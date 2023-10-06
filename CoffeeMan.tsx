@@ -6,6 +6,7 @@ import Commands from './src/screens/Commands';
 import Reports from './src/screens/Reports';
 import Menu from './src/screens/Menu';
 import CommandDetails from './src/screens/CommandDetails';
+import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
 import CustomHeader from './src/components/molecules/CustomHeader';
 import { getHeaderTitle } from '@react-navigation/elements';
@@ -35,6 +36,7 @@ const CoffeeMan = () => {
                 <Stack.Screen name="Reports" component={Reports} options={{title: 'Reportes',}} />
                 <Stack.Screen name="Menu" component={Menu}options={{title: 'Configuración del menu',}} />
                 <Stack.Screen name="CommandDetails" component={CommandDetails} options={{title: 'Comanda',}} />
+                <Stack.Screen name="Products" component={Products} options={{title: 'Productos',}} />
                 <Stack.Screen name="Pay" component={Pay} options={{title: 'Pago',}} />
             </Stack.Navigator>
         </NavigationContainer> 

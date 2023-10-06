@@ -10,7 +10,6 @@ const CustomHeader = ({ navigation, title, name}) => {
 
     //console.log(name);
     //console.log(title);
-    console.log(colors.background)
     if (name=='Reports'){
         icon = imageReports;
     }
@@ -31,8 +30,9 @@ const CustomHeader = ({ navigation, title, name}) => {
                     <Image source={icon} style={styles.image}/>
                     <Text style ={styles.title}> {title}</Text>
                 </View>
-            </View>      
+            </View>    
         </View>
+
     );
 };
 
@@ -40,6 +40,7 @@ const styles= StyleSheet.create({
     header:{
         width: '100%',
         height: 70,
+        backgroundColor: colors.background,
     },
     headerColor:{
         width: '100%',
@@ -49,6 +50,7 @@ const styles= StyleSheet.create({
         justifyContent: 'flex-start',
         borderBottomLeftRadius: 17, 
         borderBottomRightRadius: 17,
+        shadowColor: colors.typography,
         elevation:10,
     },
     logo:{

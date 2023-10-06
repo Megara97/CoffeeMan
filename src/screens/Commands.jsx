@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton';
+import colors from '../assets/colors'
 
 const Commands = ({navigation , route}) => {
     return (
@@ -19,25 +20,23 @@ const Commands = ({navigation , route}) => {
 
 const styles= StyleSheet.create({
     container:{
+        backgroundColor: colors.background,
         width: '100%',
         flex:1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
         //height: '90%',
-        borderWidth: 2,
     },
     commandList:{
         flex:1,
         width: '100%',
         //height: '90%',
-        borderWidth: 2,
     },
     new:{
         flex:0,
         width: '100%',
         height: 80,
-        borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
     },
