@@ -13,7 +13,16 @@ import acceptB from '../../assets/icons/acceptB.png';
 import acceptW from '../../assets/icons/acceptW.png';
 import cancelB from '../../assets/icons/cancelB.png';
 import cancelW from '../../assets/icons/cancelW.png';
+import { Shadow } from 'react-native-shadow-2';
 
+const ShadowPresets = {
+    general: {
+        distance:7, 
+        startColor:colors.typography+ "15", 
+        endColor:colors.background, 
+        offset:[1, 5],
+    },
+  };
 
 //Usar libreria react-native-svg-transform
 const CustomButton = props => {
@@ -43,9 +52,11 @@ const CustomButton = props => {
     }
 
     return (
+        <Shadow {...ShadowPresets.general}>
         <View style={styles.circle}>
             <Image source={icon} style={styles.icon}/> 
         </View>
+        </Shadow>
     );
 };
 
@@ -57,7 +68,7 @@ const styles= StyleSheet.create({
         backgroundColor: colors.color,
         alignItems: 'center', 
         justifyContent: 'center',
-        elevation:7,
+        //elevation:7,
 
     },
     icon:{

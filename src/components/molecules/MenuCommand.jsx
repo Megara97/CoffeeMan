@@ -25,7 +25,7 @@ const MenuCommand = ({ navigation }) => {
             <View style={styles.menuContainer}>
                <View style={styles.productsMenu}>
                     <Text style ={styles.title}> Productos ({numberProducts}) </Text>
-                    <Text style ={styles.title}> ${subtotal.toFixed(2)} </Text>
+                    <Text style ={styles.title}> $ {subtotal.toFixed(2)} </Text>
                 </View>
                 <View style={styles.buttonsMenu}>
                     <TouchableOpacity onPress={() => navigation.navigate('Products')} >

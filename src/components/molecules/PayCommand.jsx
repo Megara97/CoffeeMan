@@ -56,15 +56,15 @@ const PayCommand = ({ navigation }) => {
             <View style={styles.menuContainer}>
                <View style={styles.productsMenu}>
                     <Text style ={styles.content}> Productos ({numberProducts}) </Text>
-                    <Text style ={styles.content}> ${subtotal.toFixed(2)} </Text>
+                    <Text style ={styles.content}> $ {subtotal.toFixed(2)} </Text>
                 </View>
                <View style={styles.productsMenu}>
                     <Text style ={styles.content}> Propina </Text>
-                    <Text style ={styles.content}> ${propina.toFixed(2)} </Text>
+                    <Text style ={styles.content}> $ {propina.toFixed(2)} </Text>
                 </View>
                <View style={styles.productsMenu}>
                     <Text style ={styles.bold}> Total </Text>
-                    <Text style ={styles.bold}> ${total.toFixed(2)} </Text>
+                    <Text style ={styles.bold}> $ {total.toFixed(2)} </Text>
                 </View>
                 <View style={styles.buttonsGroups}>
                 <ButtonGroup
