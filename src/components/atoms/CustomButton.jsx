@@ -44,7 +44,7 @@ const CustomButton = props => {
 
     return (
         <View style={styles.circle}>
-            <Image source={icon} style={styles.image}/> 
+            <Image source={icon} style={styles.icon}/> 
         </View>
     );
 };
@@ -53,14 +53,14 @@ const styles= StyleSheet.create({
     circle:{
         width: 60,
         height: 60,
-        borderRadius: 60, 
+        borderRadius: 30, 
         backgroundColor: colors.color,
         alignItems: 'center', 
         justifyContent: 'center',
         elevation:7,
 
     },
-    image:{
+    icon:{
         width: 25, 
         height: 25, 
     }

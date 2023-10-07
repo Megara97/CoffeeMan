@@ -1,90 +1,86 @@
-import {StyleSheet,Appearance,Image,TouchableOpacity,View} from 'react-native'
+import {StyleSheet,Appearance,Image,TouchableOpacity,View,Text, TextInput} from 'react-native'
 import colors from '../../assets/colors'
 import { SvgXml } from 'react-native-svg';
-import newB from '../../assets/icons/newB.png';
-import newW from '../../assets/icons/newW.png';
-import payB from '../../assets/icons/payB.png';
-import payW from '../../assets/icons/payW.png';
-import saveB from '../../assets/icons/saveB.png';
-import saveW from '../../assets/icons/saveW.png';
-import deleteB from '../../assets/icons/deleteB.png';
-import deleteW from '../../assets/icons/deleteW.png';
-import acceptB from '../../assets/icons/acceptB.png';
-import acceptW from '../../assets/icons/acceptW.png';
-import cancelB from '../../assets/icons/cancelB.png';
-import cancelW from '../../assets/icons/cancelW.png';
+import efectivoB from '../../assets/icons/efectivoB.png';
+import efectivoW from '../../assets/icons/efectivoW.png';
+import tarjetaB from '../../assets/icons/tarjetaB.png';
+import tarjetaW from '../../assets/icons/tarjetaW.png';
 
-
-//Usar libreria react-native-svg-transform
-const CustomButton = props => {
+const CustomLittleButton = props => {
     let icon; 
-    //console.log(props.type);
+    //console.log(props.active);
     switch (props.type){
-        case 1: //Nuevo
-            icon = Appearance.getColorScheme() === 'dark' ? newB : newW;
+        case 1: //Efectivo
+            if (props.active == true){
+                icon = Appearance.getColorScheme() === 'dark' ? efectivoB : efectivoW;
+            } else {
+                icon = Appearance.getColorScheme() === 'dark' ? efectivoW : efectivoB;
+            }
+            Component=<Image source={icon} style={styles.icon}/> 
             break;
-        case 2: //Pagar
-            icon = Appearance.getColorScheme() === 'dark' ? payB : payW;
+        case 2: //Tarjeta
+            if (props.active == true){
+                icon = Appearance.getColorScheme() === 'dark' ? tarjetaB : tarjetaW;
+            } else {
+                icon = Appearance.getColorScheme() === 'dark' ? tarjetaW : tarjetaB;
+            }
+            Component=<Image source={icon} style={styles.icon}/> 
             break;
-        case 3: //Guardar
-            icon = Appearance.getColorScheme() === 'dark' ? saveB : saveW;
+        case 3: //Texto
+            Component=<Text style={[styles.text, {color: props.active ? colors.background: colors.typography}]}> {props.text} </Text>
             break;
-        case 4: //Borrar
-            icon = Appearance.getColorScheme() === 'dark' ? deleteB : deleteW;
-            break;
-        case 5: //Aceptar
-            icon = Appearance.getColorScheme() === 'dark' ? acceptB : acceptW;
-            break;
-        case 6: //Cancelar
-            icon = Appearance.getColorScheme() === 'dark' ? cancelB : cancelW;
-            break;
+        case 4: //Input
+            Component=(
+            <View style={styles.ovalLarge}>
+                <Text style={[styles.text, {color: props.active ? colors.background: colors.typography}]}> $ </Text>
+                <TextInput value={props.value} onChangeText={props.setValue} onFocus={() => props.onSelect(props.index)} keyboardType="numeric" style={[styles.input, {color: props.active ? colors.background: colors.typography}]}/> 
+            </View>
+            );
+            //value={props.value}
+            //onSubmitEditing={props.setValue}
+        break;
         default:
-            console.log("Type de CustomButton incorrecto"); 
+            console.log("Type de CustomLittleButton incorrecto"); 
     }
-
     return (
-        <View style={styles.circle}>
-            <Image source={icon} style={styles.image}/> 
+        <View style={[[styles.oval, props.type === 4 && styles.ovalLarge], {backgroundColor: props.active ? colors.color: colors.gray1}]}>
+            {Component}
         </View>
     );
 };
 
 const styles= StyleSheet.create({
-    circle:{
-        width: 60,
-        height: 60,
-        borderRadius: 60, 
-        backgroundColor: colors.color,
+    oval:{
+        width: 30,
+        height: 22,
+        borderRadius: 17, 
         alignItems: 'center', 
         justifyContent: 'center',
-        elevation:7,
-
+        //elevation:3,
     },
-    image:{
-        width: 25, 
-        height: 25, 
-    }
+    ovalLarge:{
+        width: 50,
+        height: 22,
+        borderRadius: 17, 
+        flexDirection: 'row',
+        alignItems: 'center', 
+        justifyContent: 'center',
+        //elevation:3,
+    },
+    icon:{
+        width: 15, 
+        height: 15, 
+    },
+    text:{
+        fontSize:13,
+        fontFamily: "Jaldi-Regular",
+    },
+    input: {
+        paddingHorizontal: 0,
+        paddingVertical:0,
+        fontSize:13,
+        fontFamily: "Jaldi-Regular",
+    },
 });
 
-export default CustomButton;
-
-//Intento por utilizar archivo SVG
-//<SvgXml xml={imageReports} />
-
-/* Opción donde se incluye el onPress en el componente CustomButton (no es conveniente pues dependiendo el lugar y tipo los botones hacen muchas cosas)
-        <TouchableOpacity onPress={() => props.navigation.navigate('CommandDetails', {id: 1})} >
-            <View style={styles.circle}>
-            </View>
-        </TouchableOpacity>*/
-
-
-/* Otra forma de recuperar las props
-    const CustomButton = ({ navigation, type }) => {
-    console.log(type);
-    return (
-        <TouchableOpacity onPress={() => navigation.navigate('CommandDetails', {id: 1})} >
-            <View style={styles.circle}>
-            </View>
-        </TouchableOpacity>
-    );
-};*/
+export default CustomLittleButton;

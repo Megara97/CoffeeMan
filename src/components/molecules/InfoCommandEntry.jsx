@@ -63,7 +63,7 @@ const styles= StyleSheet.create({
         backgroundColor: colors.background,
         paddingVertical: 0,
         height:'100%',
-        fontFamily: "Imprima-Regular",
+        fontFamily: "Jaldi-Regular",
     },
     placeholder: {
         width:50,
