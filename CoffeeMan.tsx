@@ -10,6 +10,9 @@ import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
 import CustomHeader from './src/components/molecules/CustomHeader';
 import { getHeaderTitle } from '@react-navigation/elements';
+import Delete from './src/screens/Delete';
+import InfoMenu from './src/screens/InfoMenu';
+import NewMenu from './src/screens/NewMenu';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,7 +41,10 @@ const CoffeeMan = () => {
                 <Stack.Screen name="CommandDetails" component={CommandDetails} options={{title: 'Comanda',}} />
                 <Stack.Screen name="Products" component={Products} options={{title: 'Productos',}} />
                 <Stack.Screen name="Pay" component={Pay} options={{title: 'Pago',}} />
-            </Stack.Navigator>
+                <Stack.Screen name="Delete" component={Delete} options={{ headerShown:false }} />
+                <Stack.Screen name="InfoMenu" component={InfoMenu} options={{ headerShown:false }} />
+                <Stack.Screen name="NewMenu" component={NewMenu} options={{ headerShown:false }} />
+                            </Stack.Navigator>
         </NavigationContainer> 
     );
 };

@@ -13,10 +13,10 @@ const SideMenu = ({ navigation}) => {
                     <Text style ={styles.title}> Administración de comandas </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Menu')} >
-                    <Text style ={styles.title}> Reportes </Text>
+                    <Text style ={styles.title}> Configuración del menú </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Reports')} >
-                    <Text style ={styles.title}> Configuración del menú </Text>
+                    <Text style ={styles.title}> Reportes </Text>
                 </TouchableOpacity>
             </View>
         </View>    

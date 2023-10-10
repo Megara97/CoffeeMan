@@ -1,13 +1,15 @@
 import React from 'react';
 import {Text, View, Button, TouchableOpacity, StyleSheet} from 'react-native';
-import ProductList from '../components/molecules/ProductList';
+import ProductList from '../components/atoms/ProductList';
 import CustomButton from '../components/atoms/CustomButton';
 import colors from '../assets/colors'
+import Search from '../components/atoms/Search';
 
 const Products = ({navigation , route}) => {
     return (
       <View style={styles.container}>
         <View style={styles.commandList}>
+
             <ProductList navigation={navigation}/>
         </View>  
         <View style={styles.new}>

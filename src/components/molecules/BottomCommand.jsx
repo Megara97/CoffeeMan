@@ -16,7 +16,7 @@ const ShadowPresets = {
     },
   };
   
-const MenuCommand = ({ navigation }) => {
+const BottomCommand = ({ navigation }) => {
     let numberProducts= 6;
     let subtotal= 141;
     return (
@@ -84,4 +84,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default MenuCommand;
+export default BottomCommand;

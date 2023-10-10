@@ -1,6 +1,8 @@
 import {StyleSheet,View,Text, TouchableOpacity, FlatList, StatusBar, TouchableWithoutFeedback} from 'react-native'
 import colors from '../../assets/colors'
 import { Shadow } from 'react-native-shadow-2';
+import DATA from '../../assets/data/commands';
+import { useState } from 'react';
 
 const ShadowPresets = {
     general: {
@@ -10,86 +12,35 @@ const ShadowPresets = {
         offset:[7, 10],
     },
   };
-  
-const DATA = [
-    {
-        id: '1',
-        client: 'Pepe Le Pew',
-        products: [
-            { product: 'Americano', quantity: 2},
-            { product: 'Latte', quantity: 1},
-          ],
-        subtotal: 200
-    },
-    {
-        id: '2',
-        client: 'Benito Bodoque',
-        products: [
-            { product: 'Chocolate', quantity: 2},
-            { product: 'Galleta', quantity: 1},
-            { product: 'Americano', quantity: 1},
-          ],
-        subtotal: 350
-    },
-    {
-        id: '3',
-        client: '',
-        products: [
-            { product: 'Latte', quantity: 2},
-          ],
-        subtotal: 50
-    },
-];
 
-const PRODUCTS = [
-    {
-        id: '1',
-        product: 'Americano',
-        price: 30
-    },
-    {
-        id: '2',
-        product: 'Latte',
-        price: 35
-    },
-    {
-        id: '3',
-        product: 'Chocolate',
-        price: 40
-    },
-    {
-        id: '4',
-        product: 'Galleta',
-        price: 10
-    },
-
-];
-
-const Item = ({navigation, client, subtotal}) => (
-    <TouchableOpacity onPress={() => navigation.navigate('CommandDetails')} >
-        <Shadow {...ShadowPresets.general}>
-        <View style={styles.item}>
-            <Text style={styles.client}> {client} </Text>
-            <Text style={styles.subtotal}> Subtotal: $ {subtotal.toFixed(2)} </Text>
-        </View>
-        </Shadow>
-    </TouchableOpacity>
-  );
+const Item = ({navigation, client, subtotal, id}) => {
+    const title = client === '' ? "Comanda " + id : client ;
+    return (
+        <TouchableOpacity onPress={() => navigation.navigate('CommandDetails')} >
+            <Shadow {...ShadowPresets.general}>
+            <View style={styles.item}>
+                <Text style={styles.client}> {title} </Text>
+                <Text style={styles.subtotal}> Subtotal: $ {subtotal.toFixed(2)} </Text>
+            </View>
+            </Shadow>
+        </TouchableOpacity>
+    );
+    };
 
 const CommandList = ({ navigation }) => {
+    const [list, setList] = useState(DATA);
     return (
         <View style={styles.listContainer}>
             <FlatList
             numColumns={1}
-            data={DATA}
-            renderItem={({item}) => <Item navigation={navigation} client={item.client} subtotal={item.subtotal} />}
+            data={list}
+            renderItem={({item}) => <Item navigation={navigation} client={item.client} subtotal={item.subtotal} id={item.id}/>}
             keyExtractor={item => item.id}
             />
         </View>
 
     );
 };
-
 
 const styles= StyleSheet.create({
     listContainer: {
@@ -121,7 +72,7 @@ const styles= StyleSheet.create({
     subtotal:{
         fontSize: 13,
         fontFamily: "Jaldi-Regular",
-        color: colors.gray1,
+        color: colors.mediumGray,
     },
 });
 

@@ -17,14 +17,14 @@ import { Shadow } from 'react-native-shadow-2';
 
 const ShadowPresets = {
     general: {
-        distance:7, 
-        startColor:colors.typography+ "15", 
+        distance:5, 
+        startColor:colors.typography+ "10", 
         endColor:colors.background, 
-        offset:[1, 5],
+        offset:[2, 4],
     },
   };
 
-//Usar libreria react-native-svg-transform
+//Usar libreria react-native-svg-transformer
 const CustomButton = props => {
     let icon; 
     //console.log(props.type);

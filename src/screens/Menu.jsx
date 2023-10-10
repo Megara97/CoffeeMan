@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Text, View, Button, TouchableOpacity, StyleSheet} from 'react-native';
-import ProductList from '../components/molecules/ProductList';
+import ProductList from '../components/atoms/ProductList';
 import CustomButton from '../components/atoms/CustomButton';
 import colors from '../assets/colors'
+import Search from '../components/atoms/Search';
+import CommandSection from '../components/molecules/ProductSection';
+import PRODUCTS from '../assets/data/products';
+
 
 const Menu = ({navigation , route}) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.commandList}>
-          <ProductList navigation={navigation}/>
-      </View>  
-      <View style={styles.new}>
-          <TouchableOpacity onPress={() => navigation.navigate('CommandDetails', {id: 1})} >
-              <CustomButton type={1}/>
-          </TouchableOpacity>
-      </View>
-  </View>
-  );  
+    const [list, setList] = useState(PRODUCTS);
+    return (
+        <View style={styles.container}>
+        <View style={styles.commandList}>
+            <CommandSection navigation={navigation}/>
+        </View>  
+        <View style={styles.new}>
+            <TouchableOpacity onPress={() => navigation.navigate('NewMenu')} >
+                <CustomButton type={1}/>
+            </TouchableOpacity>
+        </View>
+    </View>
+    );  
 };
 
 const styles= StyleSheet.create({

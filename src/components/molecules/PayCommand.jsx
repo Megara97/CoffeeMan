@@ -16,7 +16,7 @@ const ShadowPresets = {
             flexDirection: 'row',
         },
     },
-  };
+};
   
 const PayCommand = ({ navigation }) => {
     const [tip, setTip] = useState(0);

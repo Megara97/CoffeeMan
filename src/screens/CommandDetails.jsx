@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import InfoCommandEntry from '../components/molecules/InfoCommandEntry';
 import colors from '../assets/colors'
-import MenuCommand from '../components/molecules/MenuCommand';
+import MenuCommand from '../components/molecules/BottomCommand';
 
 //<Text> Comanda {route.params.id}  </Text>
 const CommandDetails = ({navigation , route}) => {
