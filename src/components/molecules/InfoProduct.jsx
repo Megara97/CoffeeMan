@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import CustomButton from '../atoms/CustomButton';
 import colors from '../../assets/colors';
 import { Shadow } from 'react-native-shadow-2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ShadowPresets = {
     general: {
@@ -17,9 +18,49 @@ const ShadowPresets = {
     },
 };
 
-const InfoProduct =({ navigation,product }) => {
-    let precio =25; 
-    const [price, setPrice] = useState(precio);
+const InfoProduct =({ navigation, id }) => {
+    const [price, setPrice] = useState('');
+    const [product, setProduct] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const storedList = await AsyncStorage.getItem('products');
+
+            if (storedList) {
+                let products = JSON.parse(storedList);
+                const index = products.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    setPrice(products[index].price.toString());
+                    setProduct(products[index].product);
+                  }
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+      }, []);
+
+    const onSave = async () => {
+        try {
+            const currentValue = await AsyncStorage.getItem('products');
+            if (currentValue) {
+                let productList = JSON.parse(currentValue);
+                const index = productList.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    productList[index].price = parseFloat(price);
+                    //productList[index].product = product;
+                    const jsonValue = JSON.stringify(productList);
+                    await AsyncStorage.setItem('products', jsonValue);
+                }           
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        navigation.navigate('Menu');
+    };
+
     return (
         <Shadow {...ShadowPresets.general}>
         <View style={styles.container}>
@@ -31,10 +72,10 @@ const InfoProduct =({ navigation,product }) => {
                 </View>
             </View>
             <View style={styles.buttons}>
-                <TouchableOpacity onPress={() => navigation.navigate('Menu')} >
+                <TouchableOpacity onPress={onSave} >
                     <CustomButton type={3}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Delete', {product: product})} >
+                <TouchableOpacity onPress={() => navigation.navigate('Delete', {id: id})} >
                     <CustomButton type={4}/>
                 </TouchableOpacity>
             </View>

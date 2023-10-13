@@ -2,15 +2,16 @@ import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import InfoCommandEntry from '../components/molecules/InfoCommandEntry';
 import colors from '../assets/colors'
-import MenuCommand from '../components/molecules/BottomCommand';
+import BottomCommand from '../components/molecules/BottomCommand';
+
 
 //<Text> Comanda {route.params.id}  </Text>
 const CommandDetails = ({navigation , route}) => {
   return (
     <View style={styles.container}>
       <InfoCommandEntry/>
-      <MenuCommand navigation={navigation}/>
-      </View>
+      <BottomCommand navigation={navigation}/>
+    </View>
   );  
 };
 const styles= StyleSheet.create({

@@ -28,10 +28,10 @@ const BottomCommand = ({ navigation }) => {
                     <Text style ={styles.title}> $ {subtotal.toFixed(2)} </Text>
                 </View>
                 <View style={styles.buttonsMenu}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Products')} >
+                    <TouchableOpacity onPress={() => deleteElement(2)} >
                         <CustomButton type={1}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Pay', {id: 1})} >
+                    <TouchableOpacity onPress={() => getData()} >
                         <CustomButton type={2}/>
                     </TouchableOpacity>
                 </View>
@@ -85,3 +85,10 @@ const styles= StyleSheet.create({
 });
 
 export default BottomCommand;
+
+/*                    <TouchableOpacity onPress={() => navigation.navigate('Products')} >
+                        <CustomButton type={1}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Pay', {id: 1})} >
+                        <CustomButton type={2}/>
+                    </TouchableOpacity>*/

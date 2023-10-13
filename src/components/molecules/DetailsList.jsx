@@ -37,9 +37,9 @@ const Item = ({navigation, number, product, subtotal, total}) => {
                     <CustomMiniButton type={2}/>
                 </TouchableOpacity>
             </View>
-            <Text style={[styles.text, {width: '37%',}]}> {product} </Text> 
+            <Text style={[styles.text, {width: '40%',}]}> {product} </Text> 
             <Text style={styles.textlight}> $ {subtotal.toFixed(2)} </Text>
-            <Text style={[styles.text, {width: '20%',}]}> $ {total.toFixed(2)} </Text>
+            <Text style={[styles.text, {width: '20%', textAlign: 'right',}]}> $ {total.toFixed(2)} </Text>
         </View>
   );
 };
@@ -84,13 +84,13 @@ const styles= StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         borderBottomColor: colors.gray1,
         borderBottomWidth:1,
 
     },
     quantity:{  
-        width: '23%', //80,
+        width: '20%', //80,
         height: 30, 
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -99,7 +99,7 @@ const styles= StyleSheet.create({
     input: {
         width: 25,
         height: 20, 
-        marginHorizontal: 5,
+        //marginHorizontal: 5,
         backgroundColor: colors.background,
         paddingVertical: 0,
         fontFamily: "Jaldi-Regular",
@@ -117,6 +117,7 @@ const styles= StyleSheet.create({
         width: '20%', //70,
         fontFamily: "Jaldi-Regular",
         color: colors.mediumGray,
+        textAlign: 'right',
     },
 });
 

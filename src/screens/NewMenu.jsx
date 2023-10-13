@@ -1,12 +1,12 @@
 import React from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import colors from '../assets/colors';
 import NewProduct from '../components/molecules/NewProduct';
 
 const NewMenu = ({navigation , route}) => {
     return (
         <View style={styles.container}>
-          <NewProduct navigation={navigation} />
+          <NewProduct navigation={navigation} onChange={route.params.onChange}/>
         </View>
     );
 };

@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, {useState } from 'react';
+import {StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import CustomButton from '../atoms/CustomButton';
 import colors from '../../assets/colors';
 import { Shadow } from 'react-native-shadow-2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ShadowPresets = {
     general: {
@@ -17,22 +18,51 @@ const ShadowPresets = {
     },
 };
 
-const NewProduct =({ navigation }) => {
+const NewProduct =({ navigation, onChange }) => {
     const [price, setPrice] = useState('');
-    const [name, setName] = useState('');
+    const [product, setProduct] = useState('');
+
+    const onNew = async () => {
+        try {
+            let productList = [];
+            const currentValue = await AsyncStorage.getItem('products');
+            if (currentValue) {
+                productList = JSON.parse(currentValue);
+            }
+            const Id = await AsyncStorage.getItem('numberProducts');
+            let lastId= JSON.parse(Id)+1;
+            if (!lastId) {
+                lastId=1;
+            }
+
+            const newElement = {
+                id: lastId,
+                product: product,
+                price: parseFloat(price),
+              };
+
+            productList.push(newElement);
+            await AsyncStorage.setItem('products',JSON.stringify(productList));
+            await AsyncStorage.setItem('numberProducts',JSON.stringify(lastId+1));
+        } catch (e) {
+            console.error(e);
+        }
+        onChange();
+        navigation.navigate('Menu');
+    };
 
     return (
         <Shadow {...ShadowPresets.general}>
         <View style={styles.container}>
             <View style={styles.info}>
-            <TextInput style={[styles.input , {fontSize:15, width:250,}]}  onChangeText={setName} value={name} placeholder='Producto' />
+            <TextInput style={[styles.input , {fontSize:15, width:250,}]}  onChangeText={setProduct} value={product} placeholder='Producto' />
                 <View style={styles.price}>
                     <Text style={styles.textPrice}> Precio  $  </Text>
                     <TextInput style={[styles.input , {fontSize:13, width:60,}]} onChangeText={setPrice} value={price} keyboardType='numeric' />
                 </View>
             </View>
             <View style={styles.buttons}>
-                <TouchableOpacity onPress={() => navigation.navigate('Menu')} >
+                <TouchableOpacity onPress={onNew} >
                     <CustomButton type={3}/>
                 </TouchableOpacity>
             </View>

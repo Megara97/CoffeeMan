@@ -1,8 +1,6 @@
 import {StyleSheet,View,Text, TouchableOpacity, FlatList, StatusBar, TouchableWithoutFeedback} from 'react-native'
 import colors from '../../assets/colors'
 import { Shadow } from 'react-native-shadow-2';
-import PRODUCTS from '../../assets/data/products';
-import { useState } from 'react';
 
 const ShadowPresets = {
     general: {
@@ -13,25 +11,26 @@ const ShadowPresets = {
     },
   };
 
-const Item = ({navigation, product, price}) => (
-    <TouchableOpacity onPress={() => navigation.navigate('InfoMenu', {product: product})}>
+const Item = ({navigation, id, product, price}) => (
+    <TouchableOpacity onPress={() => navigation.navigate('InfoMenu', {id: id})}>
         <Shadow {...ShadowPresets.general}>
         <View style={styles.item}>
             <Text style={styles.product}> {product} </Text>
-            <Text style={styles.price}> $ {price.toFixed(2)} </Text>
+            <Text style={styles.price}> $ {parseFloat(price).toFixed(2)} </Text>
         </View>
         </Shadow>
     </TouchableOpacity>
   );
 
-const ProductList = ({ navigation , list }) => {
-    //const [list, setList] = useState(PRODUCTS);
+  //<Text style={styles.price}>  {price !== '' ? `$ ${parseFloat(price).toFixed(2)}` : null} </Text> 
+
+const ProductList = ({ navigation, list }) => {
     return (
         <View style={styles.listContainer}>
             <FlatList
             numColumns={3}
             data={list}
-            renderItem={({item}) => <Item navigation={navigation} product={item.product} price={item.price} />}
+            renderItem={({item}) => <Item navigation={navigation} id={item.id} product={item.product} price={item.price} />}
             keyExtractor={item => item.id}
             />
         </View>
@@ -61,8 +60,6 @@ const styles= StyleSheet.create({
         marginVertical: 7,
         marginHorizontal: 7,
     },
-
-    
     product:{
         fontSize: 15,
         fontFamily: "Jaldi-Regular",

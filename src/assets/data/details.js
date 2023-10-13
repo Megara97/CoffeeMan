@@ -13,7 +13,7 @@ export default [
         client: 'Benito Bodoque',
         products: [
             { product: 'Chocolate', quantity: 2, price: 40},
-            { product: 'Galleta', quantity: 1, price: 10},
+            { product: 'Galleta con chispas', quantity: 1, price: 10},
             { product: 'Americano', quantity: 1, price: 30},
           ],
         subtotal: 350

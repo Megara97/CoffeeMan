@@ -36,11 +36,11 @@ const CoffeeMan = () => {
             >
                 <Stack.Screen name="Home" component={Home} options={{ headerShown:false }} />
                 <Stack.Screen name="Commands" component={Commands} options={{title: 'Administración de comandas',}} />
-                <Stack.Screen name="Reports" component={Reports} options={{title: 'Reportes',}} />
-                <Stack.Screen name="Menu" component={Menu}options={{title: 'Configuración del menu',}} />
                 <Stack.Screen name="CommandDetails" component={CommandDetails} options={{title: 'Comanda',}} />
                 <Stack.Screen name="Products" component={Products} options={{title: 'Productos',}} />
                 <Stack.Screen name="Pay" component={Pay} options={{title: 'Pago',}} />
+                <Stack.Screen name="Reports" component={Reports} options={{title: 'Reportes',}} />
+                <Stack.Screen name="Menu" component={Menu}options={{title: 'Configuración del menu',}} />
                 <Stack.Screen name="Delete" component={Delete} options={{ headerShown:false }} />
                 <Stack.Screen name="InfoMenu" component={InfoMenu} options={{ headerShown:false }} />
                 <Stack.Screen name="NewMenu" component={NewMenu} options={{ headerShown:false }} />

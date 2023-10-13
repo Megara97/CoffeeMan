@@ -1,12 +1,12 @@
 import React from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import colors from '../assets/colors';
 import InfoProduct from '../components/molecules/InfoProduct';
 
 const InfoMenu = ({navigation , route}) => {
     return (
         <View style={styles.container}>
-          <InfoProduct navigation={navigation} product={route.params.product}/>
+          <InfoProduct navigation={navigation} id={route.params.id} />
         </View>
     );
 };
@@ -22,8 +22,6 @@ const styles= StyleSheet.create({
         alignItems: 'center',
     },
  });
-
-
 
 export default InfoMenu;
 

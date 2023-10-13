@@ -1,20 +1,20 @@
 import {StyleSheet,View,Text, TouchableOpacity, FlatList, StatusBar, TouchableWithoutFeedback} from 'react-native'
 import colors from '../../assets/colors'
-import PRODUCTS from '../../assets/data/products';
 import { useEffect, useState } from 'react';
 import Search from '../atoms/Search';
 import ProductList from '../atoms/ProductList';
 
-const ProductSection = ({ navigation }) => {
-    const [list, setList] = useState(PRODUCTS); //lista con cambios
+const ProductSection = ({ navigation, products }) => {
+    const [list, setList] = useState(products); //lista con cambios
     const [defaultList, setDefaultList] = useState([]); //lista original
     const [text, setText] = useState(''); //palabra para buscar
 
     useEffect(() => {
-        setDefaultList(PRODUCTS);
-        setList(PRODUCTS);
-      }, []);
+        setDefaultList(products);
+        setList(products);
+      }, [products]);
 
+    console.log ('Productos:',products);
     return (
         <View style={styles.container}>
             <Search
@@ -26,7 +26,6 @@ const ProductSection = ({ navigation }) => {
             />
             <ProductList navigation={navigation} list={list}/>
         </View>
-
     );
 };
 
