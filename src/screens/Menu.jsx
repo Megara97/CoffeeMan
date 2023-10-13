@@ -6,7 +6,7 @@ import ProductSection from '../components/molecules/ProductSection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
-const Menu = ({navigation , route}) => {
+const Menu = ({navigation, route}) => {
     const [list, setList] = useState([]);
     const fetchData = async () => {
         try {
@@ -26,9 +26,30 @@ const Menu = ({navigation , route}) => {
     /*useFocusEffect(
         useCallback(() => {
             fetchData();   
-            console.log('Componente en foco (HOLA GUAPO)')
+            console.log('Componente en foco')
         })
     );*/
+
+
+    const deleteData = async () => {
+        try {
+            await AsyncStorage.removeItem('products');
+            await AsyncStorage.removeItem('numberProducts');
+            setList([]);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+
+      const getData = async () => {
+        try {
+            //const jsonValue = await AsyncStorage.getItem('products');
+            const jsonValue = await AsyncStorage.getItem('numberProducts');
+            console.log (jsonValue != null ? JSON.parse(jsonValue) : null);
+        } catch (e) {
+            console.log(e);
+        }
+      };
 
     return (
         <View style={styles.container}>
@@ -38,6 +59,12 @@ const Menu = ({navigation , route}) => {
         <View style={styles.new}>
             <TouchableOpacity onPress={() => navigation.navigate('NewMenu', {onChange: fetchData})} >
                 <CustomButton type={1}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() =>deleteData()} >
+                <CustomButton type={2}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => getData()} >
+                <CustomButton type={3}/>
             </TouchableOpacity>
         </View>
     </View>

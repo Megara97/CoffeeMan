@@ -1,8 +1,7 @@
-import {StyleSheet,View,Text, TouchableOpacity, FlatList, StatusBar, TouchableWithoutFeedback} from 'react-native'
+import {StyleSheet,View,Text, TouchableOpacity, FlatList} from 'react-native'
 import colors from '../../assets/colors'
 import { Shadow } from 'react-native-shadow-2';
-import DATA from '../../assets/data/commands';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ShadowPresets = {
     general: {
@@ -16,7 +15,7 @@ const ShadowPresets = {
 const Item = ({navigation, client, subtotal, id}) => {
     const title = client === '' ? "Comanda " + id : client ;
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('CommandDetails')} >
+        <TouchableOpacity onPress={() => navigation.navigate('CommandDetails', {id:id})} >
             <Shadow {...ShadowPresets.general}>
             <View style={styles.item}>
                 <Text style={styles.client}> {title} </Text>
@@ -27,8 +26,17 @@ const Item = ({navigation, client, subtotal, id}) => {
     );
     };
 
-const CommandList = ({ navigation }) => {
-    const [list, setList] = useState(DATA);
+// {subtotal !== null ? `Subtotal: $ ${subtotal.toFixed(2)}` : null} 
+
+const CommandList = ({ navigation, commands }) => {
+    const [list, setList] = useState(commands); //lista
+
+    useEffect(() => {
+        setList(commands);
+      }, [commands]);
+
+    console.log(list);
+
     return (
         <View style={styles.listContainer}>
             <FlatList

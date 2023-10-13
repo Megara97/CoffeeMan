@@ -1,17 +1,62 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Text,StyleSheet, TextInput, View } from 'react-native';
 import colors from '../../assets/colors'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const InfoCommandEntry = () => {
+const InfoCommandEntry = ({id}) => {
     const [name, setName] = useState('');
     const [notes, setNotes] = useState('');
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const storedList = await AsyncStorage.getItem('commands');
+
+            if (storedList) {
+                let commands = JSON.parse(storedList);
+                const index = commands.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    setName(commands[index].client);
+                    setNotes(commands[index].notes);
+                  }
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+      }, []);
+
+    const onSave = async (key,value) => {
+        try {
+            if(key==='client'){
+                setName(value);    
+                
+            } else if (key==='notes'){
+                setNotes(value);
+            }
+            const currentValue = await AsyncStorage.getItem('commands');
+            if (currentValue) {
+                let commandList = JSON.parse(currentValue);
+                const index = commandList.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    //commandList[index].client = name;
+                    //commandList[index].notes = notes;
+                    commandList[index][key] = value;
+                    const jsonValue = JSON.stringify(commandList);
+                    await AsyncStorage.setItem('commands', jsonValue);
+                }           
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return (
         <View style={styles.infoContainer}>
-            <Input value={name} onChange={setName} placeholder="Nombre" size={15}/>
+            <Input value={name} onChange={text => onSave('client',text)} placeholder="Nombre" size={15}/>
             <Input
                 value={notes}
-                onChange={setNotes}
+                onChange={text => onSave('notes',text)}
                 placeholder="Notas"
                 multiline
                 size={13}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import DeleteProduct from '../components/molecules/DeleteProduct';
 import colors from '../assets/colors';
 

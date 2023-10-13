@@ -1,6 +1,7 @@
 import {StyleSheet,View,Text, TouchableOpacity, FlatList} from 'react-native'
 import colors from '../../assets/colors'
 import { Shadow } from 'react-native-shadow-2';
+import { useState } from 'react';
 
 const ShadowPresets = {
     general: {
@@ -11,10 +12,10 @@ const ShadowPresets = {
     },
   };
 
-const Item = ({navigation, id, product, price}) => (
-    <TouchableOpacity onPress={() => navigation.navigate('InfoMenu', {id: id})}>
+const Item = ({navigation, id, product, price, isSelected, toggleSelection}) => (
+    <TouchableOpacity onPress={() => toggleSelection(id)}>
         <Shadow {...ShadowPresets.general}>
-        <View style={styles.item}>
+        <View style={[styles.item, isSelected && styles.selectedItem]}>
             <Text style={styles.product}> {product} </Text>
             <Text style={styles.price}> $ {parseFloat(price).toFixed(2)} </Text>
         </View>
@@ -24,17 +25,28 @@ const Item = ({navigation, id, product, price}) => (
 
   //<Text style={styles.price}>  {price !== '' ? `$ ${parseFloat(price).toFixed(2)}` : null} </Text> 
 
-const ProductList = ({ navigation, list }) => {
+const ProductListSelectable = ({ navigation, list, onSelect }) => {
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const toggleItemSelection = (id) => {
+        if (selectedItems.includes(id)) {
+          setSelectedItems(selectedItems.filter((item) => item !== id)); 
+          onSelect(selectedItems.filter((item) => item !== id));
+        } else {
+          setSelectedItems([...selectedItems, id]);
+          onSelect([...selectedItems, id]);
+        }
+      };
+
     return (
         <View style={styles.listContainer}>
             <FlatList
             numColumns={3}
             data={list}
-            renderItem={({item}) => <Item navigation={navigation} id={item.id} product={item.product} price={item.price} />}
+            renderItem={({item}) => <Item navigation={navigation} id={item.id} product={item.product} price={item.price}  isSelected={selectedItems.includes(item.id)} toggleSelection={toggleItemSelection} />}
             keyExtractor={item => item.id}
             />
         </View>
-
     );
 };
 
@@ -60,6 +72,19 @@ const styles= StyleSheet.create({
         marginVertical: 7,
         marginHorizontal: 7,
     },
+    selectedItem:{  
+        //width: '100%',
+        width: 100,
+        height: 80,
+        borderRadius: 17,
+        backgroundColor: colors.gray1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical:10,
+        marginVertical: 7,
+        marginHorizontal: 7,
+    },
     product:{
         fontSize: 15,
         fontFamily: "Jaldi-Regular",
@@ -74,4 +99,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default ProductList;
+export default ProductListSelectable;

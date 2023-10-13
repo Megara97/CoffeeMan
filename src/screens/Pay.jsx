@@ -1,31 +1,63 @@
-import React, { useState } from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {Text, View, StyleSheet} from 'react-native';
 import PayCommand from '../components/molecules/PayCommand'
 import colors from '../assets/colors';
-import CustomLittleButton from '../components/atoms/CustomLittleButton';
-import ButtonGroup from '../components/molecules/ButtonGroup';
+import DetailsList from '../components/molecules/DetailsListSimple';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Pay = ({navigation , route}) => {
+  const [title, setTitle] = useState('');
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const storedList = await AsyncStorage.getItem('commands');
+
+            if (storedList) {
+                let commands = JSON.parse(storedList);
+                const index = commands.findIndex((element) => element.id === route.params.id);
+                if (index !== -1) {
+                    setTitle(commands[index].client === '' ? "Comanda " + commands[index].id : commands[index].client);
+                  }
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+      }, []);
+
   return (
     <View style={styles.container}>
-      <Text> Pago </Text>
-
-      <PayCommand navigation={navigation}/>
+      <View style={styles.containerTop}></View>
+        <Text style={styles.title}> {title} </Text>
+        <DetailsList navigation={navigation} id={route.params.id}/>
+      <View style={styles.container}></View>
+      <PayCommand navigation={navigation} id={route.params.id}/>
     </View>
   );  
 };
 
 const styles= StyleSheet.create({
-container:{
+  container:{
+      width: '100%',
+      flex:1,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingTop:10,
+      backgroundColor: colors.background,
+  },
+  containerTop:{
     width: '100%',
-    flex:1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop:10,
-    backgroundColor: colors.background,
-},
+  },
+  title: {
+    fontSize: 15,
+    color: colors.typography,
+    fontFamily: "Jaldi-Regular",
+  },
 });
 
 export default Pay;
-

@@ -1,6 +1,5 @@
-import {StyleSheet,Appearance,Image,TouchableOpacity,View} from 'react-native'
+import {StyleSheet,Appearance,Image,View} from 'react-native'
 import colors from '../../assets/colors'
-import { SvgXml } from 'react-native-svg';
 import newB from '../../assets/icons/newB.png';
 import newW from '../../assets/icons/newW.png';
 import payB from '../../assets/icons/payB.png';
@@ -27,7 +26,6 @@ const ShadowPresets = {
 //Usar libreria react-native-svg-transformer
 const CustomButton = props => {
     let icon; 
-    //console.log(props.type);
     switch (props.type){
         case 1: //Nuevo
             icon = Appearance.getColorScheme() === 'dark' ? newB : newW;
@@ -78,24 +76,3 @@ const styles= StyleSheet.create({
 });
 
 export default CustomButton;
-
-//Intento por utilizar archivo SVG
-//<SvgXml xml={imageReports} />
-
-/* Opción donde se incluye el onPress en el componente CustomButton (no es conveniente pues dependiendo el lugar y tipo los botones hacen muchas cosas)
-        <TouchableOpacity onPress={() => props.navigation.navigate('CommandDetails', {id: 1})} >
-            <View style={styles.circle}>
-            </View>
-        </TouchableOpacity>*/
-
-
-/* Otra forma de recuperar las props
-    const CustomButton = ({ navigation, type }) => {
-    console.log(type);
-    return (
-        <TouchableOpacity onPress={() => navigation.navigate('CommandDetails', {id: 1})} >
-            <View style={styles.circle}>
-            </View>
-        </TouchableOpacity>
-    );
-};*/

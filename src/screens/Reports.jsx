@@ -6,7 +6,6 @@ const Reports = ({navigation , route}) => {
     return (
         <View>
           <Text>Reportes</Text>
-          <DetailsList navigation={navigation}/>
         </View>
     );  
 };

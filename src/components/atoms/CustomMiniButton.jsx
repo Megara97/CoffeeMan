@@ -5,7 +5,6 @@ import Mas from '../../assets/icons/mas.svg';
 
 const CustomMiniButton = props => {
     let Icon; 
-    //console.log(props.type);
     switch (props.type){
         case 1: //+
             Icon= <Menos width={15} height={15} fill={colors.color} />

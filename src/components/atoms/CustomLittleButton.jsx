@@ -1,6 +1,5 @@
-import {StyleSheet,Appearance,Image,TouchableOpacity,View,Text, TextInput} from 'react-native'
+import {StyleSheet,Appearance,Image,View,Text, TextInput} from 'react-native'
 import colors from '../../assets/colors'
-import { SvgXml } from 'react-native-svg';
 import efectivoB from '../../assets/icons/efectivoB.png';
 import efectivoW from '../../assets/icons/efectivoW.png';
 import tarjetaB from '../../assets/icons/tarjetaB.png';
@@ -8,7 +7,6 @@ import tarjetaW from '../../assets/icons/tarjetaW.png';
 
 const CustomLittleButton = props => {
     let icon; 
-    //console.log(props.active);
     switch (props.type){
         case 1: //Efectivo
             if (props.active == true){
@@ -36,8 +34,8 @@ const CustomLittleButton = props => {
                 <TextInput value={props.value} onChangeText={props.setValue} onFocus={() => props.onSelect(props.index)} keyboardType="numeric" style={[styles.input, {color: props.active ? colors.background: colors.typography}]}/> 
             </View>
             );
-            //value={props.value}
-            //onSubmitEditing={props.setValue}
+            //placeholder={props.value}
+            //onEndEditing={(e) => props.setValue(e.nativeEvent.text)} 
         break;
         default:
             console.log("Type de CustomLittleButton incorrecto"); 

@@ -2,8 +2,9 @@ import {StyleSheet,Image,View,Text, TouchableOpacity} from 'react-native'
 import colors from '../../assets/colors'
 import CustomButton from '../atoms/CustomButton';
 import { Shadow } from 'react-native-shadow-2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ButtonGroup from './ButtonGroup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ShadowPresets = {
     general: {
@@ -18,12 +19,51 @@ const ShadowPresets = {
     },
 };
   
-const PayCommand = ({ navigation }) => {
+const PayCommand = ({ navigation, id }) => {
+    const [numberProducts, setNumber] = useState(0);
+    const [subtotal, setSubtotal] = useState(0);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const storedList = await AsyncStorage.getItem('commands');
+
+            if (storedList) {
+                let products = JSON.parse(storedList);
+                const index = products.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    setNumber(products[index].products.length); /////MULTIPLICAR POR CANTIDAD
+                    setSubtotal(products[index].subtotal);
+                  }
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+      }, []);
+
+    const onDelete = async () => {
+        try {
+            const currentValue = await AsyncStorage.getItem('commands');
+            if (currentValue) {
+                let commandList = JSON.parse(currentValue);
+                const index = commandList.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    commandList.splice(index, 1);
+                    const jsonValue = JSON.stringify(commandList);
+                    await AsyncStorage.setItem('commands', jsonValue);
+                }           
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        //SUBIR A BASE DE DATOS
+        navigation.navigate('Commands');
+    };
+
     const [tip, setTip] = useState(0);
     const [method, setMethod] = useState(0);
     const [tipC, setTipC] = useState('0');
-    let numberProducts= 6;
-    let subtotal= 141;
     let propina;
     switch (tip){
         case 0:
@@ -50,7 +90,10 @@ const PayCommand = ({ navigation }) => {
     }
     let total= subtotal + propina;
 
-    //console.log(tipC);
+    /*useEffect(() => {
+        let total= subtotal + propina;
+    }, [tip,tipC);*/
+
     return (
          <Shadow {...ShadowPresets.general}>
             <View style={styles.menuContainer}>
@@ -81,7 +124,7 @@ const PayCommand = ({ navigation }) => {
                 />
                 </View>
                 <View style={styles.buttonsMenu}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Commands')} >
+                    <TouchableOpacity onPress={onDelete} >
                         <CustomButton type={5}/>
                     </TouchableOpacity>
                 </View>

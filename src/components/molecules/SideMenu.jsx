@@ -1,4 +1,4 @@
-import {StyleSheet,Image,View,Text, TouchableOpacity} from 'react-native'
+import {StyleSheet,View,Text, TouchableOpacity} from 'react-native'
 import colors from '../../assets/colors'
 import Logo from '../atoms/Logo';
 

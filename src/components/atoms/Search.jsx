@@ -1,4 +1,4 @@
-import {TextInput,Image,View,StyleSheet} from 'react-native';
+import {TextInput,View,StyleSheet} from 'react-native';
 import { useEffect } from 'react';
 import SearchIcon from '../../assets/icons/busqueda.svg';
 import colors from '../../assets/colors';

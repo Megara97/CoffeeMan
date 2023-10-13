@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CustomButton from '../atoms/CustomButton';
 import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';

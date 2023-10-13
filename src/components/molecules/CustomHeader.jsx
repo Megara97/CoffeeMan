@@ -8,8 +8,6 @@ const CustomHeader = ({ navigation, title, name}) => {
     const imageMenu = require('../../assets/images/Coffee.png');
     let icon; 
 
-    //console.log(name);
-    //console.log(title);
     if (name=='Reports'){
         icon = imageReports;
     }

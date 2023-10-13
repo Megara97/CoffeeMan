@@ -1,16 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import InfoCommandEntry from '../components/molecules/InfoCommandEntry';
 import colors from '../assets/colors'
 import BottomCommand from '../components/molecules/BottomCommand';
+import DetailsList from '../components/molecules/DetailsList';
 
-
-//<Text> Comanda {route.params.id}  </Text>
-const CommandDetails = ({navigation , route}) => {
+const CommandDetails = ({navigation, route}) => {
   return (
     <View style={styles.container}>
-      <InfoCommandEntry/>
-      <BottomCommand navigation={navigation}/>
+      <View style={styles.containerTop}></View>
+        <InfoCommandEntry id={route.params.id}/>
+        <DetailsList navigation={navigation} id={route.params.id}/>
+      <View style={styles.container}></View>
+      <BottomCommand navigation={navigation} id={route.params.id}/>
     </View>
   );  
 };
@@ -24,6 +26,12 @@ const styles= StyleSheet.create({
       paddingTop:10,
       //height: '90%',
       backgroundColor: colors.background,
+  },
+  containerTop:{
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
 

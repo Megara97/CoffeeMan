@@ -1,7 +1,9 @@
-import {StyleSheet,Image,View,Text, TouchableOpacity} from 'react-native'
+import {StyleSheet,View,Text, TouchableOpacity} from 'react-native'
 import colors from '../../assets/colors'
 import CustomButton from '../atoms/CustomButton';
 import { Shadow } from 'react-native-shadow-2';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ShadowPresets = {
     general: {
@@ -16,9 +18,29 @@ const ShadowPresets = {
     },
   };
   
-const BottomCommand = ({ navigation }) => {
-    let numberProducts= 6;
-    let subtotal= 141;
+const BottomCommand = ({ navigation, id}) => {
+    const [numberProducts, setNumber] = useState(0);
+    const [subtotal, setSubtotal] = useState(0);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const storedList = await AsyncStorage.getItem('commands');
+
+            if (storedList) {
+                let products = JSON.parse(storedList);
+                const index = products.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    setNumber(products[index].products.length); /////MULTIPLICAR POR CANTIDAD
+                    setSubtotal(products[index].subtotal);
+                  }
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+      }, []);
+
     return (
        // <Shadow distance={15} startColor={colors.typography+ "30"} endColor={colors.background} style={styles.shadow}>
         <Shadow {...ShadowPresets.general}>
@@ -28,10 +50,10 @@ const BottomCommand = ({ navigation }) => {
                     <Text style ={styles.title}> $ {subtotal.toFixed(2)} </Text>
                 </View>
                 <View style={styles.buttonsMenu}>
-                    <TouchableOpacity onPress={() => deleteElement(2)} >
+                    <TouchableOpacity onPress={() => navigation.navigate('Products', {id: id})} >
                         <CustomButton type={1}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => getData()} >
+                    <TouchableOpacity onPress={() => navigation.navigate('Pay', {id: id})} >
                         <CustomButton type={2}/>
                     </TouchableOpacity>
                 </View>
@@ -85,10 +107,3 @@ const styles= StyleSheet.create({
 });
 
 export default BottomCommand;
-
-/*                    <TouchableOpacity onPress={() => navigation.navigate('Products')} >
-                        <CustomButton type={1}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Pay', {id: 1})} >
-                        <CustomButton type={2}/>
-                    </TouchableOpacity>*/

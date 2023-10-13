@@ -1,29 +1,110 @@
-import {StyleSheet,View,Text, TouchableOpacity, FlatList, StatusBar, TouchableWithoutFeedback, TextInput} from 'react-native'
+import {StyleSheet,View,Text, TouchableOpacity, FlatList, TextInput} from 'react-native'
 import colors from '../../assets/colors'
-import { Shadow } from 'react-native-shadow-2';
-import DETAILS from '../../assets/data/details';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomMiniButton from '../atoms/CustomMiniButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ShadowPresets = {
-    general: {
-        distance:3, 
-        startColor:colors.typography+ "15", 
-        endColor:colors.background, 
-        offset:[7, 10],
-    },
-  };
-
-const Item = ({navigation, number, product, subtotal, total}) => {
+const Item = ({navigation, id, number, product, subtotal, setChange}) => {
     const [quantity, setQuantity] = useState(number);
-    total= quantity*subtotal;   
-    const onLess = () => {
-        if (quantity>1){
-            setQuantity(quantity-1);
+    let total= quantity*subtotal;   
+
+    const onLess = async () => {
+            try {
+                const currentValue = await AsyncStorage.getItem('commands');
+                const currentProducts = await AsyncStorage.getItem('products');
+                let productList=[];
+                if (currentProducts){
+                    productList = JSON.parse(currentProducts);
+                }
+                if (currentValue) {
+                  let commands = JSON.parse(currentValue);
+                      const index = commands.findIndex((element) => element.id === id);
+                      if (index !== -1) {
+                          const indexProduct = commands[index].products.findIndex((element) => element.product === product);
+                          if (indexProduct !== -1) {
+                              if (quantity>1){
+                                commands[index].products[indexProduct].quantity--;
+                              } else if (quantity==1) {
+                                commands[index].products.splice(indexProduct, 1);
+                                const productInfo = productList.find((productInfo) => productInfo.product === product);
+                                commands[index].subtotal -= productInfo.price;
+                                console.log(commands[index]);
+                              }
+                          }
+                          const jsonValue = JSON.stringify(commands);
+                          await AsyncStorage.setItem('commands', jsonValue);
+                  }
+                  setQuantity(quantity-1);
+                  setChange('less');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+    };
+
+    const onMore = async () => {
+        try {
+            const currentValue = await AsyncStorage.getItem('commands');
+            const currentProducts = await AsyncStorage.getItem('products');
+
+            let productList=[];
+            if (currentProducts){
+                productList = JSON.parse(currentProducts);
+            }
+
+            if (currentValue) {
+                let commands = JSON.parse(currentValue);
+                    const index = commands.findIndex((element) => element.id === id);
+                    if (index !== -1) {
+                        const indexProduct = commands[index].products.findIndex((element) => element.product === product);
+                        if (indexProduct !== -1) {
+                            commands[index].products[indexProduct].quantity++;
+                            const productInfo = productList.find((productInfo) => productInfo.product === product);
+                            commands[index].subtotal += productInfo.price;
+                            console.log(commands[index]);
+                        }
+                        const jsonValue = JSON.stringify(commands);
+                        await AsyncStorage.setItem('commands', jsonValue);
+                    }
+                }
+                setQuantity(quantity+1);
+                setChange('more');
+        } catch (error) {
+            console.error(error);
         }
     };
-    const onMore = () => {
-        setQuantity(quantity+1);
+
+    const onNumber = async (value) => {
+        try {
+            const currentValue = await AsyncStorage.getItem('commands');
+            const currentProducts = await AsyncStorage.getItem('products');
+
+            let productList=[];
+            if (currentProducts){
+                productList = JSON.parse(currentProducts);
+            }
+
+            if (currentValue) {
+                let commands = JSON.parse(currentValue);
+                    const index = commands.findIndex((element) => element.id === id);
+                    if (index !== -1) {
+                        const indexProduct = commands[index].products.findIndex((element) => element.product === product);
+                        if (indexProduct !== -1) {
+                            const before= commands[index].products[indexProduct].quantity
+                            commands[index].products[indexProduct].quantity = parseInt(value);
+                            const productInfo = productList.find((productInfo) => productInfo.product === product);
+                            commands[index].subtotal += (parseInt(value)-before)*productInfo.price;
+                            console.log(commands[index]);
+                        }
+                        const jsonValue = JSON.stringify(commands);
+                        await AsyncStorage.setItem('commands', jsonValue);
+                    }
+                }
+                setQuantity(value);
+                setChange('number');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -32,7 +113,7 @@ const Item = ({navigation, number, product, subtotal, total}) => {
                 <TouchableOpacity onPress={onLess} >
                     <CustomMiniButton type={1}/>
                 </TouchableOpacity>
-                <TextInput style={styles.input} onChangeText={(text) => setQuantity(parseInt(text))} value={quantity.toString()} keyboardType='numeric' />
+                <TextInput style={styles.input} onEndEditing={(e) => onNumber(e.nativeEvent.text)} placeholder={quantity.toString()} keyboardType='numeric' />
                 <TouchableOpacity onPress={onMore} >
                     <CustomMiniButton type={2}/>
                 </TouchableOpacity>
@@ -44,18 +125,63 @@ const Item = ({navigation, number, product, subtotal, total}) => {
   );
 };
 
+const DetailsList = ({ navigation, id }) => {
+    const [list, setList] = useState([]);
+    const [change, setChange] = useState('');
+    const fetchData = async () => {
+        try {
+          const currentValue = await AsyncStorage.getItem('commands');
+          const currentProducts = await AsyncStorage.getItem('products');
 
+          let productList=[];
+          if (currentProducts){
+              productList = JSON.parse(currentProducts);
+          }
 
-const DetailsList = ({ navigation }) => {
-    const [list, setList] = useState(DETAILS);
+          if (currentValue) {
+            let commands = JSON.parse(currentValue);
+                const index = commands.findIndex((element) => element.id === id);
+                if (index !== -1) {
+                    commands[index].products.forEach((productInOrder) => {
+                        const productInfo = productList.find((productInfo) => productInfo.product === productInOrder.product);
+                        if (productInfo) {
+                          productInOrder.price = productInfo.price;
+                        }
+                      });
+                    setList(commands[index].products);
+
+                    /*// Calcula el subtotal sumando los precios de los productos
+                    commands[index].subtotal = commands[index].products.reduce((total, product) => total + product.price * product.quantity, 0);
+                    console.log(commands[index]);
+                    const jsonValue = JSON.stringify(commands);
+                    await AsyncStorage.setItem('commands', jsonValue);*/
+                }
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    
+    useEffect(() => {
+        fetchData();
+    }, [change]);
+
     return (
         <View style={styles.Container}>
             <View style={styles.listContainer}>
                 <FlatList
                 numColumns={1}
-                data={list[1].products} //ASIGNAR CORRECTAMENTE
-                renderItem={({item}) => <Item navigation={navigation} product={item.product} number={item.quantity} subtotal={item.price} />}
-                keyExtractor={item => item.id}
+                data={list}
+                renderItem={({item}) => (
+                    <Item 
+                        navigation={navigation} 
+                        id={id}
+                        product={item.product} 
+                        number={item.quantity} 
+                        subtotal={item.price} 
+                        setChange={setChange}
+                    />
+                )}
                 />
             </View>
         </View>
@@ -68,7 +194,7 @@ const styles= StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center', 
         justifyContent: 'center',
-
+        paddingVertical:20,
     },
     listContainer: {
         width: '90%',

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CustomLittleButton from '../atoms/CustomLittleButton';
 import colors from '../../assets/colors';
 
@@ -10,7 +10,6 @@ const ButtonGroup =({ title, buttons, selectedOption, onSelect }) => {
             {buttons.map((buttonProps, i) => (
                 <TouchableOpacity 
                     key={i}
-                    //style={[styles.btn, selectedOption === i && styles.animatedBtnContainer]}
                     onPress={() => {onSelect(i); Keyboard.dismiss();}}
                     style={styles.buttons}>
                     <CustomLittleButton {...buttonProps} active={selectedOption === i} onSelect={onSelect} index={i}/>
@@ -51,4 +50,4 @@ const [selectedOption, setSelectedOption] = useState(0);
                     selectedOption={selectedOption}
                     onSelect={setSelectedOption}
                 />
-                */
+*/

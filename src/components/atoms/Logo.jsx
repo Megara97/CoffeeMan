@@ -3,15 +3,6 @@ import colors from '../../assets/colors'
 import imageLogo from '../../assets/images/Calcifer.png';
 
 const Logo = ({ navigation, menu }) => {
-    /*const onChange = () => {
-        if (menu===true){
-            navigation.goBack();    
-        }
-        else {
-            navigation.navigate('Home')
-        }
-    //onPress={onChange}
-    };*/
     return (
         <TouchableOpacity onPress={() => navigation.navigate('Home')} >
             <View style={styles.circle}>
