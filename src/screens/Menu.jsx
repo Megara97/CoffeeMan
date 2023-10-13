@@ -60,17 +60,19 @@ const Menu = ({navigation, route}) => {
             <TouchableOpacity onPress={() => navigation.navigate('NewMenu', {onChange: fetchData})} >
                 <CustomButton type={1}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() =>deleteData()} >
-                <CustomButton type={2}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => getData()} >
-                <CustomButton type={3}/>
-            </TouchableOpacity>
+
         </View>
     </View>
     );  
 };
 
+/*            <TouchableOpacity onPress={() =>deleteData()} >
+                <CustomButton type={2}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => getData()} >
+                <CustomButton type={3}/>
+            </TouchableOpacity>*/
+            
 const styles= StyleSheet.create({
     container:{
         backgroundColor: colors.background,

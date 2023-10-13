@@ -88,18 +88,18 @@ const Commands = ({navigation, route}) => {
             <View style={styles.new}>
                 <TouchableOpacity onPress={onNew} >
                     <CustomButton type={1}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() =>deleteData()} >
-                    <CustomButton type={2}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => getData()} >
-                    <CustomButton type={3}/>
-                </TouchableOpacity>
-        
+                </TouchableOpacity>      
             </View>
         </View>
     );  
 };
+
+/*              <TouchableOpacity onPress={() =>deleteData()} >
+<CustomButton type={2}/>
+</TouchableOpacity>
+<TouchableOpacity onPress={() => getData()} >
+    <CustomButton type={3}/>
+</TouchableOpacity> */
 
 const styles= StyleSheet.create({
     container:{
