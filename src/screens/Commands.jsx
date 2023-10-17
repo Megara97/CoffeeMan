@@ -1,51 +1,130 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton';
-import colors from '../assets/colors'
+import colors from '../assets/colors';
 import CommandList from '../components/molecules/CommandList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Commands = ({navigation , route}) => {
-    return (
-        <View style={styles.container}>
-            <View style={styles.commandList}>
-                <CommandList navigation={navigation}/>
-            </View>  
-            <View style={styles.new}>
-                <TouchableOpacity onPress={() => navigation.navigate('CommandDetails', {id: 1})} >
-                    <CustomButton type={1}/>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );  
+const Commands = ({navigation, route}) => {
+   const [list, setList] = useState([]);
+   const fetchData = async () => {
+      try {
+         const storedList = await AsyncStorage.getItem('commands');
+         if (storedList) {
+            setList(JSON.parse(storedList));
+         }
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
+   useEffect(() => {
+      fetchData();
+   }, [route.params]);
+
+   const onNew = async () => {
+      try {
+         let commandList = [];
+         const currentValue = await AsyncStorage.getItem('commands');
+         if (currentValue) {
+            commandList = JSON.parse(currentValue);
+         }
+         /*const Id = await AsyncStorage.getItem('numberCommands');
+         let lastId = JSON.parse(Id) + 1;
+         if (!lastId) {
+            lastId = 1;
+         }*/
+
+         let lastId = 1;
+         if (commandList.length !== 0) {
+            lastId = commandList[commandList.length - 1].id + 1;
+         }
+
+         const newElement = {
+            id: lastId,
+            client: '',
+            notes: '',
+            products: [],
+            subtotal: 0,
+         };
+
+         commandList.push(newElement);
+         setList(commandList);
+         AsyncStorage.setItem('commands', JSON.stringify(commandList));
+         //AsyncStorage.setItem('numberCommands', JSON.stringify(lastId));
+         navigation.navigate('CommandDetails', {id: lastId});
+      } catch (e) {
+         console.error(e);
+      }
+   };
+
+   const deleteData = async () => {
+      try {
+         await AsyncStorage.removeItem('commands');
+         await AsyncStorage.removeItem('numberCommands');
+         setList([]);
+      } catch (e) {
+         console.error(e);
+      }
+   };
+
+   const getData = async () => {
+      try {
+         const jsonValue = await AsyncStorage.getItem('commands');
+         //const jsonValue = await AsyncStorage.getItem('numberCommands');
+         console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+      } catch (e) {
+         console.error(e);
+      }
+   };
+
+   return (
+      <View style={styles.container}>
+         <View style={styles.commandList}>
+            <CommandList navigation={navigation} list={list} />
+         </View>
+         <View style={styles.new}>
+            <TouchableOpacity onPress={onNew}>
+               <CustomButton type={1} />
+            </TouchableOpacity>
+         </View>
+      </View>
+   );
 };
 
-const styles= StyleSheet.create({
-    container:{
-        backgroundColor: colors.background,
-        width: '100%',
-        flex:1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        //height: '90%',
-    },
-    commandList:{
-        //flex:1,
-        width: '100%',
-        //height: '90%',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    new:{
-        //flex:0,
-        width: '100%',
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+/*              
+<TouchableOpacity onPress={() =>deleteData()} >
+   <CustomButton type={2}/>
+</TouchableOpacity>
+<TouchableOpacity onPress={() => getData()} >
+    <CustomButton type={3}/>
+</TouchableOpacity> 
+*/
+
+const styles = StyleSheet.create({
+   container: {
+      backgroundColor: colors.background,
+      width: '100%',
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      //height: '90%',
+   },
+   commandList: {
+      //flex:1,
+      width: '100%',
+      //height: '90%',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+   },
+   new: {
+      //flex:0,
+      width: '100%',
+      height: 80,
+      justifyContent: 'center',
+      alignItems: 'center',
+   },
 });
 
 export default Commands;
-
-//Opción donde se le pasa navigation como prop a CustomButton
-//<CustomButton navigation={navigation} type={1}/>
