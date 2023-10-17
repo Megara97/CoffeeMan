@@ -13,7 +13,7 @@ const ProductSection = ({navigation, products}) => {
       setList(products);
    }, [products]);
 
-   console.log('Productos:', products);
+   //console.log('Productos:', products);
    return (
       <View style={styles.container}>
          <Search

@@ -29,10 +29,15 @@ const Commands = ({navigation, route}) => {
          if (currentValue) {
             commandList = JSON.parse(currentValue);
          }
-         const Id = await AsyncStorage.getItem('numberCommands');
+         /*const Id = await AsyncStorage.getItem('numberCommands');
          let lastId = JSON.parse(Id) + 1;
          if (!lastId) {
             lastId = 1;
+         }*/
+
+         let lastId = 1;
+         if (commandList.length !== 0) {
+            lastId = commandList[commandList.length - 1].id + 1;
          }
 
          const newElement = {
@@ -46,7 +51,7 @@ const Commands = ({navigation, route}) => {
          commandList.push(newElement);
          setList(commandList);
          AsyncStorage.setItem('commands', JSON.stringify(commandList));
-         AsyncStorage.setItem('numberCommands', JSON.stringify(lastId + 1));
+         //AsyncStorage.setItem('numberCommands', JSON.stringify(lastId));
          navigation.navigate('CommandDetails', {id: lastId});
       } catch (e) {
          console.error(e);

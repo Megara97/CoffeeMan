@@ -29,7 +29,7 @@ const BottomCommand = ({navigation, id, numberProducts, subtotal}) => {
             </View>
             <View style={styles.buttonsMenu}>
                <TouchableOpacity
-                  onPress={() => navigation.push('Products', {id: id})}>
+                  onPress={() => navigation.navigate('Products', {id: id})}>
                   <CustomButton type={1} />
                </TouchableOpacity>
                <TouchableOpacity

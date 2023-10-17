@@ -13,7 +13,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Item = ({navigation, id, number, product, subtotal, setChange}) => {
    const [quantity, setQuantity] = useState(number);
-   let total = quantity * subtotal;
+
+   useEffect(() => {
+      setQuantity(number);
+   }, [number]);
+
+   const calcTotal = () => {
+      let total = 0;
+      total = quantity * subtotal;
+      total = total.toFixed(2);
+      return total;
+   };
 
    const onLess = async () => {
       try {
@@ -41,7 +51,7 @@ const Item = ({navigation, id, number, product, subtotal, setChange}) => {
                      productInfo => productInfo.product === product,
                   );
                   commands[index].subtotal -= productInfo.price;
-                  console.log(commands[index]);
+                  //console.log(commands[index]);
                }
                const jsonValue = JSON.stringify(commands);
                await AsyncStorage.setItem('commands', jsonValue);
@@ -76,7 +86,7 @@ const Item = ({navigation, id, number, product, subtotal, setChange}) => {
                      productInfo => productInfo.product === product,
                   );
                   commands[index].subtotal += productInfo.price;
-                  console.log(commands[index]);
+                  //console.log(commands[index]);
                }
                const jsonValue = JSON.stringify(commands);
                await AsyncStorage.setItem('commands', jsonValue);
@@ -91,7 +101,6 @@ const Item = ({navigation, id, number, product, subtotal, setChange}) => {
 
    const onNumber = async value => {
       try {
-         console.log(value);
          if (value === '') {
             value = quantity;
          }
@@ -120,7 +129,7 @@ const Item = ({navigation, id, number, product, subtotal, setChange}) => {
                   );
                   commands[index].subtotal +=
                      (parseInt(value) - before) * productInfo.price;
-                  console.log(commands[index]);
+                  //console.log(commands[index]);
                }
                const jsonValue = JSON.stringify(commands);
                await AsyncStorage.setItem('commands', jsonValue);
@@ -152,55 +161,14 @@ const Item = ({navigation, id, number, product, subtotal, setChange}) => {
          <Text style={[styles.text, {width: '40%'}]}> {product} </Text>
          <Text style={styles.textlight}> $ {subtotal.toFixed(2)} </Text>
          <Text style={[styles.text, {width: '20%', textAlign: 'right'}]}>
-            {' '}
-            $ {total.toFixed(2)}{' '}
+            $ {calcTotal()}
          </Text>
       </View>
    );
 };
 
 const DetailsList = ({navigation, id, change, setChange, list}) => {
-   //const [list, setList] = useState([]);
-   //const [change, setChange] = useState('');
-   /*const fetchData = async () => {
-      try {
-         const currentValue = await AsyncStorage.getItem('commands');
-         const currentProducts = await AsyncStorage.getItem('products');
-
-         let productList = [];
-         if (currentProducts) {
-            productList = JSON.parse(currentProducts);
-         }
-
-         if (currentValue) {
-            let commands = JSON.parse(currentValue);
-            const index = commands.findIndex(element => element.id === id);
-            if (index !== -1) {
-               commands[index].products.forEach(productInOrder => {
-                  const productInfo = productList.find(
-                     productInfo =>
-                        productInfo.product === productInOrder.product,
-                  );
-                  if (productInfo) {
-                     productInOrder.price = productInfo.price;
-                  }
-               });
-               setList(commands[index].products);
-            }
-         }
-      } catch (error) {
-         console.error(error);
-      }
-   };
-
-   useEffect(() => {
-      fetchData();
-   }, [change]);
-   
-    */
-
-   console.log('Productos', list);
-
+   //console.log('Productos de la comanda:', list);
    return (
       <View style={styles.Container}>
          <View style={styles.listContainer}>

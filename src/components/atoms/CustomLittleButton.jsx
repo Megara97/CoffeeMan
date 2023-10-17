@@ -65,8 +65,8 @@ const CustomLittleButton = props => {
                   ${' '}
                </Text>
                <TextInput
-                  value={props.value}
-                  onChangeText={props.setValue}
+                  placeholder={props.value} //value
+                  onEndEditing={e => props.setValue(e.nativeEvent.text)} //onChangeText={props.setValue}
                   onFocus={() => props.onSelect(props.index)}
                   keyboardType="numeric"
                   style={[

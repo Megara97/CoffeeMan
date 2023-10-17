@@ -15,8 +15,6 @@ const CommandDetails = ({navigation, route}) => {
    const [change, setChange] = useState('');
    const [list, setList] = useState([]);
 
-   console.log(route.params);
-
    useEffect(() => {
       const fetchData = async () => {
          try {

@@ -57,11 +57,6 @@ const Products = ({navigation, route}) => {
       } catch (e) {
          console.error(e);
       }
-      /* navigation.navigate('CommandDetails', {
-         id: route.params.id,
-         change: 'Add' + selectedItems,
-      });*/
-      //navigation.push('CommandDetails', {id: route.params.id});
       navigation.navigate('CommandDetails', {id: route.params.id});
    };
 

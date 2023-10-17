@@ -28,17 +28,17 @@ const Menu = ({navigation, route}) => {
          await AsyncStorage.removeItem('numberProducts');
          setList([]);
       } catch (e) {
-         console.log(e);
+         console.error(e);
       }
    };
 
    const getData = async () => {
       try {
-         //const jsonValue = await AsyncStorage.getItem('products');
-         const jsonValue = await AsyncStorage.getItem('numberProducts');
+         const jsonValue = await AsyncStorage.getItem('products');
+         //const jsonValue = await AsyncStorage.getItem('numberProducts');
          console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
       } catch (e) {
-         console.log(e);
+         console.error(e);
       }
    };
 

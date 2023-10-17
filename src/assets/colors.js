@@ -6,7 +6,7 @@ const lightColors = {
    gray1: '#d9d9d9',
    gray2: '#f7f7f7',
    mediumGray: '#888888',
-   color: '#934ED8',
+   color: '#ca9ee6', //#934ED8
 };
 
 const darkColors = {
@@ -15,7 +15,7 @@ const darkColors = {
    gray1: '#262626',
    gray2: '#181818',
    mediumGray: '#777777',
-   color: '#934ED8',
+   color: '#ca9ee6',
 };
 
 /*

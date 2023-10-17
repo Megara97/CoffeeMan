@@ -35,24 +35,29 @@ const NewProduct = ({navigation}) => {
          if (currentValue) {
             productList = JSON.parse(currentValue);
          }
-         const Id = await AsyncStorage.getItem('numberProducts');
+         /*const Id = await AsyncStorage.getItem('numberProducts');
          let lastId = JSON.parse(Id) + 1;
          if (!lastId) {
             lastId = 1;
+         }*/
+
+         let lastId = 1;
+         if (productList.length !== 0) {
+            lastId = productList[productList.length - 1].id + 1;
          }
 
          const newElement = {
             id: lastId,
             product: product,
-            price: parseFloat(price),
+            price: price === '' ? 0 : parseFloat(price),
          };
 
          productList.push(newElement);
          await AsyncStorage.setItem('products', JSON.stringify(productList));
-         await AsyncStorage.setItem(
+         /*await AsyncStorage.setItem(
             'numberProducts',
-            JSON.stringify(lastId + 1),
-         );
+            JSON.stringify(lastId),
+         );*/
       } catch (e) {
          console.error(e);
       }

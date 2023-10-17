@@ -71,35 +71,42 @@ const PayCommand = ({navigation, id}) => {
    const [tip, setTip] = useState(0);
    const [method, setMethod] = useState(0);
    const [tipC, setTipC] = useState('0');
-   let propina;
-   switch (tip) {
-      case 0:
-         propina = 0;
-         break;
-      case 1:
-         propina = subtotal * 0.05;
-         break;
-      case 2:
-         propina = subtotal * 0.1;
-         break;
-      case 3:
-         propina = subtotal * 0.15;
-         break;
-      case 4:
-         propina = subtotal * 0.2;
-         break;
-      case 5:
-         propina = tipC !== '' ? parseFloat(tipC) : 0;
-         break;
-      default:
-         propina = 0;
-         break;
-   }
-   let total = subtotal + propina;
+   let propina = 0;
+   let total = 0;
 
-   /*useEffect(() => {
-        let total= subtotal + propina;
-    }, [tip,tipC);*/
+   const calcPropina = () => {
+      switch (tip) {
+         case 0:
+            propina = 0;
+            break;
+         case 1:
+            propina = subtotal * 0.05;
+            break;
+         case 2:
+            propina = subtotal * 0.1;
+            break;
+         case 3:
+            propina = subtotal * 0.15;
+            break;
+         case 4:
+            propina = subtotal * 0.2;
+            break;
+         case 5:
+            propina = tipC !== '' ? parseFloat(tipC) : 0;
+            break;
+         default:
+            propina = 0;
+            break;
+      }
+      propina = propina.toFixed(2);
+      return propina;
+   };
+
+   const calcTotal = () => {
+      total = subtotal + parseFloat(propina);
+      total = total.toFixed(2);
+      return total;
+   };
 
    return (
       <Shadow {...ShadowPresets.general}>
@@ -113,11 +120,11 @@ const PayCommand = ({navigation, id}) => {
             </View>
             <View style={styles.productsMenu}>
                <Text style={styles.content}> Propina </Text>
-               <Text style={styles.content}> $ {propina.toFixed(2)} </Text>
+               <Text style={styles.content}> $ {calcPropina()} </Text>
             </View>
             <View style={styles.productsMenu}>
                <Text style={styles.bold}> Total </Text>
-               <Text style={styles.bold}> $ {total.toFixed(2)} </Text>
+               <Text style={styles.bold}> $ {calcTotal()} </Text>
             </View>
             <View style={styles.buttonsGroups}>
                <ButtonGroup
