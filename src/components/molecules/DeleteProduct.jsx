@@ -1,13 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
 import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 
-const DeleteProduct = ({navigation, id}) => {
+const DeleteProduct = ({
+   navigation,
+   id,
+   setChange,
+   visible,
+   setVisible,
+   setInfoVisible,
+}) => {
    const colors = useTheme().colors;
    const styles = StyleSheet.create({
+      containerTotal: {
+         backgroundColor: colors.typography + '70',
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
       WarningContainer: {
          width: '80%',
          height: 170,
@@ -59,7 +74,12 @@ const DeleteProduct = ({navigation, id}) => {
          }
       };
       fetchData();
-   }, []);
+   }, [id]);
+
+   const closeModals = () => {
+      setVisible(!visible);
+      setInfoVisible(!visible);
+   };
 
    const onDelete = async () => {
       try {
@@ -76,26 +96,42 @@ const DeleteProduct = ({navigation, id}) => {
       } catch (e) {
          console.error(e);
       }
-      navigation.navigate('Menu', {change: 'Delete' + product});
+      closeModals();
+      setChange('Delete' + product);
+      //navigation.navigate('Menu', {change: 'Delete' + product});
    };
 
    return (
-      <View style={styles.WarningContainer}>
-         <Text style={styles.message}>
-            {' '}
-            ¿Estas seguro de eliminar{' '}
-            <Text style={styles.boldText}>"{product}"</Text>?
-         </Text>
-         <View style={styles.buttons}>
-            <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
-               <CustomButton type={6} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onDelete}>
-               <CustomButton type={5} />
-            </TouchableOpacity>
+      <Modal
+         animationType="slide"
+         transparent={true}
+         visible={visible}
+         onRequestClose={() => {
+            setVisible(!visible);
+         }}>
+         <View style={styles.containerTotal}>
+            <View style={styles.WarningContainer}>
+               <Text style={styles.message}>
+                  {' '}
+                  ¿Estas seguro de eliminar{' '}
+                  <Text style={styles.boldText}>"{product}"</Text>?
+               </Text>
+               <View style={styles.buttons}>
+                  <TouchableOpacity onPress={closeModals}>
+                     <CustomButton type={6} />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={onDelete}>
+                     <CustomButton type={5} />
+                  </TouchableOpacity>
+               </View>
+            </View>
          </View>
-      </View>
+      </Modal>
    );
 };
+
+/*               <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
+                  <CustomButton type={6} />
+               </TouchableOpacity>*/
 
 export default DeleteProduct;

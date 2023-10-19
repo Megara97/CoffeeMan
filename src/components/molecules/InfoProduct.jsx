@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+   Modal,
    StyleSheet,
    Text,
    TextInput,
@@ -8,25 +9,28 @@ import {
 } from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
 import colors from '../../assets/colors';
-import {Shadow} from 'react-native-shadow-2';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import DeleteProduct from './DeleteProduct';
 
-const InfoProduct = ({navigation, id}) => {
+const InfoProduct = ({
+   navigation,
+   id,
+   setChange,
+   visible,
+   setVisible,
+   setDeleteVisible,
+}) => {
    const colors = useTheme().colors;
-   const ShadowPresets = {
-      general: {
-         distance: 10,
-         startColor: colors.typography + '30',
-         endColor: colors.background,
-         style: {
-            borderTopStartRadius: 17,
-            borderTopRightRadius: 17,
-            flexDirection: 'row',
-         },
-      },
-   };
    const styles = StyleSheet.create({
+      containerTotal: {
+         backgroundColor: colors.typography + '70',
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+      },
       container: {
          width: '100%', //80
          height: 180,
@@ -107,7 +111,7 @@ const InfoProduct = ({navigation, id}) => {
          }
       };
       fetchData();
-   }, []);
+   }, [id]);
 
    const onSave = async () => {
       try {
@@ -125,37 +129,48 @@ const InfoProduct = ({navigation, id}) => {
       } catch (e) {
          console.error(e);
       }
-      navigation.navigate('Menu', {change: 'Edit' + product + price});
+      setVisible(!visible);
+      setChange('Edit' + product + price);
+      //navigation.navigate('Menu', {change: 'Edit' + product + price});
       //navigation.push('Menu');
    };
 
    return (
-      <Shadow {...ShadowPresets.general}>
-         <View style={styles.container}>
-            <View style={styles.info}>
-               <Text style={styles.textName}> {product} </Text>
-               <View style={styles.price}>
-                  <Text style={styles.textPrice}> Precio $ </Text>
-                  <TextInput
-                     style={styles.input}
-                     onChangeText={setPrice}
-                     value={price}
-                     keyboardType="numeric"
-                  />
+      <Modal
+         animationType="slide"
+         transparent={true}
+         visible={visible}
+         onRequestClose={() => {
+            setVisible(!visible);
+         }}>
+         <View style={styles.containerTotal}>
+            <View style={styles.container}>
+               <View style={styles.info}>
+                  <Text style={styles.textName}> {product} </Text>
+                  <View style={styles.price}>
+                     <Text style={styles.textPrice}> Precio $ </Text>
+                     <TextInput
+                        style={styles.input}
+                        onChangeText={setPrice}
+                        value={price}
+                        keyboardType="numeric"
+                     />
+                  </View>
+               </View>
+               <View style={styles.buttons}>
+                  <TouchableOpacity onPress={onSave}>
+                     <CustomButton type={3} />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => setDeleteVisible(true)}>
+                     <CustomButton type={4} />
+                  </TouchableOpacity>
                </View>
             </View>
-            <View style={styles.buttons}>
-               <TouchableOpacity onPress={onSave}>
-                  <CustomButton type={3} />
-               </TouchableOpacity>
-               <TouchableOpacity
-                  onPress={() => navigation.navigate('Delete', {id: id})}>
-                  <CustomButton type={4} />
-               </TouchableOpacity>
-            </View>
          </View>
-      </Shadow>
+      </Modal>
    );
 };
+
+//<TouchableOpacity onPress={() => navigation.navigate('Delete', {id: id})}>
 
 export default InfoProduct;

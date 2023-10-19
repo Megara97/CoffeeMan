@@ -1,10 +1,13 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import colors from '../assets/colors';
 import ProductSection from '../components/organisms/ProductSection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import NewProduct from '../components/molecules/NewProduct';
+import InfoProduct from '../components/molecules/InfoProduct';
+import DeleteProduct from '../components/molecules/DeleteProduct';
 
 const Menu = ({navigation, route}) => {
    const colors = useTheme().colors;
@@ -30,6 +33,7 @@ const Menu = ({navigation, route}) => {
       },
    });
 
+   const [change, setChange] = useState('');
    const [list, setList] = useState([]);
    const fetchData = async () => {
       try {
@@ -44,7 +48,7 @@ const Menu = ({navigation, route}) => {
 
    useEffect(() => {
       fetchData();
-   }, [route.params]); //route.params.change
+   }, [change, route.params]); //route.params.change
 
    const deleteData = async () => {
       try {
@@ -66,20 +70,56 @@ const Menu = ({navigation, route}) => {
       }
    };
 
+   const [newVisible, setNewVisible] = useState(false);
+   const [infoVisible, setInfoVisible] = useState(false);
+   const [deleteVisible, setDeleteVisible] = useState(false);
+   const [id, setId] = useState(0);
    return (
-      <View style={styles.container}>
-         <View style={styles.commandList}>
-            <ProductSection navigation={navigation} products={list} />
+      <>
+         <View style={styles.container}>
+            <View style={styles.commandList}>
+               <ProductSection
+                  navigation={navigation}
+                  setVisible={setInfoVisible}
+                  setId={setId}
+                  products={list}
+               />
+            </View>
+            <View style={styles.new}>
+               <TouchableOpacity onPress={() => setNewVisible(true)}>
+                  <CustomButton type={1} />
+               </TouchableOpacity>
+            </View>
          </View>
-         <View style={styles.new}>
-            <TouchableOpacity onPress={() => navigation.navigate('NewMenu')}>
-               <CustomButton type={1} />
-            </TouchableOpacity>
-         </View>
-      </View>
+         <NewProduct
+            navigation={navigation}
+            setChange={setChange}
+            visible={newVisible}
+            setVisible={setNewVisible}
+         />
+         <InfoProduct
+            navigation={navigation}
+            id={id}
+            setChange={setChange}
+            visible={infoVisible}
+            setVisible={setInfoVisible}
+            setDeleteVisible={setDeleteVisible}
+         />
+         <DeleteProduct
+            navigation={navigation}
+            id={id}
+            setChange={setChange}
+            visible={deleteVisible}
+            setVisible={setDeleteVisible}
+            setInfoVisible={setInfoVisible}
+         />
+      </>
    );
 };
 
+//<TouchableOpacity onPress={() => navigation.navigate('NewMenu')}>
+
+//
 /*            
             <TouchableOpacity onPress={() =>deleteData()} >
                 <CustomButton type={2}/>

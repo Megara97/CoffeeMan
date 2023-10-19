@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+   Modal,
    StyleSheet,
    Text,
    TextInput,
@@ -8,25 +9,20 @@ import {
 } from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
 import colors from '../../assets/colors';
-import {Shadow} from 'react-native-shadow-2';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 
-const NewProduct = ({navigation}) => {
+const NewProduct = ({navigation, setChange, visible, setVisible}) => {
    const colors = useTheme().colors;
-   const ShadowPresets = {
-      general: {
-         distance: 10,
-         startColor: colors.typography + '30',
-         endColor: colors.background,
-         style: {
-            borderTopStartRadius: 17,
-            borderTopRightRadius: 17,
-            flexDirection: 'row',
-         },
-      },
-   };
    const styles = StyleSheet.create({
+      containerTotal: {
+         backgroundColor: colors.typography + '70',
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+      },
       container: {
          width: '100%', //80
          height: 180,
@@ -109,39 +105,52 @@ const NewProduct = ({navigation}) => {
       } catch (e) {
          console.error(e);
       }
-      navigation.navigate('Menu', {change: 'New' + product + price});
+      setVisible(!visible);
+      setChange('New' + product + price);
+      setPrice('');
+      setProduct('');
+
+      //navigation.navigate('Menu', {change: 'New' + product + price});
    };
 
    return (
-      <Shadow {...ShadowPresets.general}>
-         <View style={styles.container}>
-            <View style={styles.info}>
-               <TextInput
-                  style={[styles.input, {fontSize: 15, width: 250}]}
-                  onChangeText={setProduct}
-                  value={product}
-                  placeholder="Producto"
-                  placeholderTextColor={colors.mediumGray}
-               />
-               <View style={styles.price}>
-                  <Text style={styles.textPrice}> Precio $ </Text>
+      <Modal
+         animationType="slide"
+         transparent={true}
+         visible={visible}
+         onRequestClose={() => {
+            setVisible(!visible);
+         }}>
+         <View style={styles.containerTotal}>
+            <View style={styles.container}>
+               <View style={styles.info}>
                   <TextInput
-                     style={[styles.input, {fontSize: 13, width: 60}]}
-                     onChangeText={setPrice}
-                     value={price}
-                     keyboardType="numeric"
-                     placeholder="0.00"
+                     style={[styles.input, {fontSize: 15, width: 250}]}
+                     onChangeText={setProduct}
+                     value={product}
+                     placeholder="Producto"
                      placeholderTextColor={colors.mediumGray}
                   />
+                  <View style={styles.price}>
+                     <Text style={styles.textPrice}> Precio $ </Text>
+                     <TextInput
+                        style={[styles.input, {fontSize: 13, width: 60}]}
+                        onChangeText={setPrice}
+                        value={price}
+                        keyboardType="numeric"
+                        placeholder="0.00"
+                        placeholderTextColor={colors.mediumGray}
+                     />
+                  </View>
+               </View>
+               <View style={styles.buttons}>
+                  <TouchableOpacity onPress={onNew}>
+                     <CustomButton type={3} />
+                  </TouchableOpacity>
                </View>
             </View>
-            <View style={styles.buttons}>
-               <TouchableOpacity onPress={onNew}>
-                  <CustomButton type={3} />
-               </TouchableOpacity>
-            </View>
          </View>
-      </Shadow>
+      </Modal>
    );
 };
 

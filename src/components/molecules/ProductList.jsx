@@ -3,7 +3,7 @@ import colors from '../../assets/colors';
 import {Shadow} from 'react-native-shadow-2';
 import {useTheme} from '@react-navigation/native';
 
-const Item = ({navigation, id, product, price}) => {
+const Item = ({navigation, id, product, price, setId, setVisible}) => {
    const colors = useTheme().colors;
    const ShadowPresets = {
       general: {
@@ -42,9 +42,13 @@ const Item = ({navigation, id, product, price}) => {
       },
    });
 
+   const callInfoProduct = () => {
+      setVisible(true);
+      setId(id);
+   };
+
    return (
-      <TouchableOpacity
-         onPress={() => navigation.navigate('InfoMenu', {id: id})}>
+      <TouchableOpacity onPress={callInfoProduct}>
          <Shadow {...ShadowPresets.general}>
             <View style={styles.item}>
                <Text style={styles.product}> {product} </Text>
@@ -58,8 +62,9 @@ const Item = ({navigation, id, product, price}) => {
    );
 };
 //{price !== '' ? `$ ${parseFloat(price).toFixed(2)}` : null}
+//<TouchableOpacity onPress={() => navigation.navigate('InfoMenu', {id: id})}>
 
-const ProductList = ({navigation, list}) => {
+const ProductList = ({navigation, setVisible, setId, list}) => {
    const colors = useTheme().colors;
    const styles = StyleSheet.create({
       listContainer: {
@@ -81,6 +86,8 @@ const ProductList = ({navigation, list}) => {
                   id={item.id}
                   product={item.product}
                   price={item.price}
+                  setId={setId}
+                  setVisible={setVisible}
                />
             )}
             keyExtractor={item => item.id}

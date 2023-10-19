@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import Search from '../atoms/Search';
 import ProductList from '../molecules/ProductList';
 
-const ProductSection = ({navigation, setVisible, products}) => {
+const ProductSection = ({navigation, setVisible, setId, products}) => {
    const [list, setList] = useState(products); //lista con cambios
    const [defaultList, setDefaultList] = useState([]); //lista original
    const [text, setText] = useState(''); //palabra para buscar
@@ -22,7 +22,12 @@ const ProductSection = ({navigation, setVisible, products}) => {
             data={defaultList}
             _setDataSort={setList}
          />
-         <ProductList navigation={navigation} list={list} />
+         <ProductList
+            navigation={navigation}
+            setVisible={setVisible}
+            setId={setId}
+            list={list}
+         />
       </View>
    );
 };

@@ -1,23 +1,11 @@
-import {
-   StyleSheet,
-   View,
-   Text,
-   TouchableOpacity,
-   useColorScheme,
-   Modal,
-} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Modal} from 'react-native';
 //import colors from '../../assets/colors';
-//import Theme from '../../assets/theme';
 import Logo from '../atoms/Logo';
 import {useTheme} from '@react-navigation/native';
-import {useState} from 'react';
 import imageLogo from '../../assets/images/Calcifer.png';
 
 const SideMenu = ({navigation, modalVisible, setModalVisible}) => {
    const colors = useTheme().colors;
-   //const theme = useColorScheme();
-   //const colors = theme === 'dark' ? Theme.dark.colors : Theme.light.colors;
-
    const styles = StyleSheet.create({
       side: {
          //flex: 1,
@@ -66,8 +54,10 @@ const SideMenu = ({navigation, modalVisible, setModalVisible}) => {
       <Modal
          animationType="slide"
          transparent={true}
-         visible={modalVisible} //modalVisible
-         onRequestClose={setModalVisible(false)}>
+         visible={modalVisible}
+         onRequestClose={() => {
+            setModalVisible(!modalVisible);
+         }}>
          <View style={styles.side}>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
                <View style={styles.circle}>
