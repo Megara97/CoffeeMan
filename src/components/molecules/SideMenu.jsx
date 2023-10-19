@@ -1,8 +1,40 @@
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import colors from '../../assets/colors';
 import Logo from '../atoms/Logo';
+import {useTheme} from '@react-navigation/native';
 
 const SideMenu = ({navigation}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      side: {
+         width: '60%',
+         height: '100%',
+         backgroundColor: colors.color,
+         flexDirection: 'column',
+         justifyContent: 'flex-start',
+      },
+      logo: {
+         width: '50%',
+         flexDirection: 'row',
+         justifyContent: 'center',
+      },
+      sections: {
+         width: '100%',
+         flexDirection: 'column',
+         alignItems: 'flex-end',
+         justifyContent: 'flex-start',
+         paddingVertical: 30,
+         paddingHorizontal: 10,
+      },
+      title: {
+         color: colors.background,
+         fontSize: 15,
+         fontFamily: 'Imprima-Regular',
+         textAlign: 'left',
+         paddingVertical: 7,
+      },
+   });
+
    return (
       <View style={styles.side}>
          <View style={styles.logo}>
@@ -22,35 +54,5 @@ const SideMenu = ({navigation}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   side: {
-      width: '60%',
-      height: '100%',
-      backgroundColor: colors.color,
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-   },
-   logo: {
-      width: '50%',
-      flexDirection: 'row',
-      justifyContent: 'center',
-   },
-   sections: {
-      width: '100%',
-      flexDirection: 'column',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-start',
-      paddingVertical: 30,
-      paddingHorizontal: 10,
-   },
-   title: {
-      color: colors.background,
-      fontSize: 15,
-      fontFamily: 'Imprima-Regular',
-      textAlign: 'left',
-      paddingVertical: 7,
-   },
-});
 
 export default SideMenu;

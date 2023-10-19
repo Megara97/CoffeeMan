@@ -1,11 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import PayCommand from '../components/molecules/PayCommand';
+import PayCommand from '../components/organisms/PayCommand';
 import colors from '../assets/colors';
 import DetailsList from '../components/molecules/DetailsListSimple';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTheme} from '@react-navigation/native';
 
 const Pay = ({navigation, route}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      container: {
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         paddingTop: 10,
+         backgroundColor: colors.background,
+      },
+      containerTop: {
+         width: '100%',
+         flexDirection: 'column',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      title: {
+         fontSize: 15,
+         color: colors.typography,
+         fontFamily: 'Jaldi-Regular',
+      },
+   });
+
    const [title, setTitle] = useState('');
    useEffect(() => {
       const fetchData = async () => {
@@ -42,28 +67,5 @@ const Pay = ({navigation, route}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   container: {
-      width: '100%',
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingTop: 10,
-      backgroundColor: colors.background,
-   },
-   containerTop: {
-      width: '100%',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-   },
-   title: {
-      fontSize: 15,
-      color: colors.typography,
-      fontFamily: 'Jaldi-Regular',
-   },
-});
 
 export default Pay;

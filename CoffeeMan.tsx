@@ -13,14 +13,19 @@ import {getHeaderTitle} from '@react-navigation/elements';
 import Delete from './src/screens/Delete';
 import InfoMenu from './src/screens/InfoMenu';
 import NewMenu from './src/screens/NewMenu';
+import {useColorScheme} from 'react-native';
+import Theme from './src/assets/theme';
 
 const Stack = createNativeStackNavigator();
 
 const CoffeeMan = () => {
+   const theme = useColorScheme();
+
    return (
-      <NavigationContainer>
+      <NavigationContainer theme={theme === 'dark' ? Theme.dark : Theme.light}>
          <Stack.Navigator
-            initialRouteName="Home"
+            //initialRouteName="Home"
+            initialRouteName="Commands"
             screenOptions={{
                header: ({navigation, route, options}) => {
                   const title = getHeaderTitle(options, route.name);

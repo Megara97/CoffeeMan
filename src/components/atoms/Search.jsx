@@ -1,9 +1,32 @@
 import {TextInput, View, StyleSheet} from 'react-native';
 import {useEffect} from 'react';
-import SearchIcon from '../../assets/icons/busqueda.svg';
+import SearchIcon from '../../assets/icons/search.svg';
 import colors from '../../assets/colors';
+import {useTheme} from '@react-navigation/native';
 
 const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      listSearchContainer: {
+         width: '70%',
+         height: 30,
+         backgroundColor: colors.gray2,
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         borderRadius: 7,
+         paddingHorizontal: 20,
+      },
+      input: {
+         width: '90%',
+         paddingVertical: 0,
+         height: '100%',
+         fontFamily: 'Jaldi-Regular',
+         fontSize: 13,
+         color: colors.typography,
+      },
+   });
+
    const sortData = () => {
       let listFilter = []; //Lista donde se guardan las coincidencias
       data.forEach(e => {
@@ -38,26 +61,5 @@ const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   listSearchContainer: {
-      width: '70%',
-      height: 30,
-      backgroundColor: colors.gray2,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      borderRadius: 7,
-      paddingHorizontal: 20,
-   },
-   input: {
-      width: '90%',
-      paddingVertical: 0,
-      height: '100%',
-      fontFamily: 'Jaldi-Regular',
-      fontSize: 13,
-      color: colors.typography,
-   },
-});
 
 export default Search;

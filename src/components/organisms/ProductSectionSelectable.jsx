@@ -1,19 +1,30 @@
 import {StyleSheet, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import Search from '../atoms/Search';
-import ProductList from '../atoms/ProductList';
+import ProductListSelectable from '../molecules/ProductListSelectable';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ProductSection = ({navigation, products}) => {
-   const [list, setList] = useState(products); //lista con cambios
+const ProductSection = ({navigation, onSelect, id}) => {
+   const [list, setList] = useState([]); //lista con cambios
    const [defaultList, setDefaultList] = useState([]); //lista original
    const [text, setText] = useState(''); //palabra para buscar
 
-   useEffect(() => {
-      setDefaultList(products);
-      setList(products);
-   }, [products]);
+   const fetchData = async () => {
+      try {
+         const storedList = await AsyncStorage.getItem('products');
+         if (storedList) {
+            setList(JSON.parse(storedList));
+            setDefaultList(JSON.parse(storedList));
+         }
+      } catch (error) {
+         console.error(error);
+      }
+   };
 
-   //console.log('Productos:', products);
+   useEffect(() => {
+      fetchData();
+   }, []);
+
    return (
       <View style={styles.container}>
          <Search
@@ -22,7 +33,11 @@ const ProductSection = ({navigation, products}) => {
             data={defaultList}
             _setDataSort={setList}
          />
-         <ProductList navigation={navigation} list={list} />
+         <ProductListSelectable
+            navigation={navigation}
+            list={list}
+            onSelect={onSelect}
+         />
       </View>
    );
 };

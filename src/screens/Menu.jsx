@@ -1,11 +1,35 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import CustomButton from '../components/atoms/CustomButton';
+import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import colors from '../assets/colors';
-import ProductSection from '../components/molecules/ProductSection';
+import ProductSection from '../components/organisms/ProductSection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTheme} from '@react-navigation/native';
 
 const Menu = ({navigation, route}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      container: {
+         backgroundColor: colors.background,
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+      },
+      commandList: {
+         width: '100%',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      new: {
+         width: '100%',
+         height: 80,
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+   });
+
    const [list, setList] = useState([]);
    const fetchData = async () => {
       try {
@@ -64,27 +88,5 @@ const Menu = ({navigation, route}) => {
                 <CustomButton type={3}/>
             </TouchableOpacity>
 */
-
-const styles = StyleSheet.create({
-   container: {
-      backgroundColor: colors.background,
-      width: '100%',
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-   },
-   commandList: {
-      width: '100%',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-   },
-   new: {
-      width: '100%',
-      height: 80,
-      justifyContent: 'center',
-      alignItems: 'center',
-   },
-});
 
 export default Menu;

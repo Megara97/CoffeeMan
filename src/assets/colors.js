@@ -1,12 +1,36 @@
 import {Appearance} from 'react-native';
+import {variants} from '@catppuccin/palette';
 
-const lightColors = {
+const lFlavor = variants.latte;
+const dFlavor = variants.mocha; //frappe o macchiato
+
+const light = {
+   background: lFlavor.base.hex,
+   typography: lFlavor.text.hex,
+   gray1: lFlavor.surface0.hex, //crust, mantle, surface(0,1,2)
+   gray2: lFlavor.mantle.hex, //crust, mantle, surface(0,1,2)
+   mediumGray: lFlavor.overlay1.hex,
+   color: lFlavor.lavender.hex, //mauve, lavender, overlay2
+};
+
+const dark = {
+   background: dFlavor.base.hex,
+   typography: dFlavor.text.hex,
+   gray1: dFlavor.surface0.hex, //crust, mantle, surface(0,1,2)
+   gray2: dFlavor.mantle.hex, //crust, mantle, surface(0,1,2)
+   mediumGray: dFlavor.overlay1.hex,
+   color: dFlavor.lavender.hex, //lavender
+};
+
+//https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
+
+/*const lightColors = {
    background: '#fff',
    typography: '#000000',
    gray1: '#d9d9d9',
    gray2: '#f7f7f7',
    mediumGray: '#888888',
-   color: '#ca9ee6', //#934ED8
+   color: '#ca9ee6',
 };
 
 const darkColors = {
@@ -16,7 +40,7 @@ const darkColors = {
    gray2: '#181818',
    mediumGray: '#777777',
    color: '#ca9ee6',
-};
+};*/
 
 /*
    "mocha": (
@@ -131,10 +155,9 @@ const darkColors = {
    "mantle": #e6e9ef,
    "base": #eff1f5,
  )
- //https://github.com/catppuccin/palette/blob/main/scss/_catppuccin.scss
+ https://github.com/catppuccin/palette/blob/main/scss/_catppuccin.scss
 */
 
-const colors =
-   Appearance.getColorScheme() === 'dark' ? darkColors : lightColors;
+const colors = Appearance.getColorScheme() === 'dark' ? dark : light;
 
 export default colors;

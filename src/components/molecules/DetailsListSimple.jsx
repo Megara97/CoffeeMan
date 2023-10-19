@@ -2,8 +2,51 @@ import {StyleSheet, View, Text, FlatList} from 'react-native';
 import colors from '../../assets/colors';
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTheme} from '@react-navigation/native';
 
 const Item = ({navigation, number, product, subtotal}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      item: {
+         width: '100%',
+         height: 30,
+         flexDirection: 'row',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+         paddingHorizontal: 10,
+         borderBottomColor: colors.gray1,
+         borderBottomWidth: 1,
+      },
+      quantity: {
+         width: '20%', //80,
+         height: 30,
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      input: {
+         width: 25,
+         height: 20,
+         backgroundColor: colors.background,
+         paddingVertical: 0,
+         fontFamily: 'Jaldi-Regular',
+         textAlign: 'center',
+         fontSize: 13,
+      },
+      text: {
+         fontSize: 13,
+         fontFamily: 'Jaldi-Regular',
+         color: colors.typography,
+      },
+      textlight: {
+         fontSize: 13,
+         width: '20%', //70,
+         fontFamily: 'Jaldi-Regular',
+         color: colors.mediumGray,
+         textAlign: 'right',
+      },
+   });
+
    let total = number * subtotal;
    return (
       <View style={styles.item}>
@@ -20,6 +63,25 @@ const Item = ({navigation, number, product, subtotal}) => {
 };
 
 const DetailsList = ({navigation, id}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      Container: {
+         width: '100%',
+         flexDirection: 'column',
+         alignItems: 'center',
+         justifyContent: 'center',
+         paddingVertical: 20,
+      },
+      listContainer: {
+         width: '90%',
+         flexDirection: 'column',
+         alignItems: 'center',
+         justifyContent: 'center',
+         backgroundColor: colors.gray2,
+         borderRadius: 17,
+      },
+   });
+
    const [list, setList] = useState([]);
    const fetchData = async () => {
       try {
@@ -75,61 +137,5 @@ const DetailsList = ({navigation, id}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   Container: {
-      width: '100%',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: 20,
-   },
-   listContainer: {
-      width: '90%',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: colors.gray2,
-      borderRadius: 17,
-   },
-   item: {
-      width: '100%',
-      height: 30,
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      paddingHorizontal: 10,
-      borderBottomColor: colors.gray1,
-      borderBottomWidth: 1,
-   },
-   quantity: {
-      width: '20%', //80,
-      height: 30,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-   },
-   input: {
-      width: 25,
-      height: 20,
-      backgroundColor: colors.background,
-      paddingVertical: 0,
-      fontFamily: 'Jaldi-Regular',
-      textAlign: 'center',
-      fontSize: 13,
-   },
-   text: {
-      fontSize: 13,
-      fontFamily: 'Jaldi-Regular',
-      color: colors.typography,
-   },
-   textlight: {
-      fontSize: 13,
-      width: '20%', //70,
-      fontFamily: 'Jaldi-Regular',
-      color: colors.mediumGray,
-      textAlign: 'right',
-   },
-});
 
 export default DetailsList;

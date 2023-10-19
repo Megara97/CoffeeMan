@@ -1,10 +1,44 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import CustomButton from '../atoms/CustomButton';
+import CustomButton from '../atoms/CustomButton/CustomButton';
 import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTheme} from '@react-navigation/native';
 
 const DeleteProduct = ({navigation, id}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      WarningContainer: {
+         width: '80%',
+         height: 170,
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+         backgroundColor: colors.gray2,
+         borderRadius: 7,
+      },
+      message: {
+         fontSize: 15,
+         fontFamily: 'Jaldi-Regular',
+         color: colors.typography,
+         paddingHorizontal: 20,
+         paddingVertical: 10,
+         textAlign: 'center',
+      },
+      boldText: {
+         fontFamily: 'Jaldi-Bold',
+      },
+      buttons: {
+         width: '100%',
+         //height: 150,
+         flexDirection: 'row',
+         justifyContent: 'space-evenly',
+         paddingHorizontal: 50,
+         alignItems: 'center',
+         paddingVertical: 10,
+      },
+   });
+
    const [product, setProduct] = useState('');
 
    useEffect(() => {
@@ -63,37 +97,5 @@ const DeleteProduct = ({navigation, id}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   WarningContainer: {
-      width: '80%',
-      height: 170,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colors.gray2,
-      borderRadius: 7,
-   },
-   message: {
-      fontSize: 15,
-      fontFamily: 'Jaldi-Regular',
-      color: colors.typography,
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-      textAlign: 'center',
-   },
-   boldText: {
-      fontFamily: 'Jaldi-Bold',
-   },
-   buttons: {
-      width: '100%',
-      //height: 150,
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      paddingHorizontal: 50,
-      alignItems: 'center',
-      paddingVertical: 10,
-   },
-});
 
 export default DeleteProduct;

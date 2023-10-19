@@ -1,19 +1,46 @@
 import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
 import colors from '../../assets/colors';
 import {Shadow} from 'react-native-shadow-2';
-import {useEffect, useState} from 'react';
-
-const ShadowPresets = {
-   general: {
-      distance: 3,
-      startColor: colors.typography + '15',
-      endColor: colors.background,
-      offset: [7, 10],
-   },
-};
+import {useTheme} from '@react-navigation/native';
 
 const Item = ({navigation, client, subtotal, id}) => {
    const title = client === '' ? 'Comanda ' + id : client;
+
+   const colors = useTheme().colors;
+   const ShadowPresets = {
+      general: {
+         distance: 3,
+         startColor: colors.typography + '15',
+         endColor: colors.background,
+         offset: [7, 10],
+      },
+   };
+   const styles = StyleSheet.create({
+      item: {
+         //width: '100%',
+         width: 350,
+         height: 45,
+         borderRadius: 17,
+         backgroundColor: colors.gray2,
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         //elevation: 3,
+         paddingHorizontal: 20,
+         marginVertical: 7,
+         marginHorizontal: 5,
+      },
+      client: {
+         fontSize: 15,
+         fontFamily: 'Jaldi-Regular',
+         color: colors.typography,
+      },
+      subtotal: {
+         fontSize: 13,
+         fontFamily: 'Jaldi-Regular',
+         color: colors.mediumGray,
+      },
+   });
    return (
       <TouchableOpacity
          onPress={() => navigation.navigate('CommandDetails', {id: id})}>
@@ -34,6 +61,16 @@ const Item = ({navigation, client, subtotal, id}) => {
 // Subtotal: $ {subtotal.toFixed(2)}
 
 const CommandList = ({navigation, list}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      listContainer: {
+         width: '100%', //'90%',
+         flexDirection: 'column',
+         alignItems: 'center',
+         justifyContent: 'center',
+      },
+   });
+
    //console.log(list);
    return (
       <View style={styles.listContainer}>
@@ -53,38 +90,5 @@ const CommandList = ({navigation, list}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   listContainer: {
-      width: '100%', //'90%',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-   },
-   item: {
-      //width: '100%',
-      width: 350,
-      height: 45,
-      borderRadius: 17,
-      backgroundColor: colors.gray2,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      //elevation: 3,
-      paddingHorizontal: 20,
-      marginVertical: 7,
-      marginHorizontal: 5,
-   },
-   client: {
-      fontSize: 15,
-      fontFamily: 'Jaldi-Regular',
-      color: colors.typography,
-   },
-   subtotal: {
-      fontSize: 13,
-      fontFamily: 'Jaldi-Regular',
-      color: colors.mediumGray,
-   },
-});
 
 export default CommandList;

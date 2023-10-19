@@ -1,13 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import InfoCommandEntry from '../components/molecules/InfoCommandEntry';
+import InfoCommand from '../components/atoms/InfoCommand';
 import colors from '../assets/colors';
 import BottomCommand from '../components/molecules/BottomCommand';
-import DetailsList from '../components/molecules/DetailsList';
+import DetailsList from '../components/organisms/DetailsList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomButton from '../components/atoms/CustomButton';
+import CustomButton from '../components/atoms/CustomButton/CustomButton';
+import {useTheme} from '@react-navigation/native';
 
 const CommandDetails = ({navigation, route}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      container: {
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         paddingTop: 10,
+         //height: '90%',
+         backgroundColor: colors.background,
+      },
+      containerTop: {
+         width: '90%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+      },
+   });
+
    const [name, setName] = useState('');
    const [notes, setNotes] = useState('');
    const [numberProducts, setNumber] = useState(0);
@@ -71,7 +92,7 @@ const CommandDetails = ({navigation, route}) => {
                }>
                <CustomButton type={7} />
             </TouchableOpacity>
-            <InfoCommandEntry
+            <InfoCommand
                id={route.params.id}
                name={name}
                setName={setName}
@@ -95,23 +116,5 @@ const CommandDetails = ({navigation, route}) => {
       </View>
    );
 };
-const styles = StyleSheet.create({
-   container: {
-      width: '100%',
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingTop: 10,
-      //height: '90%',
-      backgroundColor: colors.background,
-   },
-   containerTop: {
-      width: '90%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-   },
-});
 
 export default CommandDetails;

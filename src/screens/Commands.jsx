@@ -1,11 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import CustomButton from '../components/atoms/CustomButton';
+import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import colors from '../assets/colors';
 import CommandList from '../components/molecules/CommandList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTheme} from '@react-navigation/native';
 
 const Commands = ({navigation, route}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      container: {
+         backgroundColor: colors.background,
+         width: '100%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         //height: '90%',
+      },
+      commandList: {
+         //flex:1,
+         width: '100%',
+         //height: '90%',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      new: {
+         //flex:0,
+         width: '100%',
+         height: 80,
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+   });
+
    const [list, setList] = useState([]);
    const fetchData = async () => {
       try {
@@ -100,31 +128,5 @@ const Commands = ({navigation, route}) => {
     <CustomButton type={3}/>
 </TouchableOpacity> 
 */
-
-const styles = StyleSheet.create({
-   container: {
-      backgroundColor: colors.background,
-      width: '100%',
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      //height: '90%',
-   },
-   commandList: {
-      //flex:1,
-      width: '100%',
-      //height: '90%',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-   },
-   new: {
-      //flex:0,
-      width: '100%',
-      height: 80,
-      justifyContent: 'center',
-      alignItems: 'center',
-   },
-});
 
 export default Commands;

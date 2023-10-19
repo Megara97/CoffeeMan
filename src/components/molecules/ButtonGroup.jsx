@@ -1,9 +1,29 @@
 import React from 'react';
 import {Keyboard, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import CustomLittleButton from '../atoms/CustomLittleButton';
+import CustomLittleButton from '../atoms/CustomLittleButton/CustomLittleButton';
 import colors from '../../assets/colors';
+import {useTheme} from '@react-navigation/native';
 
 const ButtonGroup = ({title, buttons, selectedOption, onSelect}) => {
+   const colors = useTheme().colors;
+   const styles = StyleSheet.create({
+      buttonGroupContainer: {
+         width: '100%',
+         height: 30,
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      content: {
+         fontSize: 13,
+         fontFamily: 'Jaldi-Regular',
+         color: colors.typography,
+         paddingHorizontal: 10,
+      },
+      buttons: {
+         paddingHorizontal: 5,
+      },
+   });
    return (
       <View style={styles.buttonGroupContainer}>
          <Text style={styles.content}> {title} </Text>
@@ -26,25 +46,6 @@ const ButtonGroup = ({title, buttons, selectedOption, onSelect}) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   buttonGroupContainer: {
-      width: '100%',
-      height: 30,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-   },
-   content: {
-      fontSize: 13,
-      fontFamily: 'Jaldi-Regular',
-      color: colors.typography,
-      paddingHorizontal: 10,
-   },
-   buttons: {
-      paddingHorizontal: 5,
-   },
-});
 
 export default ButtonGroup;
 
