@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/screens/Home';
@@ -24,7 +24,6 @@ const CoffeeMan = () => {
    return (
       <NavigationContainer theme={theme === 'dark' ? Theme.dark : Theme.light}>
          <Stack.Navigator
-            //initialRouteName="Home"
             initialRouteName="Commands"
             screenOptions={{
                header: ({navigation, route, options}) => {

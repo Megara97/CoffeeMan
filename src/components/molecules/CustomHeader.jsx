@@ -1,7 +1,9 @@
-import {StyleSheet, Image, View, Text} from 'react-native';
+import {StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
 import colors from '../../assets/colors';
 import Logo from '../atoms/Logo';
 import {useTheme} from '@react-navigation/native';
+import SideMenu from './SideMenuModal';
+import {useState} from 'react';
 
 const CustomHeader = ({navigation, title, name}) => {
    const colors = useTheme().colors;
@@ -56,20 +58,33 @@ const CustomHeader = ({navigation, title, name}) => {
    } else {
       icon = imageCommands;
    }
-
+   const [modalVisible, setModalVisible] = useState(false);
    return (
-      <View style={styles.header}>
-         <View style={styles.headerColor}>
-            <View style={styles.logo}>
-               <Logo navigation={navigation} />
-            </View>
-            <View style={styles.section}>
-               <Image source={icon} style={styles.image} />
-               <Text style={styles.title}> {title}</Text>
+      <>
+         <View style={styles.header}>
+            <View style={styles.headerColor}>
+               <View style={styles.logo}>
+                  <TouchableOpacity
+                     onPress={() => setModalVisible(!modalVisible)}>
+                     <Logo navigation={navigation} />
+                  </TouchableOpacity>
+               </View>
+               <View style={styles.section}>
+                  <Image source={icon} style={styles.image} />
+                  <Text style={styles.title}> {title}</Text>
+               </View>
             </View>
          </View>
-      </View>
+         <SideMenu
+            navigation={navigation}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+         />
+      </>
    );
 };
+
+//Opciòn para que el menu de secciones sea screen y no modal
+//<TouchableOpacity onPress={() => navigation.navigate('Home')}>
 
 export default CustomHeader;

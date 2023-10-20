@@ -43,22 +43,22 @@ const CustomButton = props => {
    let Icon;
    switch (props.type) {
       case 1: //Nuevo
-         Icon = <New width={25} height={25} fill={colors.background} />;
+         Icon = <New width={20} height={20} fill={colors.background} />;
          break;
       case 2: //Pagar
-         Icon = <Pay width={25} height={25} fill={colors.background} />;
+         Icon = <Pay width={20} height={20} fill={colors.background} />;
          break;
       case 3: //Guardar
-         Icon = <Save width={25} height={25} fill={colors.background} />;
+         Icon = <Save width={20} height={20} fill={colors.background} />;
          break;
       case 4: //Borrar
-         Icon = <Delete width={25} height={25} fill={colors.background} />;
+         Icon = <Delete width={20} height={20} fill={colors.background} />;
          break;
       case 5: //Aceptar
-         Icon = <Accept width={25} height={25} fill={colors.background} />;
+         Icon = <Accept width={20} height={20} fill={colors.background} />;
          break;
       case 6: //Cancelar
-         Icon = <Cancel width={20} height={20} fill={colors.background} />;
+         Icon = <Cancel width={15} height={15} fill={colors.background} />;
          break;
       case 7: //Regresar
          Icon = <Back width={25} height={25} fill={colors.background} />;

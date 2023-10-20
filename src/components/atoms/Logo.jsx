@@ -1,7 +1,6 @@
 import {StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 import colors from '../../assets/colors';
 import imageLogo from '../../assets/images/Calcifer.png';
-import {useState} from 'react';
 import {useTheme} from '@react-navigation/native';
 
 const Logo = ({navigation}) => {
@@ -23,38 +22,13 @@ const Logo = ({navigation}) => {
    });
 
    return (
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-         <View style={styles.circle}>
-            <Image source={imageLogo} style={styles.image} />
-         </View>
-      </TouchableOpacity>
+      //<TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <View style={styles.circle}>
+         <Image source={imageLogo} style={styles.image} />
+      </View>
+      //</TouchableOpacity>
    );
 };
-
-/*
-   return (
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-         <View style={styles.circle}>
-            <Image source={imageLogo} style={styles.image} />
-         </View>
-      </TouchableOpacity>
-   );
-   
-   const [modalVisible, setModalVisible] = useState(false);
-   return (
-      <>
-         <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <View style={styles.circle}>
-               <Image source={imageLogo} style={styles.image} />
-            </View>
-         </TouchableOpacity>
-         <SideMenu
-            navigation={navigation}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-         />
-      </>
-*/
 
 export default Logo;
 

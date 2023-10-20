@@ -122,7 +122,7 @@ const Menu = ({navigation, route}) => {
 //
 /*            
             <TouchableOpacity onPress={() =>deleteData()} >
-                <CustomButton type={2}/>
+                <CustomButton type={4}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => getData()} >
                 <CustomButton type={3}/>

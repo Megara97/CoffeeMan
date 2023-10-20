@@ -11,15 +11,11 @@ const ComponentStyle = () => {
       circle: {
          width: 60,
          height: 60,
-         borderRadius: 30,
+         borderRadius: 17,
          backgroundColor: colors.color,
          alignItems: 'center',
          justifyContent: 'center',
          //elevation:7,
-      },
-      icon: {
-         width: 25,
-         height: 25,
       },
    });
 };
