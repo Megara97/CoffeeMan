@@ -10,8 +10,16 @@ import {
 //import colors from '../../assets/colors';
 import Logo from '../atoms/Logo';
 import {useTheme} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 
-const SideMenu = ({navigation, modalVisible, setModalVisible}) => {
+const SideMenu = ({
+   navigation,
+   modalVisible,
+   setModalVisible,
+
+   setChange,
+}) => {
    const colors = useTheme().colors;
    const styles = StyleSheet.create({
       containerTotal: {
@@ -79,6 +87,46 @@ const SideMenu = ({navigation, modalVisible, setModalVisible}) => {
          height: 50,
       },
    });
+
+   const [systemMode, setSystemMode] = useState(true);
+   const [darkMode, setDarkMode] = useState(false);
+
+   useEffect(() => {
+      const fetchData = async () => {
+         const storageSystemMode = await AsyncStorage.getItem(
+            'systemColorScheme',
+         );
+         setSystemMode(JSON.parse(storageSystemMode));
+         if (storageSystemMode !== null) {
+            setSystemMode(true);
+         }
+         const storageDarkScheme = await AsyncStorage.getItem('darkScheme');
+         setDarkMode(JSON.parse(storageDarkScheme));
+         if (storageDarkScheme !== null) {
+            setDarkMode(false);
+         }
+      };
+      fetchData();
+   }, []);
+
+   const onSave = async type => {
+      try {
+         if (type === 'system') {
+            await AsyncStorage.setItem(
+               'systemColorScheme',
+               JSON.stringify(!systemMode),
+            );
+            setSystemMode(!systemMode);
+         } else if (type === 'custom') {
+            await AsyncStorage.setItem('darkScheme', JSON.stringify(!darkMode));
+            setDarkMode(!darkMode);
+         }
+      } catch (e) {
+         console.error(e);
+      }
+      setChange('Edit' + systemMode + darkMode);
+   };
+
    return (
       <Modal
          animationType="none"
@@ -115,6 +163,28 @@ const SideMenu = ({navigation, modalVisible, setModalVisible}) => {
                      <Text style={styles.title}> Reportes </Text>
                   </TouchableOpacity>
                </View>
+               <View style={styles.aparience}>
+                  <Text style={styles.title}>Modo oscuro</Text>
+                  <Text style={[styles.title, {fontSize: 13}]}>
+                     Usar configuración del sistema
+                  </Text>
+                  <Switch
+                     value={systemMode}
+                     onValueChange={() => onSave('system')}
+                  />
+                  {!systemMode && (
+                     <View style={styles.switch}>
+                        <Text style={[styles.title, {fontSize: 13}]}>
+                           {darkMode ? 'Activado' : 'Desactivado'}
+                        </Text>
+                        <Switch
+                           value={darkMode}
+                           onValueChange={() => onSave('custom')}
+                           disabled={systemMode}
+                        />
+                     </View>
+                  )}
+               </View>
             </View>
             <View style={styles.logo}>
                <TouchableOpacity onPress={() => setModalVisible(false)}>
@@ -126,4 +196,6 @@ const SideMenu = ({navigation, modalVisible, setModalVisible}) => {
    );
 };
 
+//onValueChange={setSystemMode}
+//onValueChange={setDarkMode}
 export default SideMenu;

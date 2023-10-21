@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/screens/Home';
@@ -15,13 +15,54 @@ import InfoMenu from './src/screens/InfoMenu';
 import NewMenu from './src/screens/NewMenu';
 import {useColorScheme} from 'react-native';
 import Theme from './src/assets/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import {theme, darkTheme} from './src/styles/theme';
 
 const Stack = createNativeStackNavigator();
+//export const ThemeContext = React.createContext({});
 
 const CoffeeMan = () => {
-   const theme = useColorScheme();
+   const [change, setChange] = useState('');
+   const [theme, setTheme] = useState('light');
+   const systemColorScheme = useColorScheme();
+
+   /*
+   const [systemMode, setSystemMode] = useState(true);
+   const [darkMode, setDarkMode] = useState(false);
+   let theme;
+   if (systemMode === true) {
+      theme = systemColorScheme;
+   } else {
+      theme = darkMode ? 'dark' : 'light';
+   }*/
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const storageSystemMode = await AsyncStorage.getItem(
+               'systemColorScheme',
+            );
+            if (storageSystemMode === 'false') {
+               const storageDarkScheme = await AsyncStorage.getItem(
+                  'darkScheme',
+               );
+               if (storageDarkScheme !== null) {
+                  setTheme(JSON.parse(storageDarkScheme) ? 'dark' : 'light');
+               } else {
+                  setTheme('light');
+               }
+            } else {
+               setTheme(systemColorScheme);
+            }
+         } catch (error) {
+            console.error(error);
+         }
+      };
+      fetchData();
+   }, [change, systemColorScheme]);
 
    return (
+      //<ThemeContext.Provider value={themeMode === 'dark' ? darkTheme : theme}>
       <NavigationContainer theme={theme === 'dark' ? Theme.dark : Theme.light}>
          <Stack.Navigator
             initialRouteName="Commands"
@@ -33,6 +74,7 @@ const CoffeeMan = () => {
                         name={route.name}
                         title={title} //options.title
                         navigation={navigation}
+                        setChange={setChange}
                      />
                   );
                },
@@ -89,6 +131,7 @@ const CoffeeMan = () => {
             />
          </Stack.Navigator>
       </NavigationContainer>
+      //</ThemeContext.Provider>
    );
 };
 
