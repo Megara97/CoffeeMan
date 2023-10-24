@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from './src/screens/Home';
+import Home from './src/screens/No/Home';
 import Commands from './src/screens/Commands';
 import Reports from './src/screens/Reports';
 import Menu from './src/screens/Menu';
@@ -10,13 +10,13 @@ import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
 import CustomHeader from './src/components/molecules/CustomHeader';
 import {getHeaderTitle} from '@react-navigation/elements';
-import Delete from './src/screens/Delete';
-import InfoMenu from './src/screens/InfoMenu';
-import NewMenu from './src/screens/NewMenu';
+import Delete from './src/screens/No/Delete';
+import InfoMenu from './src/screens/No/InfoMenu';
+import NewMenu from './src/screens/No/NewMenu';
 import {useColorScheme} from 'react-native';
-import Theme from './src/assets/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import {theme, darkTheme} from './src/styles/theme';
+import Theme from './src/styles/colors';
+//import Theme from './src/assets/theme';
 
 const Stack = createNativeStackNavigator();
 //export const ThemeContext = React.createContext({});

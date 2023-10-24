@@ -1,33 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import InfoCommand from '../components/atoms/InfoCommand';
-import colors from '../assets/colors';
 import BottomCommand from '../components/molecules/BottomCommand';
 import DetailsList from '../components/organisms/DetailsList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../styles/index';
 
 const CommandDetails = ({navigation, route}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      container: {
-         width: '100%',
-         flex: 1,
-         flexDirection: 'column',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-         paddingTop: 10,
-         //height: '90%',
-         backgroundColor: colors.background,
-      },
-      containerTop: {
-         width: '90%',
-         flexDirection: 'row',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const [name, setName] = useState('');
    const [notes, setNotes] = useState('');
@@ -83,38 +66,75 @@ const CommandDetails = ({navigation, route}) => {
 
    return (
       <View style={styles.container}>
-         <View style={styles.containerTop}>
-            <TouchableOpacity
-               onPress={() =>
-                  navigation.navigate('Commands', {
-                     change: 'Volver' + route.params.id + name + subtotal,
-                  })
-               }>
-               <CustomButton type={7} />
-            </TouchableOpacity>
-            <InfoCommand
+         <View style={styles.principal}>
+            <View style={styles.containerTop}>
+               <TouchableOpacity
+                  onPress={() =>
+                     navigation.navigate('Commands', {
+                        change: 'Volver' + route.params.id + name + subtotal,
+                     })
+                  }>
+                  <CustomButton type={7} />
+               </TouchableOpacity>
+               <InfoCommand
+                  id={route.params.id}
+                  name={name}
+                  setName={setName}
+                  notes={notes}
+                  setNotes={setNotes}
+               />
+            </View>
+            <DetailsList
+               navigation={navigation}
                id={route.params.id}
-               name={name}
-               setName={setName}
-               notes={notes}
-               setNotes={setNotes}
+               list={list}
+               change={change}
+               setChange={setChange}
             />
          </View>
-         <DetailsList
-            navigation={navigation}
-            id={route.params.id}
-            list={list}
-            change={change}
-            setChange={setChange}
-         />
-         <BottomCommand
-            navigation={navigation}
-            id={route.params.id}
-            numberProducts={numberProducts}
-            subtotal={subtotal}
-         />
+         <View style={styles.bottom}>
+            <BottomCommand
+               navigation={navigation}
+               id={route.params.id}
+               numberProducts={numberProducts}
+               subtotal={subtotal}
+            />
+         </View>
       </View>
    );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      container: {
+         width: '100%',
+         height: '100%',
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         backgroundColor: colors.background,
+      },
+      containerTop: {
+         width: '90%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         marginVertical: spacing.s,
+      },
+      principal: {
+         width: '100%',
+         height: '77%',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      bottom: {
+         width: '100%',
+         height: '23%',
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+      },
+   });
 };
 
 export default CommandDetails;

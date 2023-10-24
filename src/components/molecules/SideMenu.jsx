@@ -1,39 +1,11 @@
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import colors from '../../assets/colors';
 import Logo from '../atoms/Logo';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
 const SideMenu = ({navigation}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      side: {
-         width: '60%',
-         height: '100%',
-         backgroundColor: colors.color,
-         flexDirection: 'column',
-         justifyContent: 'flex-start',
-      },
-      logo: {
-         width: '50%',
-         flexDirection: 'row',
-         justifyContent: 'center',
-      },
-      sections: {
-         width: '100%',
-         flexDirection: 'column',
-         alignItems: 'flex-end',
-         justifyContent: 'flex-start',
-         paddingVertical: 30,
-         paddingHorizontal: 10,
-      },
-      title: {
-         color: colors.background,
-         fontSize: 15,
-         fontFamily: 'Imprima-Regular',
-         textAlign: 'left',
-         paddingVertical: 7,
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    return (
       <View style={styles.side}>
@@ -53,6 +25,37 @@ const SideMenu = ({navigation}) => {
          </View>
       </View>
    );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      side: {
+         width: '70%',
+         height: '100%',
+         backgroundColor: colors.color1,
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+      },
+      logo: {
+         width: '50%',
+         flexDirection: 'row',
+         justifyContent: 'center',
+      },
+      sections: {
+         width: '100%',
+         flexDirection: 'column',
+         justifyContent: 'flex-start',
+         alignItems: 'flex-end',
+         paddingVertical: spacing.xl,
+         paddingHorizontal: spacing.m,
+      },
+      title: {
+         color: colors.background,
+         ...typography.header,
+         textAlign: 'left',
+         paddingVertical: spacing.s,
+      },
+   });
 };
 
 export default SideMenu;

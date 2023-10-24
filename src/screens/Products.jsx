@@ -2,35 +2,16 @@ import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import ProductSectionSelectable from '../components/organisms/ProductSectionSelectable';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
-import colors from '../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../styles/index';
 
 const Products = ({navigation, route}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      container: {
-         backgroundColor: colors.background,
-         width: '100%',
-         flex: 1,
-         flexDirection: 'column',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-      },
-      commandList: {
-         width: '100%',
-         justifyContent: 'flex-start',
-         alignItems: 'center',
-      },
-      new: {
-         width: '100%',
-         height: 80,
-         justifyContent: 'center',
-         alignItems: 'center',
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const [selectedItems, setSelectedItems] = useState([]);
+
    const onSave = async () => {
       try {
          const currentValue = await AsyncStorage.getItem('commands');
@@ -86,20 +67,47 @@ const Products = ({navigation, route}) => {
 
    return (
       <View style={styles.container}>
-         <View style={styles.commandList}>
+         <View style={styles.list}>
             <ProductSectionSelectable
                navigation={navigation}
                onSelect={setSelectedItems}
                id={route.params.id}
             />
          </View>
-         <View style={styles.new}>
+         <View style={styles.accept}>
             <TouchableOpacity onPress={onSave}>
                <CustomButton type={5} />
             </TouchableOpacity>
          </View>
       </View>
    );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      container: {
+         width: '100%',
+         height: '100%',
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         backgroundColor: colors.background,
+      },
+      list: {
+         width: '100%',
+         height: '87%',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      accept: {
+         width: '100%',
+         height: '13%',
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+         paddingBottom: spacing.l,
+      },
+   });
 };
 
 export default Products;

@@ -28,18 +28,21 @@ const dark = {
 export const theme = {
    ...light,
    spacing: {
-      s: 6,
-      m: 10,
-      l: 14,
-      xl: 20,
+      xxs: 3,
+      xs: 5,
+      s: 10,
+      m: 15,
+      l: 20,
+      xl: 25,
    },
-   borderRadius: {
-      s: 5,
-      m: 7,
-      l: 17,
-      xl: 20,
+   radius: {
+      xs: 5,
+      s: 10,
+      m: 20,
+      l: 30,
+      xl: 35,
    },
-   textVariants: {
+   typography: {
       header: {
          fontSize: 15,
          fontFamily: 'Imprima-Regular',

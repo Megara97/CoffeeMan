@@ -1,31 +1,29 @@
-import {useThemeColors} from '../../../customHooks/useThemeColors';
 const {StyleSheet} = require('react-native');
+import {typography, spacing, radius} from '../../../styles/index';
 
 const styles = StyleSheet.create({
    oval: {
       width: 30,
       height: 22,
-      borderRadius: 17,
+      borderRadius: radius.m,
       alignItems: 'center',
       justifyContent: 'center',
    },
    ovalLarge: {
       width: 50,
       height: 22,
-      borderRadius: 17,
+      borderRadius: radius.m,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
    },
    text: {
-      fontSize: 13,
-      fontFamily: 'Jaldi-Regular',
+      ...typography.body,
    },
    input: {
-      paddingHorizontal: 0,
-      paddingVertical: 0,
-      fontSize: 13,
-      fontFamily: 'Jaldi-Regular',
+      padding: 0,
+      textAlign: 'center',
+      ...typography.body,
    },
 });
 

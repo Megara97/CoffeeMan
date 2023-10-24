@@ -2,6 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import Search from '../atoms/Search';
 import ProductList from '../molecules/ProductList';
+import {typography, spacing, radius} from '../../styles/index';
 
 const ProductSection = ({navigation, setVisible, setId, products}) => {
    const [list, setList] = useState(products); //lista con cambios
@@ -35,11 +36,11 @@ const ProductSection = ({navigation, setVisible, setId, products}) => {
 const styles = StyleSheet.create({
    container: {
       width: '100%',
-      //height: 500,
+      height: '100%',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      paddingTop: 10,
+      paddingVertical: spacing.s,
    },
 });
 

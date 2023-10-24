@@ -1,33 +1,22 @@
-import {StyleSheet, View} from 'react-native';
-import colors from '../../assets/colors';
 import More from '../../assets/icons/more.svg';
 import Less from '../../assets/icons/less.svg';
 import {useTheme} from '@react-navigation/native';
 
 const CustomMiniButton = props => {
+   const size = 15;
    const colors = useTheme().colors;
    let Icon;
    switch (props.type) {
       case 1: //+
-         Icon = <Less width={15} height={15} fill={colors.color} />;
+         Icon = <Less width={size} height={size} fill={colors.color1} />;
          break;
       case 2: //-
-         Icon = <More width={15} height={15} fill={colors.color} />;
+         Icon = <More width={size} height={size} fill={colors.color1} />;
          break;
       default:
-         console.log('Type de CustomButton incorrecto');
+         console.log('Type de CustomMiniButton incorrecto');
    }
-
-   return <View style={styles.icon}>{Icon}</View>;
+   return <>{Icon}</>;
 };
-
-const styles = StyleSheet.create({
-   icon: {
-      width: 15,
-      height: 15,
-      alignItems: 'center',
-      justifyContent: 'center',
-   },
-});
 
 export default CustomMiniButton;

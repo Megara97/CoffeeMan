@@ -1,70 +1,15 @@
-import {StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
-import colors from '../../assets/colors';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
 import {Shadow} from 'react-native-shadow-2';
 import {useEffect, useState} from 'react';
 import ButtonGroup from '../molecules/ButtonGroup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
 const PayCommand = ({navigation, id}) => {
    const colors = useTheme().colors;
-   const ShadowPresets = {
-      general: {
-         distance: 10,
-         startColor: colors.typography + '30',
-         endColor: colors.background,
-         style: {
-            borderTopStartRadius: 17,
-            borderTopRightRadius: 17,
-            flexDirection: 'row',
-         },
-      },
-   };
-
-   const styles = StyleSheet.create({
-      menuContainer: {
-         width: '100%',
-         height: 240,
-         backgroundColor: colors.gray2,
-         flexDirection: 'columns',
-         justifyContent: 'flex-end',
-         paddingBottom: 10,
-         borderTopStartRadius: 17,
-         borderTopRightRadius: 17,
-         alignItems: 'center',
-      },
-      productsMenu: {
-         width: '70%',
-         flexDirection: 'row',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-      },
-      buttonsMenu: {
-         width: '100%',
-         height: 70,
-         flexDirection: 'row',
-         alignItems: 'flex-start',
-         justifyContent: 'space-around',
-      },
-      buttonsGroups: {
-         width: '100%',
-         flexDirection: 'colums',
-         alignItems: 'center',
-         justifyContent: 'center',
-         paddingVertical: 10,
-      },
-      content: {
-         fontSize: 13,
-         fontFamily: 'Jaldi-Regular',
-         color: colors.typography,
-      },
-      bold: {
-         fontSize: 15,
-         fontFamily: 'Jaldi-Bold',
-         color: colors.typography,
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const [numberProducts, setNumber] = useState(0);
    const [subtotal, setSubtotal] = useState(0);
@@ -155,8 +100,8 @@ const PayCommand = ({navigation, id}) => {
    };
 
    return (
-      <Shadow {...ShadowPresets.general}>
-         <View style={styles.menuContainer}>
+      <Shadow {...styles.shadow}>
+         <View style={styles.container}>
             <View style={styles.productsMenu}>
                <Text style={styles.content}>
                   {' '}
@@ -208,6 +153,57 @@ const PayCommand = ({navigation, id}) => {
          </View>
       </Shadow>
    );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      container: {
+         width: '100%',
+         height: 260,
+         backgroundColor: colors.secondary,
+         flexDirection: 'columns',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+         paddingBottom: spacing.m,
+         borderTopStartRadius: radius.l,
+         borderTopRightRadius: radius.l,
+      },
+      productsMenu: {
+         width: '70%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+      },
+      buttonsGroups: {
+         width: '100%',
+         flexDirection: 'colums',
+         alignItems: 'center',
+         justifyContent: 'center',
+         paddingVertical: spacing.s,
+      },
+      buttonsMenu: {
+         width: '100%',
+         height: 70,
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      content: {
+         ...typography.body,
+         color: colors.typography,
+      },
+      bold: {
+         ...typography.titleBold,
+         color: colors.typography,
+      },
+      shadow: {
+         distance: spacing.s,
+         ...colors.shadow,
+         style: {
+            flexDirection: 'row',
+         },
+      },
+   });
 };
 
 export default PayCommand;

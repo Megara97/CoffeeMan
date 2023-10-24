@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import Search from '../atoms/Search';
 import ProductListSelectable from '../molecules/ProductListSelectable';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {typography, spacing, radius} from '../../styles/index';
 
 const ProductSection = ({navigation, onSelect, id}) => {
    const [list, setList] = useState([]); //lista con cambios
@@ -45,11 +46,11 @@ const ProductSection = ({navigation, onSelect, id}) => {
 const styles = StyleSheet.create({
    container: {
       width: '100%',
-      //height: 500,
+      height: '100%',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      paddingTop: 10,
+      paddingVertical: spacing.s,
    },
 });
 

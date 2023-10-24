@@ -1,31 +1,12 @@
 import {TextInput, View, StyleSheet} from 'react-native';
 import {useEffect} from 'react';
 import SearchIcon from '../../assets/icons/search.svg';
-import colors from '../../assets/colors';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
 const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      listSearchContainer: {
-         width: '70%',
-         height: 30,
-         backgroundColor: colors.gray2,
-         flexDirection: 'row',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-         borderRadius: 7,
-         paddingHorizontal: 20,
-      },
-      input: {
-         width: '90%',
-         paddingVertical: 0,
-         height: '100%',
-         fontFamily: 'Jaldi-Regular',
-         fontSize: 13,
-         color: colors.typography,
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const sortData = () => {
       let listFilter = []; //Lista donde se guardan las coincidencias
@@ -49,17 +30,39 @@ const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
    }, [textToSearch]);
 
    return (
-      <View style={styles.listSearchContainer}>
+      <View style={styles.container}>
          <TextInput
             style={styles.input}
             placeholder="Buscar productos"
-            placeholderTextColor={colors.mediumGray}
+            placeholderTextColor={colors.overlay}
             onChangeText={_onChangeText}
             value={textToSearch}
          />
          <SearchIcon width={20} height={20} fill={colors.typography} />
       </View>
    );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      container: {
+         width: '70%',
+         height: 35,
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         backgroundColor: colors.secondary,
+         borderRadius: radius.xs,
+         paddingHorizontal: spacing.m,
+      },
+      input: {
+         width: '90%',
+         height: '100%',
+         paddingVertical: 0,
+         color: colors.typography,
+         ...typography.body,
+      },
+   });
 };
 
 export default Search;

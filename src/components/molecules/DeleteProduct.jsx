@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
-import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
 const DeleteProduct = ({
-   navigation,
    id,
    setChange,
    visible,
@@ -14,45 +13,7 @@ const DeleteProduct = ({
    setInfoVisible,
 }) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      containerTotal: {
-         backgroundColor: colors.typography + '70',
-         width: '100%',
-         flex: 1,
-         flexDirection: 'column',
-         justifyContent: 'center',
-         alignItems: 'center',
-      },
-      WarningContainer: {
-         width: '80%',
-         height: 170,
-         flexDirection: 'column',
-         justifyContent: 'center',
-         alignItems: 'center',
-         backgroundColor: colors.gray2,
-         borderRadius: 7,
-      },
-      message: {
-         fontSize: 15,
-         fontFamily: 'Jaldi-Regular',
-         color: colors.typography,
-         paddingHorizontal: 20,
-         paddingVertical: 10,
-         textAlign: 'center',
-      },
-      boldText: {
-         fontFamily: 'Jaldi-Bold',
-      },
-      buttons: {
-         width: '100%',
-         //height: 150,
-         flexDirection: 'row',
-         justifyContent: 'space-evenly',
-         paddingHorizontal: 50,
-         alignItems: 'center',
-         paddingVertical: 10,
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const [product, setProduct] = useState('');
 
@@ -98,7 +59,6 @@ const DeleteProduct = ({
       }
       closeModals();
       setChange('Delete' + product);
-      //navigation.navigate('Menu', {change: 'Delete' + product});
    };
 
    return (
@@ -109,12 +69,11 @@ const DeleteProduct = ({
          onRequestClose={() => {
             setVisible(!visible);
          }}>
-         <View style={styles.containerTotal}>
-            <View style={styles.WarningContainer}>
+         <View style={styles.backdrop}>
+            <View style={styles.container}>
                <Text style={styles.message}>
-                  {' '}
-                  ¿Estas seguro de eliminar{' '}
-                  <Text style={styles.boldText}>"{product}"</Text>?
+                  ¿Estas seguro de eliminar
+                  <Text style={styles.bold}> {product}</Text>?
                </Text>
                <View style={styles.buttons}>
                   <TouchableOpacity onPress={closeModals}>
@@ -130,8 +89,43 @@ const DeleteProduct = ({
    );
 };
 
-/*               <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
-                  <CustomButton type={6} />
-               </TouchableOpacity>*/
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      backdrop: {
+         width: '100%',
+         height: '100%',
+         backgroundColor: colors.typography + '70',
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      container: {
+         width: '80%',
+         height: '25%',
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+         backgroundColor: colors.secondary,
+         borderRadius: radius.s,
+      },
+      message: {
+         textAlign: 'center',
+         color: colors.typography,
+         paddingVertical: spacing.s,
+         paddingHorizontal: spacing.l,
+         ...typography.title,
+      },
+      bold: {
+         ...typography.titleBold,
+      },
+      buttons: {
+         width: '50%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         paddingVertical: spacing.s,
+      },
+   });
+};
 
 export default DeleteProduct;

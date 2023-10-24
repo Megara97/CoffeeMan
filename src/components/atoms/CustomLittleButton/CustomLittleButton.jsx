@@ -1,34 +1,32 @@
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 import Efectivo from '../../../assets/icons/efectivo.svg';
 import Tarjeta from '../../../assets/icons/tarjeta.svg';
 import {useTheme} from '@react-navigation/native';
-import styles from './CustomLittleButtonStyle';
+import {typography, spacing, radius} from '../../../styles/index';
+//import styles from './CustomLittleButtonStyle';
 
 const CustomLittleButton = props => {
+   const size = 15;
    const colors = useTheme().colors;
 
    switch (props.type) {
       case 1: //Efectivo
-         if (props.active == true) {
-            Component = (
-               <Efectivo width={15} height={15} fill={colors.background} />
-            );
-         } else {
-            Component = (
-               <Efectivo width={15} height={15} fill={colors.typography} />
-            );
-         }
+         Component = (
+            <Efectivo
+               width={size}
+               height={size}
+               fill={props.active ? colors.background : colors.typography}
+            />
+         );
          break;
       case 2: //Tarjeta
-         if (props.active == true) {
-            Component = (
-               <Tarjeta width={15} height={15} fill={colors.background} />
-            );
-         } else {
-            Component = (
-               <Tarjeta width={15} height={15} fill={colors.typography} />
-            );
-         }
+         Component = (
+            <Tarjeta
+               width={size}
+               height={size}
+               fill={props.active ? colors.background : colors.typography}
+            />
+         );
          break;
       case 3: //Texto
          Component = (
@@ -41,8 +39,7 @@ const CustomLittleButton = props => {
                         : colors.typography,
                   },
                ]}>
-               {' '}
-               {props.text}{' '}
+               {props.text}
             </Text>
          );
          break;
@@ -61,9 +58,9 @@ const CustomLittleButton = props => {
                   ${' '}
                </Text>
                <TextInput
-                  placeholder={props.value} //value
-                  placeholderTextColor={colors.mediumGray}
-                  onEndEditing={e => props.setValue(e.nativeEvent.text)} //onChangeText={props.setValue}
+                  placeholder={props.value}
+                  placeholderTextColor={colors.overlay}
+                  onEndEditing={e => props.setValue(e.nativeEvent.text)}
                   onFocus={() => props.onSelect(props.index)}
                   keyboardType="numeric"
                   style={[
@@ -77,8 +74,9 @@ const CustomLittleButton = props => {
                />
             </View>
          );
-         //placeholder={props.value}
-         //onEndEditing={(e) => props.setValue(e.nativeEvent.text)}
+         //value={props.value}
+         //onChangeText={props.setValue}
+
          break;
       default:
          console.log('Type de CustomLittleButton incorrecto');
@@ -89,12 +87,38 @@ const CustomLittleButton = props => {
          style={[
             [styles.oval, props.type === 4 && styles.ovalLarge],
             {
-               backgroundColor: props.active ? colors.color : colors.gray1,
+               backgroundColor: props.active ? colors.color1 : colors.surface,
             },
          ]}>
          {Component}
       </View>
    );
 };
+
+const styles = StyleSheet.create({
+   oval: {
+      width: 35,
+      height: 26,
+      borderRadius: radius.m,
+      alignItems: 'center',
+      justifyContent: 'center',
+   },
+   ovalLarge: {
+      width: 55,
+      height: 26,
+      borderRadius: radius.m,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+   },
+   text: {
+      ...typography.body,
+   },
+   input: {
+      padding: 0,
+      textAlign: 'center',
+      ...typography.body,
+   },
+});
 
 export default CustomLittleButton;

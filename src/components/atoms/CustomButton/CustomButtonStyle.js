@@ -1,11 +1,8 @@
 import {useThemeColors} from '../../../customHooks/useThemeColors';
-const {StyleSheet, useColorScheme} = require('react-native');
-//import Theme from '../../../assets/theme';
+const {StyleSheet} = require('react-native');
 
-const ComponentStyle = () => {
-   //const theme = useColorScheme();
-   //const colors = theme === 'dark' ? Theme.dark.colors : Theme.light.colors;
-   const colors = useThemeColors();
+const ComponentStyle = colors => {
+   //const colors = useThemeColors();
 
    return StyleSheet.create({
       circle: {
@@ -15,7 +12,12 @@ const ComponentStyle = () => {
          backgroundColor: colors.color,
          alignItems: 'center',
          justifyContent: 'center',
-         //elevation:7,
+      },
+      shadow: {
+         distance: 5,
+         startColor: colors.typography + '25',
+         endColor: colors.background,
+         offset: [2, 2],
       },
    });
 };

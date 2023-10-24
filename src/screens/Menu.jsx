@@ -1,54 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
-import colors from '../assets/colors';
 import ProductSection from '../components/organisms/ProductSection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import NewProduct from '../components/molecules/NewProduct';
 import InfoProduct from '../components/molecules/InfoProduct';
 import DeleteProduct from '../components/molecules/DeleteProduct';
+import {typography, spacing, radius} from '../styles/index';
 
 const Menu = ({navigation, route}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      container: {
-         backgroundColor: colors.background,
-         width: '100%',
-         flex: 1,
-         flexDirection: 'column',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-      },
-      commandList: {
-         width: '100%',
-         justifyContent: 'flex-start',
-         alignItems: 'center',
-      },
-      new: {
-         width: '100%',
-         height: 80,
-         justifyContent: 'center',
-         alignItems: 'center',
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const [change, setChange] = useState('');
    const [list, setList] = useState([]);
-   const fetchData = async () => {
-      try {
-         const storedList = await AsyncStorage.getItem('products');
-         if (storedList) {
-            setList(JSON.parse(storedList));
-         }
-      } catch (error) {
-         console.error(error);
-      }
-   };
 
    useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const storedList = await AsyncStorage.getItem('products');
+            if (storedList) {
+               setList(JSON.parse(storedList));
+            }
+         } catch (error) {
+            console.error(error);
+         }
+      };
       fetchData();
-   }, [change, route.params]); //route.params.change
+   }, [change, route.params]);
 
    const deleteData = async () => {
       try {
@@ -77,7 +57,7 @@ const Menu = ({navigation, route}) => {
    return (
       <>
          <View style={styles.container}>
-            <View style={styles.commandList}>
+            <View style={styles.list}>
                <ProductSection
                   navigation={navigation}
                   setVisible={setInfoVisible}
@@ -116,10 +96,6 @@ const Menu = ({navigation, route}) => {
       </>
    );
 };
-
-//<TouchableOpacity onPress={() => navigation.navigate('NewMenu')}>
-
-//
 /*            
             <TouchableOpacity onPress={() =>deleteData()} >
                 <CustomButton type={4}/>
@@ -129,4 +105,30 @@ const Menu = ({navigation, route}) => {
             </TouchableOpacity>
 */
 
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      container: {
+         width: '100%',
+         height: '100%',
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         backgroundColor: colors.background,
+      },
+      list: {
+         width: '100%',
+         height: '85%',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      new: {
+         width: '100%',
+         height: '15%',
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+         paddingBottom: spacing.l,
+      },
+   });
+};
 export default Menu;
