@@ -17,7 +17,6 @@ const SideMenu = ({
    navigation,
    modalVisible,
    setModalVisible,
-
    setChange,
 }) => {
    const colors = useTheme().colors;
@@ -96,15 +95,23 @@ const SideMenu = ({
          const storageSystemMode = await AsyncStorage.getItem(
             'systemColorScheme',
          );
-         setSystemMode(JSON.parse(storageSystemMode));
-         if (storageSystemMode !== null) {
+         setSystemMode(
+            storageSystemMode !== null ? JSON.parse(storageSystemMode) : true,
+         );
+         //console.log('system', JSON.parse(storageSystemMode));
+         /*setSystemMode(JSON.parse(storageSystemMode));
+         if (storageSystemMode === null) {
             setSystemMode(true);
-         }
+         }*/
          const storageDarkScheme = await AsyncStorage.getItem('darkScheme');
-         setDarkMode(JSON.parse(storageDarkScheme));
-         if (storageDarkScheme !== null) {
+         setDarkMode(
+            storageDarkScheme !== null ? JSON.parse(storageDarkScheme) : false,
+         );
+         //console.log('dark', JSON.parse(storageDarkScheme));
+         /*setDarkMode(JSON.parse(storageDarkScheme));
+         if (storageDarkScheme === null) {
             setDarkMode(false);
-         }
+         }*/
       };
       fetchData();
    }, []);
@@ -195,7 +202,7 @@ const SideMenu = ({
       </Modal>
    );
 };
-
 //onValueChange={setSystemMode}
 //onValueChange={setDarkMode}
+
 export default SideMenu;
