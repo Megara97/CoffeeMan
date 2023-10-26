@@ -59,7 +59,9 @@ const CustomLittleButton = props => {
                </Text>
                <TextInput
                   placeholder={props.value}
-                  placeholderTextColor={colors.overlay}
+                  placeholderTextColor={
+                     props.active ? colors.background : colors.overlay
+                  }
                   onEndEditing={e => props.setValue(e.nativeEvent.text)}
                   onFocus={() => props.onSelect(props.index)}
                   keyboardType="numeric"

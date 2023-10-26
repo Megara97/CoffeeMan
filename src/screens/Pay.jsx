@@ -5,14 +5,24 @@ import DetailsList from '../components/molecules/DetailsListSimple';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
+import {usePartLocalStorage} from '../customHooks/usePartLocalStorage';
 
 const Pay = ({navigation, route}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
    const [title, setTitle] = useState('');
+   const [command] = usePartLocalStorage('commands', route.params.id);
 
    useEffect(() => {
+      if (command) {
+         setTitle(
+            command.client === '' ? 'Comanda ' + command.id : command.client,
+         );
+      }
+   }, [command]);
+
+   /*useEffect(() => {
       const fetchData = async () => {
          try {
             const storedList = await AsyncStorage.getItem('commands');
@@ -36,7 +46,7 @@ const Pay = ({navigation, route}) => {
       };
       fetchData();
    }, []);
-
+*/
    return (
       <View style={styles.container}>
          <View style={styles.principal}>

@@ -15,7 +15,7 @@ const Item = ({navigation, client, subtotal, id}) => {
             <View style={styles.item}>
                <Text style={styles.title}> {title} </Text>
                <Text style={styles.subtotal}>
-                  {subtotal !== null
+                  {subtotal !== undefined
                      ? `Subtotal: $ ${subtotal.toFixed(2)}`
                      : null}
                </Text>

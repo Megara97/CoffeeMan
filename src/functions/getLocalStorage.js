@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 
-export async function getLocalStorage(key, id) {
+export async function getLocalStorage(key, id = 0) {
    let storedValue = [];
    let index = -1;
    try {
@@ -15,6 +16,6 @@ export async function getLocalStorage(key, id) {
    } catch (e) {
       console.error(e);
    }
-   console.log(storedValue, index);
-   return index;
+   //console.log(storedValue, index);
+   return [storedValue, index];
 }

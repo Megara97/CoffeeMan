@@ -110,6 +110,7 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                         setSystemMode(!systemMode);
                         setChange('Edit' + systemMode);
                      }}
+                     trackColor={{true: colors.overlay}}
                   />
                   {!systemMode && (
                      <View style={styles.switch}>
@@ -123,6 +124,7 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                               setChange('Edit' + darkMode);
                            }}
                            disabled={systemMode}
+                           trackColor={{true: colors.overlay}}
                         />
                      </View>
                   )}

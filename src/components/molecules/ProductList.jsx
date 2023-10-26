@@ -2,7 +2,7 @@ import {StyleSheet, View, FlatList} from 'react-native';
 import Item from './ProductItem';
 import {typography, spacing, radius} from '../../styles/index';
 
-const ProductList = ({navigation, setVisible, setId, list}) => {
+const ProductList = ({navigation, list, setVisible, setId}) => {
    return (
       <View style={styles.container}>
          <FlatList

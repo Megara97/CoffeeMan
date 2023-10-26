@@ -3,7 +3,7 @@ import {useTheme} from '@react-navigation/native';
 import Item from './DetailsItem';
 import {typography, spacing, radius} from '../../styles/index';
 
-const DetailsList = ({navigation, id, setChange, list}) => {
+const DetailsList = ({navigation, id, list, setChange}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -18,11 +18,11 @@ const DetailsList = ({navigation, id, setChange, list}) => {
                renderItem={({item}) => (
                   <Item
                      navigation={navigation}
-                     id={id}
                      product={item.product}
                      number={item.quantity}
                      subtotal={item.price}
                      setChange={setChange}
+                     id={id}
                   />
                )}
             />

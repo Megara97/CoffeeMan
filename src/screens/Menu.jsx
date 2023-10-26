@@ -8,13 +8,16 @@ import NewProduct from '../components/molecules/NewProduct';
 import InfoProduct from '../components/molecules/InfoProduct';
 import DeleteProduct from '../components/molecules/DeleteProduct';
 import {typography, spacing, radius} from '../styles/index';
+import {useLocalStorage} from '../customHooks/useLocalStorage';
 
 const Menu = ({navigation, route}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
    const [change, setChange] = useState('');
-   const [list, setList] = useState([]);
+   const [list, setList] = useLocalStorage('products', [], change);
+
+   /*const [list, setList] = useState([]);
 
    useEffect(() => {
       const fetchData = async () => {
@@ -49,6 +52,7 @@ const Menu = ({navigation, route}) => {
          console.error(e);
       }
    };
+*/
 
    const [newVisible, setNewVisible] = useState(false);
    const [infoVisible, setInfoVisible] = useState(false);
@@ -69,6 +73,12 @@ const Menu = ({navigation, route}) => {
                <TouchableOpacity onPress={() => setNewVisible(true)}>
                   <CustomButton type={1} />
                </TouchableOpacity>
+               <TouchableOpacity onPress={() => setList([])}>
+                  <CustomButton type={4} />
+               </TouchableOpacity>
+               <TouchableOpacity onPress={() => console.log(list)}>
+                  <CustomButton type={3} />
+               </TouchableOpacity>
             </View>
          </View>
          <NewProduct
@@ -76,6 +86,8 @@ const Menu = ({navigation, route}) => {
             setChange={setChange}
             visible={newVisible}
             setVisible={setNewVisible}
+            list={list}
+            setList={setList}
          />
          <InfoProduct
             navigation={navigation}
@@ -97,6 +109,13 @@ const Menu = ({navigation, route}) => {
    );
 };
 /*            
+            <TouchableOpacity onPress={() => setList([])}>
+               <CustomButton type={4} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log(list)}>
+               <CustomButton type={3} />
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() =>deleteData()} >
                 <CustomButton type={4}/>
             </TouchableOpacity>

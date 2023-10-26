@@ -11,6 +11,7 @@ import CustomButton from '../atoms/CustomButton/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
+import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 
 const InfoProduct = ({
    id,
@@ -23,9 +24,34 @@ const InfoProduct = ({
    const styles = ComponentStyle(colors);
 
    const [price, setPrice] = useState('');
-   const [product, setProduct] = useState('');
+   const [name, setName] = useState('');
+
+   const [product, deleteProduct, changeProduct] = usePartLocalStorage(
+      'products',
+      id,
+   );
 
    useEffect(() => {
+      if (product) {
+         setPrice(product.price.toFixed(2).toString());
+         setName(product.product);
+      }
+   }, [product]);
+
+   const recordChanges = () => {
+      //SUBIR A BASE DE DATOS
+      if (product) {
+         let newValue = {...product};
+         newValue.price = parseFloat(price);
+         //newValue.product = name;
+         console.log('PArte', newValue);
+         changeProduct(newValue);
+      }
+      setVisible(!visible);
+      setChange('Edit' + name + price);
+   };
+
+   /*useEffect(() => {
       const fetchData = async () => {
          try {
             const storedList = await AsyncStorage.getItem('products');
@@ -35,7 +61,7 @@ const InfoProduct = ({
                const index = products.findIndex(element => element.id === id);
                if (index !== -1) {
                   setPrice(products[index].price.toFixed(2).toString());
-                  setProduct(products[index].product);
+                  setName(products[index].product);
                }
             }
          } catch (error) {
@@ -62,8 +88,9 @@ const InfoProduct = ({
          console.error(e);
       }
       setVisible(!visible);
-      setChange('Edit' + product + price);
+      setChange('Edit' + name + price);
    };
+*/
 
    return (
       <Modal
@@ -76,7 +103,7 @@ const InfoProduct = ({
          <View style={styles.backdrop}>
             <View style={styles.container}>
                <View style={styles.info}>
-                  <Text style={styles.textName}> {product} </Text>
+                  <Text style={styles.textName}> {name} </Text>
                   <View style={styles.price}>
                      <Text style={styles.textPrice}> Precio $ </Text>
                      <TextInput
@@ -88,7 +115,7 @@ const InfoProduct = ({
                   </View>
                </View>
                <View style={styles.buttons}>
-                  <TouchableOpacity onPress={onSave}>
+                  <TouchableOpacity onPress={recordChanges}>
                      <CustomButton type={3} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => setDeleteVisible(true)}>

@@ -12,14 +12,40 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
-const NewProduct = ({navigation, setChange, visible, setVisible}) => {
+const NewProduct = ({
+   navigation,
+   setChange,
+   visible,
+   setVisible,
+   list,
+   setList,
+}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
    const [price, setPrice] = useState('');
    const [product, setProduct] = useState('');
 
-   const onNew = async () => {
+   const recordNewProduct = () => {
+      //SUBIR A BASE DE DATOS
+      let lastId = 1;
+      if (list.length !== 0) {
+         lastId = list[list.length - 1].id + 1;
+      }
+      const newElement = {
+         id: lastId,
+         product: product,
+         price: price === '' ? 0 : parseFloat(price),
+      };
+      let newValue = list.slice();
+      newValue.push(newElement);
+      setList(newValue);
+      setVisible(!visible);
+      setPrice('');
+      setProduct('');
+   };
+
+   /*const newProduct = async () => {
       let lastId = 1;
       try {
          let productList = [];
@@ -31,7 +57,7 @@ const NewProduct = ({navigation, setChange, visible, setVisible}) => {
          let lastId = JSON.parse(Id) + 1;
          if (!lastId) {
             lastId = 1;
-         }*/
+         }/*
 
          if (productList.length !== 0) {
             lastId = productList[productList.length - 1].id + 1;
@@ -48,7 +74,7 @@ const NewProduct = ({navigation, setChange, visible, setVisible}) => {
          /*await AsyncStorage.setItem(
             'numberProducts',
             JSON.stringify(lastId),
-         );*/
+         );/*
       } catch (e) {
          console.error(e);
       }
@@ -57,6 +83,7 @@ const NewProduct = ({navigation, setChange, visible, setVisible}) => {
       setPrice('');
       setProduct('');
    };
+*/
 
    return (
       <Modal
@@ -89,7 +116,7 @@ const NewProduct = ({navigation, setChange, visible, setVisible}) => {
                   </View>
                </View>
                <View style={styles.buttons}>
-                  <TouchableOpacity onPress={onNew}>
+                  <TouchableOpacity onPress={recordNewProduct}>
                      <CustomButton type={3} />
                   </TouchableOpacity>
                </View>

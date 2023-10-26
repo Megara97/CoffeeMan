@@ -1,10 +1,13 @@
 import {StyleSheet, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import Search from '../atoms/Search';
-import ProductList from '../molecules/ProductList';
-import ProductListSelectable from '../molecules/ProductListSelectable';
+//import ProductList from '../molecules/ProductList';
+import ProductList from '../molecules/ProductListGeneral';
+//import ProductListSelectable from '../molecules/ProductListSelectable';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {typography, spacing, radius} from '../../styles/index';
+import {useLocalStorage} from '../../customHooks/useLocalStorage';
+import {getLocalStorage} from '../../functions/getLocalStorage';
 
 const ProductSection = ({
    navigation,
@@ -17,6 +20,32 @@ const ProductSection = ({
    const [list, setList] = useState([]); //lista con cambios
    const [defaultList, setDefaultList] = useState([]); //lista original
    const [text, setText] = useState(''); //palabra para buscar
+
+   const [productsInm] = useLocalStorage('products');
+
+   useEffect(() => {
+      if (selectable) {
+         setList(productsInm);
+         setDefaultList(productsInm);
+      } else {
+         setList(products);
+         setDefaultList(products);
+      }
+   }, [products, productsInm]);
+
+   /*  
+      useEffect(() => {
+      if (selectable) {
+         getLocalStorage('products').then(([products]) => {
+            console.log(products);
+            setList(products);
+            setDefaultList(products);
+         });
+      } else {
+         setList(products);
+         setDefaultList(products);
+      }
+   }, [products]);
 
    useEffect(() => {
       if (selectable) {
@@ -36,7 +65,7 @@ const ProductSection = ({
          setList(products);
          setDefaultList(products);
       }
-   }, [products]);
+   }, [products]);*/
 
    return (
       <View style={styles.container}>
@@ -47,10 +76,11 @@ const ProductSection = ({
             _setDataSort={setList}
          />
          {selectable ? (
-            <ProductListSelectable
+            <ProductList
                navigation={navigation}
                list={list}
                onSelect={onSelect}
+               selectable
             />
          ) : (
             <ProductList

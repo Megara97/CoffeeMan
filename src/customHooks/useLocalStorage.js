@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export function useLocalStorage(key, initialValue) {
+export function useLocalStorage(key, initialValue = [], change = 1) {
    const [storedValue, setStoredValue] = useState(initialValue);
 
    useEffect(() => {
@@ -14,7 +14,7 @@ export function useLocalStorage(key, initialValue) {
          }
       };
       fetchData();
-   }, [key]);
+   }, [change]);
 
    const setValue = async value => {
       try {
@@ -24,5 +24,6 @@ export function useLocalStorage(key, initialValue) {
          console.error(e);
       }
    };
+
    return [storedValue, setValue];
 }
