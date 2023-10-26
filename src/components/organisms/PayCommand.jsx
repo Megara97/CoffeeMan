@@ -6,6 +6,8 @@ import ButtonGroup from '../molecules/ButtonGroup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
+import {getLocalStorage} from '../../functions/getLocalStorage';
+import {setLocalStorage} from '../../functions/setLocalStorage';
 
 const PayCommand = ({navigation, id}) => {
    const colors = useTheme().colors;
@@ -58,6 +60,49 @@ const PayCommand = ({navigation, id}) => {
          change: 'Pay' + id + numberProducts + subtotal,
       });
    };
+
+   /*async function getLocalStorage(key, id) {
+      let storedValue = [];
+      let index = -1;
+      try {
+         const item = await AsyncStorage.getItem(key);
+         storedValue = item ? JSON.parse(item) : [];
+         index = storedValue.findIndex(element => element.id === id);
+      } catch (e) {
+         console.error(e);
+      }
+      console.log(storedValue, index);
+      return index;
+   }
+
+   useEffect(() => {
+      let commands = [];
+      let index = -1;
+      //[commands, index] = getLocalStorage('commands', id);
+      console.log(getLocalStorage('commands', id));
+      if (index !== -1) {
+         setNumber(
+            commands[index].products.reduce(
+               (total, product) => total + product.quantity,
+               0,
+            ),
+         );
+         setSubtotal(commands[index].subtotal);
+      }
+   }, []);
+
+   const onDelete = () => {
+      const [commands, index] = getLocalStorage('commands', id);
+      if (index !== -1) {
+         commands.splice(index, 1);
+         setLocalStorage('commands', commands);
+      }
+      //SUBIR A BASE DE DATOS
+      navigation.navigate('Commands', {
+         change: 'Pay' + id + numberProducts + subtotal,
+      });
+   };
+*/
 
    const [tip, setTip] = useState(0);
    const [method, setMethod] = useState(0);

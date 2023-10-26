@@ -12,9 +12,11 @@ import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../../styles/index';
 
 const CustomButton = props => {
-   const size = 20;
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
+
+   const size = 20;
+   const resize = (size, percentage) => size * (percentage / 100);
 
    let Icon;
    switch (props.type) {
@@ -36,8 +38,8 @@ const CustomButton = props => {
       case 6: //Cancelar
          Icon = (
             <Cancel
-               width={size * 0.75}
-               height={size * 0.75}
+               width={resize(size, 75)}
+               height={resize(size, 75)}
                fill={colors.background}
             />
          );
@@ -45,8 +47,8 @@ const CustomButton = props => {
       case 7: //Regresar
          Icon = (
             <Back
-               width={size * 1.5}
-               height={size * 1.5}
+               width={resize(size, 150)}
+               height={resize(size, 150)}
                fill={colors.background}
             />
          );
@@ -73,10 +75,7 @@ const ComponentStyle = colors => {
          justifyContent: 'center',
       },
       shadow: {
-         //distance: 5,
          distance: spacing.xs,
-         //startColor: colors.typography + '25',
-         //endColor: colors.background,
          ...colors.shadow,
          offset: [2, 2],
       },

@@ -11,12 +11,19 @@ import {useTheme} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
 import {typography, spacing, radius} from '../../styles/index';
+import {useLocalStorage} from '../../customHooks/useLocalStorage';
 
 const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const [systemMode, setSystemMode] = useState(true);
+   const [systemMode, setSystemMode] = useLocalStorage(
+      'systemColorScheme',
+      true,
+   );
+   const [darkMode, setDarkMode] = useLocalStorage('darkScheme', false);
+
+   /* const [systemMode, setSystemMode] = useState(true);
    const [darkMode, setDarkMode] = useState(false);
 
    useEffect(() => {
@@ -27,20 +34,11 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
          setSystemMode(
             storageSystemMode !== null ? JSON.parse(storageSystemMode) : true,
          );
-         //console.log('system', JSON.parse(storageSystemMode));
-         /*setSystemMode(JSON.parse(storageSystemMode));
-         if (storageSystemMode === null) {
-            setSystemMode(true);
-         }*/
          const storageDarkScheme = await AsyncStorage.getItem('darkScheme');
          setDarkMode(
             storageDarkScheme !== null ? JSON.parse(storageDarkScheme) : false,
          );
-         //console.log('dark', JSON.parse(storageDarkScheme));
-         /*setDarkMode(JSON.parse(storageDarkScheme));
-         if (storageDarkScheme === null) {
-            setDarkMode(false);
-         }*/
+
       };
       fetchData();
    }, []);
@@ -62,6 +60,7 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
       }
       setChange('Edit' + systemMode + darkMode);
    };
+*/
 
    return (
       <Modal
@@ -107,7 +106,10 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                   </Text>
                   <Switch
                      value={systemMode}
-                     onValueChange={() => onSave('system')}
+                     onValueChange={() => {
+                        setSystemMode(!systemMode);
+                        setChange('Edit' + systemMode);
+                     }}
                   />
                   {!systemMode && (
                      <View style={styles.switch}>
@@ -116,7 +118,10 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                         </Text>
                         <Switch
                            value={darkMode}
-                           onValueChange={() => onSave('custom')}
+                           onValueChange={() => {
+                              setDarkMode(!darkMode);
+                              setChange('Edit' + darkMode);
+                           }}
                            disabled={systemMode}
                         />
                      </View>
@@ -132,6 +137,8 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
       </Modal>
    );
 };
+//onValueChange={() => onSave('system')}
+//onValueChange={() => onSave('custom')}
 
 const ComponentStyle = colors => {
    return StyleSheet.create({

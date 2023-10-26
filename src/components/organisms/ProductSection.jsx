@@ -6,7 +6,7 @@ import {typography, spacing, radius} from '../../styles/index';
 
 const ProductSection = ({navigation, setVisible, setId, products}) => {
    const [list, setList] = useState(products); //lista con cambios
-   const [defaultList, setDefaultList] = useState([]); //lista original
+   const [defaultList, setDefaultList] = useState(products); //lista original
    const [text, setText] = useState(''); //palabra para buscar
 
    useEffect(() => {
@@ -25,9 +25,9 @@ const ProductSection = ({navigation, setVisible, setId, products}) => {
          />
          <ProductList
             navigation={navigation}
+            list={list}
             setVisible={setVisible}
             setId={setId}
-            list={list}
          />
       </View>
    );

@@ -5,24 +5,23 @@ import ProductListSelectable from '../molecules/ProductListSelectable';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {typography, spacing, radius} from '../../styles/index';
 
-const ProductSection = ({navigation, onSelect, id}) => {
+const ProductSection = ({navigation, onSelect}) => {
    const [list, setList] = useState([]); //lista con cambios
    const [defaultList, setDefaultList] = useState([]); //lista original
    const [text, setText] = useState(''); //palabra para buscar
 
-   const fetchData = async () => {
-      try {
-         const storedList = await AsyncStorage.getItem('products');
-         if (storedList) {
-            setList(JSON.parse(storedList));
-            setDefaultList(JSON.parse(storedList));
-         }
-      } catch (error) {
-         console.error(error);
-      }
-   };
-
    useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const storedList = await AsyncStorage.getItem('products');
+            if (storedList) {
+               setList(JSON.parse(storedList));
+               setDefaultList(JSON.parse(storedList));
+            }
+         } catch (error) {
+            console.error(error);
+         }
+      };
       fetchData();
    }, []);
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import ProductSectionSelectable from '../components/organisms/ProductSectionSelectable';
+import ProductSectionSelectable from '../components/organisms/ProductSectionGeneral';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
@@ -72,6 +72,7 @@ const Products = ({navigation, route}) => {
                navigation={navigation}
                onSelect={setSelectedItems}
                id={route.params.id}
+               selectable
             />
          </View>
          <View style={styles.accept}>

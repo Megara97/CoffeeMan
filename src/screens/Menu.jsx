@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
-import ProductSection from '../components/organisms/ProductSection';
+import ProductSection from '../components/organisms/ProductSectionGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import NewProduct from '../components/molecules/NewProduct';
