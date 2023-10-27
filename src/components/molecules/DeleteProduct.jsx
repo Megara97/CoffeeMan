@@ -4,6 +4,7 @@ import CustomButton from '../atoms/CustomButton/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
+import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 
 const DeleteProduct = ({
    id,
@@ -15,9 +16,31 @@ const DeleteProduct = ({
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const [product, setProduct] = useState('');
+   const [name, setName] = useState('');
+   const [product, deleteProduct, changeProduct] = usePartLocalStorage(
+      'products',
+      id,
+   );
 
    useEffect(() => {
+      if (product) {
+         setName(product.product);
+      }
+   }, [product]);
+
+   const closeModals = () => {
+      setVisible(!visible);
+      setInfoVisible(!visible);
+   };
+
+   const recordDeletedProduct = () => {
+      //SUBIR A BASE DE DATOS
+      deleteProduct();
+      closeModals();
+      setChange('Delete' + name);
+   };
+
+   /*useEffect(() => {
       const fetchData = async () => {
          try {
             const storedList = await AsyncStorage.getItem('products');
@@ -58,8 +81,8 @@ const DeleteProduct = ({
          console.error(e);
       }
       closeModals();
-      setChange('Delete' + product);
-   };
+      setChange('Delete' + name);
+   };*/
 
    return (
       <Modal
@@ -73,13 +96,13 @@ const DeleteProduct = ({
             <View style={styles.container}>
                <Text style={styles.message}>
                   ¿Estas seguro de eliminar
-                  <Text style={styles.bold}> {product}</Text>?
+                  <Text style={styles.bold}> {name}</Text>?
                </Text>
                <View style={styles.buttons}>
                   <TouchableOpacity onPress={closeModals}>
                      <CustomButton type={6} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={onDelete}>
+                  <TouchableOpacity onPress={recordDeletedProduct}>
                      <CustomButton type={5} />
                   </TouchableOpacity>
                </View>

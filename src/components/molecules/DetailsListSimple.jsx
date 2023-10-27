@@ -10,6 +10,7 @@ const DetailsList = ({navigation, id}) => {
    const styles = ComponentStyle(colors);
 
    const [list, setList] = useState([]);
+
    useEffect(() => {
       const fetchData = async () => {
          try {
@@ -50,6 +51,7 @@ const DetailsList = ({navigation, id}) => {
             <FlatList
                numColumns={1}
                data={list}
+               keyExtractor={item => item.product}
                renderItem={({item}) => (
                   <Item
                      navigation={navigation}

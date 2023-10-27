@@ -113,7 +113,6 @@ const PayCommand = ({navigation, id}) => {
    const recordCommandPaid = () => {
       //SUBIR A BASE DE DATOS
       deleteCommand();
-
       navigation.navigate('Commands', {
          change: 'Pay' + id + numberProducts + subtotal,
       });

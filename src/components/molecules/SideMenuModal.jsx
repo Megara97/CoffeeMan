@@ -76,7 +76,9 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                   <TouchableOpacity
                      onPress={() => {
                         setModalVisible(false);
-                        navigation.navigate('Commands');
+                        navigation.navigate('Commands', {
+                           change: 'SideMenu',
+                        });
                      }}>
                      <Text style={styles.titleHeader}>
                         Administración de comandas

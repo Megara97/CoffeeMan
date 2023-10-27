@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
    listContainer: {
       width: '90%',
       height: '100%',
-      //flex: 1,
    },
 });
 

@@ -13,6 +13,7 @@ const Logo = () => {
       </View>
    );
 };
+
 const ComponentStyle = colors => {
    return StyleSheet.create({
       circle: {

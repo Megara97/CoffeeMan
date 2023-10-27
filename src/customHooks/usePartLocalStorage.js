@@ -43,7 +43,6 @@ export function usePartLocalStorage(key, id) {
          if (index !== -1) {
             let newValue = storedValue.slice();
             newValue[index] = newPart;
-            console.log('Completo', newValue);
             save(newValue);
          }
       } catch (e) {

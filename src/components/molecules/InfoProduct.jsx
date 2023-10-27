@@ -25,7 +25,6 @@ const InfoProduct = ({
 
    const [price, setPrice] = useState('');
    const [name, setName] = useState('');
-
    const [product, deleteProduct, changeProduct] = usePartLocalStorage(
       'products',
       id,
@@ -38,13 +37,12 @@ const InfoProduct = ({
       }
    }, [product]);
 
-   const recordChanges = () => {
+   const recordProductChanges = () => {
       //SUBIR A BASE DE DATOS
       if (product) {
          let newValue = {...product};
          newValue.price = parseFloat(price);
          //newValue.product = name;
-         console.log('PArte', newValue);
          changeProduct(newValue);
       }
       setVisible(!visible);
@@ -115,7 +113,7 @@ const InfoProduct = ({
                   </View>
                </View>
                <View style={styles.buttons}>
-                  <TouchableOpacity onPress={recordChanges}>
+                  <TouchableOpacity onPress={recordProductChanges}>
                      <CustomButton type={3} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => setDeleteVisible(true)}>

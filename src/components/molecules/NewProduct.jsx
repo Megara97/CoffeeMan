@@ -24,7 +24,7 @@ const NewProduct = ({
    const styles = ComponentStyle(colors);
 
    const [price, setPrice] = useState('');
-   const [product, setProduct] = useState('');
+   const [name, setName] = useState('');
 
    const recordNewProduct = () => {
       //SUBIR A BASE DE DATOS
@@ -34,7 +34,7 @@ const NewProduct = ({
       }
       const newElement = {
          id: lastId,
-         product: product,
+         product: name,
          price: price === '' ? 0 : parseFloat(price),
       };
       let newValue = list.slice();
@@ -42,7 +42,7 @@ const NewProduct = ({
       setList(newValue);
       setVisible(!visible);
       setPrice('');
-      setProduct('');
+      setName('');
    };
 
    /*const newProduct = async () => {
@@ -98,8 +98,8 @@ const NewProduct = ({
                <View style={styles.info}>
                   <TextInput
                      style={[styles.inputName]}
-                     onChangeText={setProduct}
-                     value={product}
+                     onChangeText={setName}
+                     value={name}
                      placeholder="Producto"
                      placeholderTextColor={colors.overlay}
                   />

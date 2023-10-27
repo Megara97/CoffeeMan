@@ -8,24 +8,17 @@ const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const sortData = () => {
-      let listFilter = []; //Lista donde se guardan las coincidencias
-      data.forEach(e => {
-         var re = new RegExp(textToSearch, 'gi');
-         //RegExp es un objeto que representa una expresión regular
-         // RegExp es un constructor, y cuando se utiliza new, se crea una nueva instancia de la clase RegExp
-         //Las expresiones regulares son patrones utilizados para realizar búsquedas y manipulaciones en string.
-         // Indicadores o flags: g-global e i-insensitive
-
-         //metodo test de RegExp busca coincidencias en el string e indica si se encontraron o no
-         //metodo match ademas devuele un array con las coincidencias encontradas
-         if (re.test(e.product)) {
-            listFilter.push(e);
-         }
-      });
-      _setDataSort(listFilter);
-   };
    useEffect(() => {
+      const sortData = () => {
+         let listFilter = []; //Lista donde se guardan las coincidencias
+         data.forEach(e => {
+            var re = new RegExp(textToSearch, 'gi');
+            if (re.test(e.product)) {
+               listFilter.push(e);
+            }
+         });
+         _setDataSort(listFilter);
+      };
       sortData();
    }, [textToSearch]);
 
@@ -66,3 +59,13 @@ const ComponentStyle = colors => {
 };
 
 export default Search;
+
+/*
+RegExp es un objeto que representa una expresión regular
+RegExp es un constructor, y cuando se utiliza new, se crea una nueva instancia de la clase RegExp
+Las expresiones regulares son patrones utilizados para realizar búsquedas y manipulaciones en string.
+Indicadores o flags: g-global e i-insensitive
+
+metodo test de RegExp busca coincidencias en el string e indica si se encontraron o no
+metodo match ademas devuele un array con las coincidencias encontradas
+*/

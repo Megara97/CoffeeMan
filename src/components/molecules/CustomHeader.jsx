@@ -4,23 +4,28 @@ import {useTheme} from '@react-navigation/native';
 import SideMenu from './SideMenuModal';
 import {useState} from 'react';
 import {typography, spacing, radius} from '../../styles/index';
+import imageCommands from '../../assets/images/Command.png';
+import imageReports from '../../assets/images/Report.png';
+import imageMenu from '../../assets/images/Coffee.png';
 
 const CustomHeader = ({navigation, title, name, setChange}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const imageCommands = require('../../assets/images/Command.png');
-   const imageReports = require('../../assets/images/Report.png');
-   const imageMenu = require('../../assets/images/Coffee.png');
-   let icon;
-   if (name == 'Reports') {
-      icon = imageReports;
-   } else if (name == 'Menu') {
-      icon = imageMenu;
-   } else {
-      icon = imageCommands;
-   }
    const [modalVisible, setModalVisible] = useState(false);
+
+   const selectIcon = () => {
+      let icon;
+      if (name == 'Reports') {
+         icon = imageReports;
+      } else if (name == 'Menu') {
+         icon = imageMenu;
+      } else {
+         icon = imageCommands;
+      }
+      return icon;
+   };
+
    return (
       <>
          <View style={styles.header}>
@@ -32,7 +37,7 @@ const CustomHeader = ({navigation, title, name, setChange}) => {
                   </TouchableOpacity>
                </View>
                <View style={styles.section}>
-                  <Image source={icon} style={styles.image} />
+                  <Image source={selectIcon()} style={styles.image} />
                   <Text style={styles.title}> {title}</Text>
                </View>
             </View>

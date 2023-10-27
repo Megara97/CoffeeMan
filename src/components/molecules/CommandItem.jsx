@@ -7,13 +7,14 @@ const Item = ({navigation, client, subtotal, id}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const title = client === '' ? 'Comanda ' + id : client;
+   const putName = () => (title = client === '' ? 'Comanda ' + id : client);
+
    return (
       <TouchableOpacity
          onPress={() => navigation.navigate('CommandDetails', {id: id})}>
          <Shadow {...styles.shadow}>
             <View style={styles.item}>
-               <Text style={styles.title}> {title} </Text>
+               <Text style={styles.title}> {putName()} </Text>
                <Text style={styles.subtotal}>
                   {subtotal !== undefined
                      ? `Subtotal: $ ${subtotal.toFixed(2)}`

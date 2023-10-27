@@ -10,10 +10,8 @@ import CustomMiniButton from '../atoms/CustomMiniButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
-import {useLocalStorage} from '../../customHooks/useLocalStorage';
-import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 
-const Item = ({id, number, product, subtotal, setChange}) => {
+const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -29,44 +27,6 @@ const Item = ({id, number, product, subtotal, setChange}) => {
       total = total.toFixed(2);
       return total;
    };
-
-   /*
-   const [command, deleteCommand, changeCommand] = usePartLocalStorage(
-      'commands',
-      id,
-   );
-   const [products] = useLocalStorage('products');
-
-   const onLess = async () => {
-      try {
-         const productList = products.slice();
-
-         //const commands[index]=command
-         if(command){}
-               const indexProduct = commands[index].products.findIndex(
-                  element => element.product === product,
-               );
-               if (indexProduct !== -1) {
-                  if (quantity > 1) {
-                     commands[index].products[indexProduct].quantity--;
-                     setQuantity(quantity - 1);
-                  } else if (quantity == 1) {
-                     commands[index].products.splice(indexProduct, 1);
-                  }
-                  const productInfo = productList.find(
-                     productInfo => productInfo.product === product,
-                  );
-                  commands[index].subtotal -= productInfo.price;
-               }
-               const jsonValue = JSON.stringify(commands);
-               await AsyncStorage.setItem('commands', jsonValue);
-            }
-            setChange('less' + product + quantity);
-         }
-      } catch (error) {
-         console.error(error);
-      }
-   };*/
 
    const onLess = async () => {
       try {
@@ -247,4 +207,4 @@ const ComponentStyle = colors => {
    });
 };
 
-export default Item;
+export default ItemDynamic;

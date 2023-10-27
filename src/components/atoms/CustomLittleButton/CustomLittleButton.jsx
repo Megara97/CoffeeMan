@@ -6,46 +6,32 @@ import {typography, spacing, radius} from '../../../styles/index';
 //import styles from './CustomLittleButtonStyle';
 
 const CustomLittleButton = props => {
-   const size = 15;
    const colors = useTheme().colors;
+   const size = 15;
 
-   switch (props.type) {
-      case 1: //Efectivo
-         Component = (
-            <Efectivo
-               width={size}
-               height={size}
-               fill={props.active ? colors.background : colors.typography}
-            />
-         );
-         break;
-      case 2: //Tarjeta
-         Component = (
-            <Tarjeta
-               width={size}
-               height={size}
-               fill={props.active ? colors.background : colors.typography}
-            />
-         );
-         break;
-      case 3: //Texto
-         Component = (
-            <Text
-               style={[
-                  styles.text,
-                  {
-                     color: props.active
-                        ? colors.background
-                        : colors.typography,
-                  },
-               ]}>
-               {props.text}
-            </Text>
-         );
-         break;
-      case 4: //Input
-         Component = (
-            <View style={styles.ovalLarge}>
+   const selectComponent = () => {
+      let Component;
+      switch (props.type) {
+         case 1: //Efectivo
+            Component = (
+               <Efectivo
+                  width={size}
+                  height={size}
+                  fill={props.active ? colors.background : colors.typography}
+               />
+            );
+            break;
+         case 2: //Tarjeta
+            Component = (
+               <Tarjeta
+                  width={size}
+                  height={size}
+                  fill={props.active ? colors.background : colors.typography}
+               />
+            );
+            break;
+         case 3: //Texto
+            Component = (
                <Text
                   style={[
                      styles.text,
@@ -55,34 +41,51 @@ const CustomLittleButton = props => {
                            : colors.typography,
                      },
                   ]}>
-                  ${' '}
+                  {props.text}
                </Text>
-               <TextInput
-                  placeholder={props.value}
-                  placeholderTextColor={
-                     props.active ? colors.background : colors.overlay
-                  }
-                  onEndEditing={e => props.setValue(e.nativeEvent.text)}
-                  onFocus={() => props.onSelect(props.index)}
-                  keyboardType="numeric"
-                  style={[
-                     styles.input,
-                     {
-                        color: props.active
-                           ? colors.background
-                           : colors.typography,
-                     },
-                  ]}
-               />
-            </View>
-         );
-         //value={props.value}
-         //onChangeText={props.setValue}
-
-         break;
-      default:
-         console.log('Type de CustomLittleButton incorrecto');
-   }
+            );
+            break;
+         case 4: //Input
+            Component = (
+               <View style={styles.ovalLarge}>
+                  <Text
+                     style={[
+                        styles.text,
+                        {
+                           color: props.active
+                              ? colors.background
+                              : colors.typography,
+                        },
+                     ]}>
+                     ${' '}
+                  </Text>
+                  <TextInput
+                     placeholder={props.value}
+                     placeholderTextColor={
+                        props.active ? colors.background : colors.overlay
+                     }
+                     onEndEditing={e => props.setValue(e.nativeEvent.text)}
+                     onFocus={() => props.onSelect(props.index)}
+                     keyboardType="numeric"
+                     style={[
+                        styles.input,
+                        {
+                           color: props.active
+                              ? colors.background
+                              : colors.typography,
+                        },
+                     ]}
+                  />
+               </View>
+            );
+            //value={props.value}
+            //onChangeText={props.setValue}
+            break;
+         default:
+            console.log('Type de CustomLittleButton incorrecto');
+      }
+      return Component;
+   };
 
    return (
       <View
@@ -92,7 +95,7 @@ const CustomLittleButton = props => {
                backgroundColor: props.active ? colors.color1 : colors.surface,
             },
          ]}>
-         {Component}
+         {selectComponent()}
       </View>
    );
 };

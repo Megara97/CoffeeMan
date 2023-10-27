@@ -14,6 +14,7 @@ const ProductListSelectable = ({
    selectable = false,
 }) => {
    const [selectedItems, setSelectedItems] = useState([]);
+
    const toggleItemSelection = id => {
       if (selectedItems.includes(id)) {
          setSelectedItems(selectedItems.filter(item => item !== id));

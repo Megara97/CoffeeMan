@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import PayCommand from '../components/organisms/PayCommand';
-import DetailsList from '../components/molecules/DetailsListSimple';
+//import DetailsList from '../components/molecules/DetailsListSimple';
+import DetailsList from '../components/organisms/DetailsListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
@@ -84,6 +85,7 @@ const ComponentStyle = colors => {
          alignItems: 'center',
       },
       title: {
+         marginBottom: spacing.xs,
          color: colors.typography,
          ...typography.title,
       },

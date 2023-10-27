@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import InfoCommand from '../components/atoms/InfoCommand';
 import BottomCommand from '../components/molecules/BottomCommand';
-import DetailsList from '../components/organisms/DetailsList';
+//import DetailsList from '../components/organisms/DetailsList';
+import DetailsList from '../components/organisms/DetailsListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import {useTheme} from '@react-navigation/native';
@@ -90,6 +91,7 @@ const CommandDetails = ({navigation, route}) => {
                list={list}
                change={change}
                setChange={setChange}
+               dynamic
             />
          </View>
          <View style={styles.bottom}>
