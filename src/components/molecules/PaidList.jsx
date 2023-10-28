@@ -1,9 +1,9 @@
 import {StyleSheet, View, FlatList} from 'react-native';
-import Item from './CommandItem';
+import Item from './PaidItem';
 import {typography, spacing, radius} from '../../styles/index';
 import {useEffect, useState} from 'react';
 
-const CommandList = ({navigation, list}) => {
+const PaidList = ({navigation, list}) => {
    //console.log(list);
    const [commands, setCommands] = useState([]);
 
@@ -20,7 +20,7 @@ const CommandList = ({navigation, list}) => {
                renderItem={({item}) => (
                   <Item
                      navigation={navigation}
-                     client={item.client}
+                     title={item.date}
                      subtotal={item.subtotal}
                      id={item.id}
                   />
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
    },
 });
 
-export default CommandList;
+export default PaidList;

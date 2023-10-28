@@ -73,12 +73,6 @@ const Menu = ({navigation, route}) => {
                <TouchableOpacity onPress={() => setNewVisible(true)}>
                   <CustomButton type={1} />
                </TouchableOpacity>
-               <TouchableOpacity onPress={() => setList([])}>
-                  <CustomButton type={4} />
-               </TouchableOpacity>
-               <TouchableOpacity onPress={() => console.log(list)}>
-                  <CustomButton type={3} />
-               </TouchableOpacity>
             </View>
          </View>
          <NewProduct
@@ -143,10 +137,11 @@ const ComponentStyle = colors => {
       new: {
          width: '100%',
          height: '15%',
-         flexDirection: 'column',
+         flexDirection: 'row',
          justifyContent: 'flex-end',
          alignItems: 'center',
          paddingBottom: spacing.l,
+         paddingHorizontal: spacing.l,
       },
    });
 };

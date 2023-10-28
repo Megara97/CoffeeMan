@@ -7,6 +7,7 @@ import Menu from './src/screens/Menu';
 import CommandDetails from './src/screens/CommandDetails';
 import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
+import PayDetails from './src/screens/PayDetails';
 import CustomHeader from './src/components/molecules/CustomHeader';
 import {getHeaderTitle} from '@react-navigation/elements';
 import {useColorScheme} from 'react-native';
@@ -99,6 +100,11 @@ const CoffeeMan = () => {
                name="Reports"
                component={Reports}
                options={{title: 'Reportes'}}
+            />
+            <Stack.Screen
+               name="PayDetails"
+               component={PayDetails}
+               options={{title: 'Comanda Pagada'}}
             />
             <Stack.Screen
                name="Menu"

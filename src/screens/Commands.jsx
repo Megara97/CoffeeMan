@@ -12,6 +12,12 @@ const Commands = ({navigation, route}) => {
    const styles = ComponentStyle(colors);
 
    const [list, setList] = useLocalStorage('commands', [], route.params);
+   const [commands, setCommands] = useState([]);
+
+   useEffect(() => {
+      activeCommands = list.filter(item => item.status === 'active');
+      setCommands(activeCommands);
+   }, [list]);
 
    const newCommand = () => {
       let lastId = 1;
@@ -24,6 +30,7 @@ const Commands = ({navigation, route}) => {
          notes: '',
          products: [],
          subtotal: 0,
+         status: 'active',
       };
       let newValue = list.slice();
       newValue.push(newElement);
@@ -109,17 +116,11 @@ const Commands = ({navigation, route}) => {
    return (
       <View style={styles.container}>
          <View style={styles.list}>
-            <CommandList navigation={navigation} list={list} />
+            <CommandList navigation={navigation} list={commands} />
          </View>
          <View style={styles.new}>
             <TouchableOpacity onPress={newCommand}>
                <CustomButton type={1} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setList([])}>
-               <CustomButton type={4} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log(list)}>
-               <CustomButton type={3} />
             </TouchableOpacity>
          </View>
       </View>
@@ -160,10 +161,11 @@ const ComponentStyle = colors => {
       new: {
          width: '100%',
          height: '15%',
-         flexDirection: 'column',
+         flexDirection: 'row',
          justifyContent: 'flex-end',
          alignItems: 'center',
          paddingBottom: spacing.l,
+         paddingHorizontal: spacing.l,
       },
    });
 };

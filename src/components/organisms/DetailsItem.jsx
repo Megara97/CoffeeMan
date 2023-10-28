@@ -159,11 +159,13 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
                <CustomMiniButton type={2} />
             </TouchableOpacity>
          </View>
-         <Text style={[styles.text, {width: '45%'}]}> {product} </Text>
-         <Text style={styles.textlight}> $ {subtotal.toFixed(2)} </Text>
-         <Text style={[styles.text, {width: '17%', textAlign: 'right'}]}>
-            $ {calcTotal()}
-         </Text>
+         <Text style={[styles.product]}>{product}</Text>
+         <View style={styles.money}>
+            <Text style={styles.textlight}>$ {subtotal.toFixed(2)}</Text>
+            <Text style={[styles.text, {textAlign: 'right'}]}>
+               $ {calcTotal()}
+            </Text>
+         </View>
       </View>
    );
 };
@@ -171,27 +173,45 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
 const ComponentStyle = colors => {
    return StyleSheet.create({
       item: {
-         width: '100%',
-         height: 40,
+         width: '97%',
+         height: 60,
          flexDirection: 'row',
-         justifyContent: 'flex-start',
+         justifyContent: 'space-between',
          alignItems: 'center',
          paddingHorizontal: spacing.s,
          borderBottomColor: colors.surface,
          borderBottomWidth: 1,
       },
       quantity: {
-         width: '20%',
+         width: '30%',
          flexDirection: 'row',
          justifyContent: 'flex-start',
          alignItems: 'center',
       },
+      product: {
+         width: '40%',
+         textAlign: 'left',
+         textAlignVertical: 'center',
+         ...typography.title,
+         color: colors.typography,
+         paddingTop: spacing.s,
+         lineHeight: spacing.l,
+      },
+      money: {
+         width: '25%',
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'flex-end',
+      },
       input: {
-         width: '35%',
+         width: '40%',
          backgroundColor: colors.background,
-         paddingVertical: 0,
+         marginTop: spacing.s,
+         marginHorizontal: spacing.xs,
          textAlign: 'center',
-         ...typography.body,
+         textAlignVertical: 'center',
+         ...typography.title,
+         fontSize: 22,
          color: colors.typography,
       },
       text: {
@@ -199,8 +219,6 @@ const ComponentStyle = colors => {
          color: colors.typography,
       },
       textlight: {
-         width: '18%',
-         textAlign: 'right',
          ...typography.body,
          color: colors.overlay,
       },

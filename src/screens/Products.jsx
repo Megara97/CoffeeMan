@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import ProductSectionSelectable from '../components/organisms/ProductSectionGeneral';
+//import ProductSectionSelectable from '../components/organisms/ProductSectionGeneral';
+import ProductSectionSelectable from '../components/organisms/ProductSectionQuantity';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
@@ -20,9 +21,21 @@ const Products = ({navigation, route}) => {
          let newProducts = [];
          if (currentProducts) {
             let productList = JSON.parse(currentProducts);
-            newProducts = productList.filter(product =>
-               selectedItems.includes(product.id),
-            ); //copia de productList pero solo con los productos seleccionados
+            /*newProducts = productList.filter(product =>
+               //selectedItems.includes(product.id),
+               selectedItems.some(item => item.id === product.id),);*/
+            newProducts = selectedItems
+               .map(item1 => {
+                  const item2 = productList.find(
+                     item2 => item2.id === item1.id,
+                  );
+                  if (item2) {
+                     return {...item2, quantity: item1.quantity};
+                  }
+                  return null;
+               })
+               .filter(item => item !== null);
+            //copia de productList pero solo con los productos seleccionados
          }
 
          if (currentValue) {
@@ -34,23 +47,23 @@ const Products = ({navigation, route}) => {
                for (const newProduct of newProducts) {
                   const existingProductIndex = commandList[
                      index
-                  ].products.findIndex(
-                     product => product.product === newProduct.product,
-                  ); //Verificaciòn de si el producto seleccionado ya esta en la comanda
+                  ].products.findIndex(product => product.id === newProduct.id); //Verificaciòn de si el producto seleccionado ya esta en la comanda
                   if (existingProductIndex !== -1) {
                      //Si està se aumenta su cantidad en 1
-                     commandList[index].products[existingProductIndex]
-                        .quantity++;
+                     commandList[index].products[
+                        existingProductIndex
+                     ].quantity += newProduct.quantity;
                   } else {
                      //Si no està se agrega
                      commandList[index].products.push({
-                        product: newProduct.product,
-                        quantity: 1,
+                        id: newProduct.id,
+                        product: newProduct.product, //GESTIONAR MEJRO
+                        quantity: newProduct.quantity,
                      });
                   }
                }
                const totalSelectedPrice = newProducts.reduce(
-                  (total, product) => total + product.price,
+                  (total, product) => total + product.price * product.quantity,
                   0,
                ); //Obtener el precio total de los productos seleccionados
                commandList[index].subtotal += totalSelectedPrice; //sumarlo al subtotal de la comanda

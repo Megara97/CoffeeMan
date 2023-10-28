@@ -5,7 +5,7 @@ import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 
-const InfoCommandEntry = ({id, name, setName, notes, setNotes}) => {
+const InfoCommand = ({id, name, setName, notes, setNotes}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -108,4 +108,4 @@ const ComponentStyle = colors => {
    });
 };
 
-export default InfoCommandEntry;
+export default InfoCommand;

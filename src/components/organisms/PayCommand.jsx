@@ -112,7 +112,15 @@ const PayCommand = ({navigation, id}) => {
 
    const recordCommandPaid = () => {
       //SUBIR A BASE DE DATOS
-      deleteCommand();
+      //deleteCommand();
+      if (command) {
+         let newValue = {...command};
+         newValue.status = 'paid';
+         newValue.date = new Date();
+         newValue.tip = calcTip();
+         newValue.method = method === 0 ? 'efectivo' : 'tarjeta';
+         changeCommand(newValue);
+      }
       navigation.navigate('Commands', {
          change: 'Pay' + id + numberProducts + subtotal,
       });
@@ -130,12 +138,13 @@ const PayCommand = ({navigation, id}) => {
       if (tipType === 5) {
          tip = tipQuantity !== '' ? parseFloat(tipQuantity) : 0;
       }
-      tip = tip.toFixed(2);
+      //tip = tip.toFixed(2);
       return tip;
    };
 
    const calcTotal = tip => {
-      let total = subtotal + parseFloat(tip);
+      //let total = subtotal + parseFloat(tip);
+      let total = subtotal + tip;
       total = total.toFixed(2);
       return total;
    };
@@ -152,7 +161,7 @@ const PayCommand = ({navigation, id}) => {
             </View>
             <View style={styles.productsMenu}>
                <Text style={styles.content}> Propina </Text>
-               <Text style={styles.content}> $ {calcTip()} </Text>
+               <Text style={styles.content}> $ {calcTip().toFixed(2)} </Text>
             </View>
             <View style={styles.productsMenu}>
                <Text style={styles.bold}> Total </Text>

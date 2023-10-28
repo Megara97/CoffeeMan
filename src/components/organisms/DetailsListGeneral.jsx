@@ -11,6 +11,7 @@ const DetailsList = ({navigation, id, list, setChange, dynamic = false}) => {
    const styles = ComponentStyle(colors);
 
    const [details, setDetails] = useState([]);
+
    useEffect(() => {
       if (!dynamic) {
          const fetchData = async () => {

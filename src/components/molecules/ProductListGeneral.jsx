@@ -1,7 +1,7 @@
 import {StyleSheet, View, FlatList} from 'react-native';
 import {useState} from 'react';
 import Item from './ProductItemGeneral';
-//import ItemSelectable from './ProductItemSelectable';
+import ItemSelectable from './ProductItemSelectable';
 //import Item from './ProductItem';
 import {typography, spacing, radius} from '../../styles/index';
 
@@ -32,7 +32,7 @@ const ProductListSelectable = ({
             data={list}
             renderItem={({item}) =>
                selectable ? (
-                  <Item
+                  <ItemSelectable
                      navigation={navigation}
                      id={item.id}
                      product={item.product}
