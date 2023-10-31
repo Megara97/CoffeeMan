@@ -122,6 +122,12 @@ const Commands = ({navigation, route}) => {
             <TouchableOpacity onPress={newCommand}>
                <CustomButton type={1} />
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => setList([])}>
+               <CustomButton type={4} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log(list)}>
+               <CustomButton type={3} />
+            </TouchableOpacity>
          </View>
       </View>
    );

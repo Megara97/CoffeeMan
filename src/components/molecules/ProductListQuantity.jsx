@@ -23,7 +23,11 @@ const ProductListSelectable = ({navigation, list, onSelect}) => {
          }
          return item;
       });
-      filterValue = newValue.filter(item => item.quantity > 0);
+      if (!selectedItems.some(item => item.id === id)) {
+         newValue.push({id: id, quantity: -1});
+      }
+      filterValue = newValue.filter(item => item.quantity != 0);
+      console.log(filterValue);
       setSelectedItems(filterValue);
       onSelect(filterValue);
    };

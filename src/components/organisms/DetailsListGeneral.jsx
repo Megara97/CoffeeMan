@@ -32,11 +32,11 @@ const DetailsList = ({navigation, id, list, setChange, dynamic = false}) => {
                   if (index !== -1) {
                      commands[index].products.forEach(productInOrder => {
                         const productInfo = productList.find(
-                           productInfo =>
-                              productInfo.product === productInOrder.product,
+                           productInfo => productInfo.id === productInOrder.id, //product
                         );
                         if (productInfo) {
                            productInOrder.price = productInfo.price;
+                           productInOrder.product = productInfo.product; //si cambia el nombre
                         }
                      });
                      setDetails(commands[index].products);

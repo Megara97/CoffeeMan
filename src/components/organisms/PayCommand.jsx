@@ -1,4 +1,10 @@
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+   StyleSheet,
+   View,
+   Text,
+   TouchableOpacity,
+   TextInput,
+} from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
 import {Shadow} from 'react-native-shadow-2';
 import {useEffect, useState} from 'react';
@@ -18,6 +24,7 @@ const PayCommand = ({navigation, id}) => {
    const [tipType, setTipType] = useState(0);
    const [method, setMethod] = useState(0);
    const [tipQuantity, setTipQuantity] = useState('0');
+   const [money, setMoney] = useState('0');
 
    const [command, deleteCommand, changeCommand] = usePartLocalStorage(
       'commands',
@@ -142,30 +149,37 @@ const PayCommand = ({navigation, id}) => {
       return tip;
    };
 
-   const calcTotal = tip => {
+   const calcTotal = () => {
+      const tip = calcTip();
       //let total = subtotal + parseFloat(tip);
       let total = subtotal + tip;
-      total = total.toFixed(2);
       return total;
+   };
+
+   const calcChange = () => {
+      const total = calcTotal();
+      let change = money - total;
+      change = change.toFixed(2);
+      if (money <= 0) {
+         change = '       -';
+      }
+      return change;
    };
 
    return (
       <Shadow {...styles.shadow}>
          <View style={styles.container}>
             <View style={styles.productsMenu}>
-               <Text style={styles.content}>
-                  {' '}
-                  Productos ({numberProducts}){' '}
-               </Text>
-               <Text style={styles.content}> $ {subtotal.toFixed(2)} </Text>
+               <Text style={styles.content}>Productos ({numberProducts})</Text>
+               <Text style={styles.content}>$ {subtotal.toFixed(2)}</Text>
             </View>
             <View style={styles.productsMenu}>
-               <Text style={styles.content}> Propina </Text>
-               <Text style={styles.content}> $ {calcTip().toFixed(2)} </Text>
+               <Text style={styles.content}>Propina</Text>
+               <Text style={styles.content}>$ {calcTip().toFixed(2)}</Text>
             </View>
             <View style={styles.productsMenu}>
-               <Text style={styles.bold}> Total </Text>
-               <Text style={styles.bold}> $ {calcTotal(calcTip())} </Text>
+               <Text style={styles.bold}>Total</Text>
+               <Text style={styles.bold}>$ {calcTotal().toFixed(2)}</Text>
             </View>
             <View style={styles.buttonsGroups}>
                <ButtonGroup
@@ -193,6 +207,29 @@ const PayCommand = ({navigation, id}) => {
                />
             </View>
             <View style={styles.buttonsMenu}>
+               <View style={styles.changeMenu}>
+                  <View style={styles.moneyMenu}>
+                     <Text style={styles.content}>Recibido:</Text>
+                     <View style={styles.inputContainer}>
+                        <Text style={styles.content}>$ </Text>
+                        <TextInput
+                           style={styles.input}
+                           onEndEditing={e =>
+                              setMoney(
+                                 parseFloat(e.nativeEvent.text).toFixed(2),
+                              )
+                           }
+                           onChangeText={setMoney}
+                           value={money}
+                           keyboardType="numeric"
+                        />
+                     </View>
+                  </View>
+                  <View style={styles.moneyMenu}>
+                     <Text style={styles.content}>Cambio:</Text>
+                     <Text style={styles.content}>$ {calcChange()} </Text>
+                  </View>
+               </View>
                <TouchableOpacity onPress={recordCommandPaid}>
                   <CustomButton type={5} />
                </TouchableOpacity>
@@ -221,6 +258,19 @@ const ComponentStyle = colors => {
          justifyContent: 'space-between',
          alignItems: 'center',
       },
+      changeMenu: {
+         width: '50%',
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+         //borderWidth: 1,
+      },
+      moneyMenu: {
+         width: '100%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+      },
       buttonsGroups: {
          width: '100%',
          flexDirection: 'colums',
@@ -229,13 +279,31 @@ const ComponentStyle = colors => {
          paddingVertical: spacing.s,
       },
       buttonsMenu: {
-         width: '100%',
+         width: '70%',
          height: 70,
          flexDirection: 'row',
-         justifyContent: 'center',
+         justifyContent: 'space-between',
          alignItems: 'center',
+         //borderWidth: 1,
       },
       content: {
+         ...typography.body,
+         color: colors.typography,
+      },
+      inputContainer: {
+         //width: '42%',
+         paddingLeft: spacing.xs,
+         backgroundColor: colors.background,
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+      },
+      input: {
+         //width: '40%',
+         //paddingHorizontal: spacing.xs,
+         //backgroundColor: colors.background,
+         paddingVertical: 0,
+         textAlign: 'right',
          ...typography.body,
          color: colors.typography,
       },

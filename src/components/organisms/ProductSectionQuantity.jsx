@@ -10,7 +10,6 @@ const ProductSection = ({navigation, id, onSelect}) => {
    const [list, setList] = useState([]); //lista con cambios
    const [defaultList, setDefaultList] = useState([]); //lista original
    const [text, setText] = useState(''); //palabra para buscar
-
    /*const [products] = useLocalStorage('products');
 
    useEffect(() => {
@@ -43,8 +42,12 @@ const ProductSection = ({navigation, id, onSelect}) => {
                   });
                }
             }
-            setList(products);
-            setDefaultList(products);
+            const sortedData = [...products];
+            sortedData.sort((a, b) => a.product.localeCompare(b.product));
+            setList(sortedData);
+            setDefaultList(sortedData);
+            //setList(products);
+            //setDefaultList(products);
          } catch (error) {
             console.error(error);
          }

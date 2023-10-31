@@ -32,7 +32,7 @@ const InfoProduct = ({
 
    useEffect(() => {
       if (product) {
-         setPrice(product.price.toFixed(2).toString());
+         setPrice(product.price.toString());
          setName(product.product);
       }
    }, [product]);
@@ -42,7 +42,7 @@ const InfoProduct = ({
       if (product) {
          let newValue = {...product};
          newValue.price = parseFloat(price);
-         //newValue.product = name;
+         newValue.product = name;
          changeProduct(newValue);
       }
       setVisible(!visible);
@@ -105,7 +105,7 @@ const InfoProduct = ({
                   <View style={styles.price}>
                      <Text style={styles.textPrice}> Precio $ </Text>
                      <TextInput
-                        style={styles.input}
+                        style={styles.inputPrice}
                         onChangeText={setPrice}
                         value={price}
                         keyboardType="numeric"
@@ -125,6 +125,15 @@ const InfoProduct = ({
       </Modal>
    );
 };
+/*
+<TextInput
+style={[styles.inputName]}
+onChangeText={setName}
+value={name}
+placeholder="Producto"
+placeholderTextColor={colors.overlay}
+/>
+*/
 
 const ComponentStyle = colors => {
    return StyleSheet.create({
@@ -166,7 +175,16 @@ const ComponentStyle = colors => {
          alignItems: 'center',
          paddingBottom: spacing.xl,
       },
-      input: {
+      inputName: {
+         width: '70%',
+         paddingHorizontal: spacing.xs,
+         backgroundColor: colors.background,
+         paddingVertical: 0,
+         textAlign: 'center',
+         ...typography.titleBold,
+         color: colors.typography,
+      },
+      inputPrice: {
          width: '15%',
          paddingHorizontal: spacing.xs,
          backgroundColor: colors.background,

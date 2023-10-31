@@ -47,6 +47,7 @@ const CustomHeader = ({navigation, title, name, setChange}) => {
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             setChange={setChange}
+            origin={name}
          />
       </>
    );

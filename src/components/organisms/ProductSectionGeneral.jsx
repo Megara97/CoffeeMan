@@ -24,13 +24,20 @@ const ProductSection = ({
    const [productsInm] = useLocalStorage('products');
 
    useEffect(() => {
+      let sortedData = [];
       if (selectable) {
-         setList(productsInm);
-         setDefaultList(productsInm);
+         sortedData = [...productsInm];
+         //setList(productsInm);
+         //setDefaultList(productsInm);
       } else {
-         setList(products);
-         setDefaultList(products);
+         sortedData = [...products];
+         //setList(products);
+         //setDefaultList(products);
       }
+      sortedData.sort((a, b) => a.product.localeCompare(b.product));
+      setList(sortedData);
+      setDefaultList(sortedData);
+      setText('');
    }, [products, productsInm]);
 
    /*  

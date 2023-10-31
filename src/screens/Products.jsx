@@ -53,15 +53,20 @@ const Products = ({navigation, route}) => {
                      commandList[index].products[
                         existingProductIndex
                      ].quantity += newProduct.quantity;
+                     // Eliminar productos con cantidad igual a 0
+                     commandList[index].products = commandList[
+                        index
+                     ].products.filter(item => item.quantity > 0);
                   } else {
                      //Si no està se agrega
                      commandList[index].products.push({
                         id: newProduct.id,
-                        product: newProduct.product, //GESTIONAR MEJRO
+                        //product: newProduct.product, //GESTIONAR MEJRO
                         quantity: newProduct.quantity,
                      });
                   }
                }
+
                const totalSelectedPrice = newProducts.reduce(
                   (total, product) => total + product.price * product.quantity,
                   0,

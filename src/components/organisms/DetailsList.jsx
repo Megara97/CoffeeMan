@@ -19,6 +19,7 @@ const DetailsList = ({navigation, id, list, setChange}) => {
                   <Item
                      navigation={navigation}
                      product={item.product}
+                     idProduct={item.id}
                      number={item.quantity}
                      subtotal={item.price}
                      setChange={setChange}

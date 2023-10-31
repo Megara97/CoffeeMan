@@ -16,6 +16,13 @@ const Menu = ({navigation, route}) => {
 
    const [change, setChange] = useState('');
    const [list, setList] = useLocalStorage('products', [], change);
+   /*const sortedData = [...list];
+
+   console.log(list);
+   useEffect(() => {
+      //const sortedData = [...list];
+      sortedData.sort((a, b) => a.product.localeCompare(b.product));
+   }, [list, change]);*/
 
    /*const [list, setList] = useState([]);
 
@@ -72,6 +79,12 @@ const Menu = ({navigation, route}) => {
             <View style={styles.new}>
                <TouchableOpacity onPress={() => setNewVisible(true)}>
                   <CustomButton type={1} />
+               </TouchableOpacity>
+               <TouchableOpacity onPress={() => setList([])}>
+                  <CustomButton type={4} />
+               </TouchableOpacity>
+               <TouchableOpacity onPress={() => console.log(list)}>
+                  <CustomButton type={3} />
                </TouchableOpacity>
             </View>
          </View>

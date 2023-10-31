@@ -4,7 +4,7 @@ import {Shadow} from 'react-native-shadow-2';
 import {useEffect, useState} from 'react';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
-import CustomMiniButton from '../atoms/CustomMiniButton';
+import Less from '../../assets/icons/less.svg';
 
 const Item = ({id, product, price, number, addItem, substractItem}) => {
    const colors = useTheme().colors;
@@ -43,8 +43,8 @@ const Item = ({id, product, price, number, addItem, substractItem}) => {
          </TouchableOpacity>
          {quantity > 0 && (
             <TouchableOpacity onPress={() => substractProduct()}>
-               <View style={[styles.less]}>
-                  <CustomMiniButton type={3} />
+               <View style={styles.less}>
+                  <Less width={15} height={15} fill={colors.background} />
                </View>
             </TouchableOpacity>
          )}
@@ -88,14 +88,18 @@ const ComponentStyle = colors => {
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'center',
+         width: 25,
+         height: 25,
+         borderRadius: radius.s,
+         backgroundColor: colors.color1,
       },
       product: {
          height: 40,
          ...typography.body,
          textAlign: 'center',
-         textAlignVertical: 'center',
+         textAlignVertical: 'top',
          lineHeight: spacing.l,
-         paddingTop: spacing.xs,
+         paddingTop: spacing.xxs,
          color: colors.typography,
       },
       quantity: {

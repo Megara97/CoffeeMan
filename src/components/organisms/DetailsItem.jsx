@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
-const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
+const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -41,7 +41,7 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
             const index = commands.findIndex(element => element.id === id);
             if (index !== -1) {
                const indexProduct = commands[index].products.findIndex(
-                  element => element.product === product,
+                  element => element.id === idProduct,
                );
                if (indexProduct !== -1) {
                   if (quantity > 1) {
@@ -51,7 +51,7 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
                      commands[index].products.splice(indexProduct, 1);
                   }
                   const productInfo = productList.find(
-                     productInfo => productInfo.product === product,
+                     productInfo => productInfo.id === idProduct, //product
                   );
                   commands[index].subtotal -= productInfo.price;
                }
@@ -80,12 +80,12 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
             const index = commands.findIndex(element => element.id === id);
             if (index !== -1) {
                const indexProduct = commands[index].products.findIndex(
-                  element => element.product === product,
+                  element => element.id === idProduct,
                );
                if (indexProduct !== -1) {
                   commands[index].products[indexProduct].quantity++;
                   const productInfo = productList.find(
-                     productInfo => productInfo.product === product,
+                     productInfo => productInfo.id === idProduct,
                   );
                   commands[index].subtotal += productInfo.price;
                }
@@ -118,7 +118,7 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
             const index = commands.findIndex(element => element.id === id);
             if (index !== -1) {
                const indexProduct = commands[index].products.findIndex(
-                  element => element.product === product,
+                  element => element.id === idProduct,
                );
                if (indexProduct !== -1) {
                   const before =
@@ -126,7 +126,7 @@ const ItemDynamic = ({id, number, product, subtotal, setChange}) => {
                   commands[index].products[indexProduct].quantity =
                      parseInt(value);
                   const productInfo = productList.find(
-                     productInfo => productInfo.product === product,
+                     productInfo => productInfo.id === idProduct,
                   );
                   commands[index].subtotal +=
                      (parseInt(value) - before) * productInfo.price;
@@ -205,14 +205,14 @@ const ComponentStyle = colors => {
       },
       input: {
          width: '40%',
+         height: 50,
          backgroundColor: colors.background,
-         marginTop: spacing.s,
          marginHorizontal: spacing.xs,
          textAlign: 'center',
-         textAlignVertical: 'center',
          ...typography.title,
-         fontSize: 22,
+         fontSize: 20,
          color: colors.typography,
+         paddingVertical: 0,
       },
       text: {
          ...typography.body,

@@ -1,6 +1,7 @@
-import {TextInput, View, StyleSheet} from 'react-native';
+import {TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useEffect} from 'react';
 import SearchIcon from '../../assets/icons/search.svg';
+import Delete from '../../assets/icons/cancel.svg';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
@@ -24,14 +25,18 @@ const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
 
    return (
       <View style={styles.container}>
+         <SearchIcon width={20} height={20} fill={colors.typography} />
          <TextInput
             style={styles.input}
             placeholder="Buscar productos"
             placeholderTextColor={colors.overlay}
             onChangeText={_onChangeText}
             value={textToSearch}
+            onFocus={() => _onChangeText('')}
          />
-         <SearchIcon width={20} height={20} fill={colors.typography} />
+         <TouchableOpacity onPress={() => _onChangeText('')}>
+            <Delete width={15} height={15} fill={colors.typography} />
+         </TouchableOpacity>
       </View>
    );
 };
@@ -46,7 +51,9 @@ const ComponentStyle = colors => {
          alignItems: 'center',
          backgroundColor: colors.secondary,
          borderRadius: radius.xs,
-         paddingHorizontal: spacing.m,
+         paddingLeft: spacing.m,
+         paddingRight: spacing.xl,
+         //borderWidth: 1,
       },
       input: {
          width: '90%',
@@ -54,6 +61,8 @@ const ComponentStyle = colors => {
          paddingVertical: 0,
          color: colors.typography,
          ...typography.body,
+         paddingHorizontal: spacing.s,
+         //borderWidth: 1,
       },
    });
 };

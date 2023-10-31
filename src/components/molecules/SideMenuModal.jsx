@@ -13,7 +13,13 @@ import {useEffect, useState} from 'react';
 import {typography, spacing, radius} from '../../styles/index';
 import {useLocalStorage} from '../../customHooks/useLocalStorage';
 
-const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
+const SideMenu = ({
+   navigation,
+   modalVisible,
+   setModalVisible,
+   setChange,
+   origin,
+}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -76,9 +82,8 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                   <TouchableOpacity
                      onPress={() => {
                         setModalVisible(false);
-                        navigation.navigate('Commands', {
-                           change: 'SideMenu',
-                        });
+                        //navigation.navigate('Commands');
+                        navigation.push('Commands'); //Arregla el problema en Switch Modo oscuro
                      }}>
                      <Text style={styles.titleHeader}>
                         Administración de comandas
@@ -110,7 +115,7 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                      value={systemMode}
                      onValueChange={() => {
                         setSystemMode(!systemMode);
-                        setChange('Edit' + systemMode);
+                        setChange('Edit' + systemMode + darkMode);
                      }}
                      trackColor={{true: colors.overlay}}
                   />
@@ -123,7 +128,7 @@ const SideMenu = ({navigation, modalVisible, setModalVisible, setChange}) => {
                            value={darkMode}
                            onValueChange={() => {
                               setDarkMode(!darkMode);
-                              setChange('Edit' + darkMode);
+                              setChange('Edit' + systemMode + darkMode);
                            }}
                            disabled={systemMode}
                            trackColor={{true: colors.overlay}}

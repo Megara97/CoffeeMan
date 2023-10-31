@@ -37,6 +37,7 @@ const CommandDetails = ({navigation, route}) => {
                   element => element.id === route.params.id,
                );
                if (index !== -1) {
+                  console.log(commands[index].products);
                   setName(commands[index].client);
                   setNotes(commands[index].notes);
                   setNumber(
@@ -48,11 +49,11 @@ const CommandDetails = ({navigation, route}) => {
                   setSubtotal(commands[index].subtotal);
                   commands[index].products.forEach(productInOrder => {
                      const productInfo = productList.find(
-                        productInfo =>
-                           productInfo.product === productInOrder.product,
+                        productInfo => productInfo.id === productInOrder.id, //busca por id o por product
                      );
                      if (productInfo) {
                         productInOrder.price = productInfo.price;
+                        productInOrder.product = productInfo.product; //si cambia el nombre
                      }
                   });
                   setList(commands[index].products); /**/
