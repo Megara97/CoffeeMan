@@ -1,16 +1,9 @@
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import CustomButton from '../atoms/CustomButton/CustomButton';
-import {Shadow} from 'react-native-shadow-2';
 import {useEffect, useState} from 'react';
-import ButtonGroup from '../molecules/ButtonGroup';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
-import {getLocalStorage} from '../../functions/getLocalStorage';
-import {setLocalStorage} from '../../functions/setLocalStorage';
-import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
-import CustomLittleButton from '../atoms/CustomLittleButton/CustomLittleButton';
 
-const PayPaidCommand = ({navigation, list}) => {
+const PayPaidCommand = ({list}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -30,12 +23,6 @@ const PayPaidCommand = ({navigation, list}) => {
          setTip(calcTip);
       }
    }, [list]);
-
-   const calcTotal = () => {
-      let total = subtotal + tip;
-      total = total.toFixed(2);
-      return total;
-   };
 
    return (
       <View style={styles.container}>

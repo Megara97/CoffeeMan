@@ -1,5 +1,6 @@
 import {useThemeColors} from '../../../customHooks/useThemeColors';
 const {StyleSheet} = require('react-native');
+import {typography, spacing, radius} from '../../../styles/index';
 
 const ComponentStyle = colors => {
    //const colors = useThemeColors();
@@ -8,15 +9,14 @@ const ComponentStyle = colors => {
       circle: {
          width: 60,
          height: 60,
-         borderRadius: 17,
-         backgroundColor: colors.color,
+         borderRadius: radius.m,
+         backgroundColor: colors.color1,
          alignItems: 'center',
          justifyContent: 'center',
       },
       shadow: {
-         distance: 5,
-         startColor: colors.typography + '25',
-         endColor: colors.background,
+         distance: spacing.xs,
+         ...colors.shadow,
          offset: [2, 2],
       },
    });

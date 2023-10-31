@@ -3,15 +3,15 @@ import {typography, spacing, radius} from '../../../styles/index';
 
 const styles = StyleSheet.create({
    oval: {
-      width: 30,
-      height: 22,
+      width: 35,
+      height: 26,
       borderRadius: radius.m,
       alignItems: 'center',
       justifyContent: 'center',
    },
    ovalLarge: {
-      width: 50,
-      height: 22,
+      width: 55,
+      height: 26,
       borderRadius: radius.m,
       flexDirection: 'row',
       alignItems: 'center',

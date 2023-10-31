@@ -10,11 +10,15 @@ const ProductSection = ({navigation, setVisible, setId, products}) => {
    const [text, setText] = useState(''); //palabra para buscar
 
    useEffect(() => {
-      setDefaultList(products);
-      setList(products);
+      //setDefaultList(products);
+      //setList(products);
+      const sortedData = [...products];
+      sortedData.sort((a, b) => a.product.localeCompare(b.product));
+      setList(sortedData);
+      setDefaultList(sortedData);
+      setText('');
    }, [products]);
 
-   //console.log('Productos:', products);
    return (
       <View style={styles.container}>
          <Search

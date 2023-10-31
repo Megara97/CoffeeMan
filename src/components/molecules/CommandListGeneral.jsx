@@ -1,10 +1,9 @@
 import {StyleSheet, View, FlatList} from 'react-native';
-import Item from './PaidItem';
+import Item from '../atoms/CommandItemGeneral';
 import {typography, spacing, radius} from '../../styles/index';
 import {useEffect, useState} from 'react';
 
-const PaidList = ({navigation, list}) => {
-   //console.log(list);
+const CommandList = ({navigation, list, paid = false}) => {
    const [commands, setCommands] = useState([]);
 
    useEffect(() => {
@@ -17,14 +16,25 @@ const PaidList = ({navigation, list}) => {
             <FlatList
                numColumns={1}
                data={commands}
-               renderItem={({item}) => (
-                  <Item
-                     navigation={navigation}
-                     title={item.date}
-                     subtotal={item.subtotal}
-                     id={item.id}
-                  />
-               )}
+               renderItem={({item}) =>
+                  paid ? (
+                     <Item
+                        navigation={navigation}
+                        client={item.client}
+                        subtotal={item.subtotal}
+                        id={item.id}
+                        date={item.date}
+                        paid
+                     />
+                  ) : (
+                     <Item
+                        navigation={navigation}
+                        client={item.client}
+                        subtotal={item.subtotal}
+                        id={item.id}
+                     />
+                  )
+               }
                keyExtractor={item => item.id}
             />
          </View>
@@ -47,4 +57,4 @@ const styles = StyleSheet.create({
    },
 });
 
-export default PaidList;
+export default CommandList;

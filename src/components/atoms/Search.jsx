@@ -53,7 +53,6 @@ const ComponentStyle = colors => {
          borderRadius: radius.xs,
          paddingLeft: spacing.m,
          paddingRight: spacing.xl,
-         //borderWidth: 1,
       },
       input: {
          width: '90%',
@@ -62,7 +61,6 @@ const ComponentStyle = colors => {
          color: colors.typography,
          ...typography.body,
          paddingHorizontal: spacing.s,
-         //borderWidth: 1,
       },
    });
 };

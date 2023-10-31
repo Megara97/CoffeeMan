@@ -1,20 +1,10 @@
 import {StyleSheet, View, FlatList} from 'react-native';
 import {useState} from 'react';
-import Item from './ProductItemQuantity';
+import Item from '../atoms/CommandProductItem';
 import {typography, spacing, radius} from '../../styles/index';
 
-const ProductListSelectable = ({navigation, list, onSelect}) => {
+const CommandProductList = ({navigation, list, onSelect}) => {
    const [selectedItems, setSelectedItems] = useState([]);
-
-   /*const toggleItemSelection = id => {
-      if (selectedItems.includes(id)) {
-         setSelectedItems(selectedItems.filter(item => item !== id));
-         onSelect(selectedItems.filter(item => item !== id));
-      } else {
-         setSelectedItems([...selectedItems, id]);
-         onSelect([...selectedItems, id]);
-      }
-   };*/
 
    const substractItem = id => {
       let newValue = selectedItems.map(item => {
@@ -27,7 +17,6 @@ const ProductListSelectable = ({navigation, list, onSelect}) => {
          newValue.push({id: id, quantity: -1});
       }
       filterValue = newValue.filter(item => item.quantity != 0);
-      console.log(filterValue);
       setSelectedItems(filterValue);
       onSelect(filterValue);
    };
@@ -79,4 +68,4 @@ const styles = StyleSheet.create({
    },
 });
 
-export default ProductListSelectable;
+export default CommandProductList;

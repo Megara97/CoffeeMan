@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import PayPaidCommand from '../components/organisms/PayPaidCommand';
-//import DetailsList from '../components/molecules/DetailsListSimple';
-import DetailsList from '../components/organisms/DetailsListGeneral';
+import BottomPaidCommand from '../components/molecules/BottomPaidCommand';
+import DetailsList from '../components/molecules/DetailsListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
@@ -67,7 +66,7 @@ const Pay = ({navigation, route}) => {
             <DetailsList navigation={navigation} id={route.params.id} />
          </View>
          <View style={styles.bottom}>
-            <PayPaidCommand navigation={navigation} id={route.params.id} />
+            <BottomPaidCommand navigation={navigation} id={route.params.id} />
          </View>
       </View>
    );

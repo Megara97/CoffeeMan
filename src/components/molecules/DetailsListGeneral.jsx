@@ -1,7 +1,7 @@
 import {StyleSheet, View, FlatList} from 'react-native';
 import {useTheme} from '@react-navigation/native';
-import ItemDynamic from './DetailsItem';
-import Item from '../molecules/DetailsItemSimple';
+import ItemDynamic from '../atoms/DetailsItemDynamic';
+import Item from '../atoms/DetailsItemSimple';
 import {typography, spacing, radius} from '../../styles/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
@@ -16,31 +16,24 @@ const DetailsList = ({navigation, id, list, setChange, dynamic = false}) => {
       if (!dynamic) {
          const fetchData = async () => {
             try {
-               const currentValue = await AsyncStorage.getItem('commands');
-               const currentProducts = await AsyncStorage.getItem('products');
+               const productsList = await AsyncStorage.getItem('products');
+               const products = productsList ? JSON.parse(productsList) : [];
+               const commandsList = await AsyncStorage.getItem('commands');
+               const commands = commandsList ? JSON.parse(commandsList) : [];
+               const index = commands.findIndex(element => element.id === id);
 
-               let productList = [];
-               if (currentProducts) {
-                  productList = JSON.parse(currentProducts);
-               }
-
-               if (currentValue) {
-                  let commands = JSON.parse(currentValue);
-                  const index = commands.findIndex(
-                     element => element.id === id,
-                  );
-                  if (index !== -1) {
-                     commands[index].products.forEach(productInOrder => {
-                        const productInfo = productList.find(
-                           productInfo => productInfo.id === productInOrder.id, //product
-                        );
-                        if (productInfo) {
-                           productInOrder.price = productInfo.price;
-                           productInOrder.product = productInfo.product; //si cambia el nombre
-                        }
-                     });
-                     setDetails(commands[index].products);
-                  }
+               if (index !== -1) {
+                  //Agregar el precio y el nombre de cada producto de la comanda
+                  commands[index].products.forEach(productInOrder => {
+                     const productInfo = products.find(
+                        productInMenu => productInMenu.id === productInOrder.id,
+                     );
+                     if (productInfo) {
+                        productInOrder.price = productInfo.price;
+                        productInOrder.product = productInfo.product;
+                     }
+                  });
+                  setDetails(commands[index].products);
                }
             } catch (error) {
                console.error(error);
@@ -57,13 +50,14 @@ const DetailsList = ({navigation, id, list, setChange, dynamic = false}) => {
          <View style={styles.listContainer}>
             <FlatList
                numColumns={1}
-               data={details}
+               data={details} //list
                keyExtractor={item => item.product}
                renderItem={({item}) =>
                   dynamic ? (
                      <ItemDynamic
                         navigation={navigation}
                         product={item.product}
+                        idProduct={item.id}
                         number={item.quantity}
                         subtotal={item.price}
                         setChange={setChange}

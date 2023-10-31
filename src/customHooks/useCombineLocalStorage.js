@@ -1,39 +1,31 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
 
-export function useCombineLocalStorage(id) {
-   const [storedValue, setStoredValue] = useState([]);
+export function useCombineLocalStorage(id, change) {
+   const [storedProducts, setStoredProducts] = useState([]);
+   const [storedCommands, setStoredCommands] = useState([]);
    const [index, setIndex] = useState(-1);
 
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const commandsList = await AsyncStorage.getItem('commands');
-            const productsList = await AsyncStorage.getItem('products');
-            const commands = commands ? JSON.parse(commandsList) : [];
-            const products = products ? JSON.parse(productsList) : [];
-            const i = value.findIndex(element => element.id === id);
-            setIndex(i);
-            if (i !== -1) {
-               commands[i].products.forEach(productInOrder => {
-                  const productInfo = products.find(
-                     productInfo =>
-                        productInfo.product === productInOrder.product,
-                  );
-                  if (productInfo) {
-                     productInOrder.price = productInfo.price;
-                  }
-               });
-               setStoredValue(commands[index].products);
-            }
-         } catch (e) {
-            console.error(e);
-         }
-      };
-      fetchData();
-   }, [id]);
+   const fetchData = async () => {
+      try {
+         const productsList = await AsyncStorage.getItem('products');
+         const products = productsList ? JSON.parse(productsList) : [];
+         const commandsList = await AsyncStorage.getItem('commands');
+         const commands = commandsList ? JSON.parse(commandsList) : [];
+         const i = commands.findIndex(element => element.id === id);
+         setStoredProducts(products);
+         setStoredCommands(commands);
+         setIndex(i);
+      } catch (e) {
+         console.error(e);
+      }
+   };
 
-   const save = async newValue => {
+   useEffect(() => {
+      fetchData();
+   }, [id, change]);
+
+   /*const save = async newValue => {
       try {
          const jsonValue = JSON.stringify(newValue);
          await AsyncStorage.setItem(key, jsonValue);
@@ -61,7 +53,7 @@ export function useCombineLocalStorage(id) {
       } catch (e) {
          console.error(e);
       }
-   };
-   //console.log(storedValue[index]);
-   return [storedValue[index], onDelete, saveChanges];
+   };*/
+   //console.log(storedValue[index]); onDelete, saveChanges
+   return [storedCommands[index], storedProducts, fetchData];
 }

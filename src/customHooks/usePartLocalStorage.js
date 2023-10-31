@@ -5,18 +5,19 @@ export function usePartLocalStorage(key, id) {
    const [storedValue, setStoredValue] = useState([]);
    const [index, setIndex] = useState(-1);
 
+   const fetchData = async () => {
+      try {
+         const item = await AsyncStorage.getItem(key);
+         const value = item ? JSON.parse(item) : [];
+         const i = value.findIndex(element => element.id === id);
+         setStoredValue(value);
+         setIndex(i);
+      } catch (e) {
+         console.error(e);
+      }
+   };
+
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const item = await AsyncStorage.getItem(key);
-            const value = item ? JSON.parse(item) : [];
-            const i = value.findIndex(element => element.id === id);
-            setStoredValue(value);
-            setIndex(i);
-         } catch (e) {
-            console.error(e);
-         }
-      };
       fetchData();
    }, [key, id]);
 
@@ -40,6 +41,7 @@ export function usePartLocalStorage(key, id) {
 
    const saveChanges = async newPart => {
       try {
+         fetchData();
          if (index !== -1) {
             let newValue = storedValue.slice();
             newValue[index] = newPart;

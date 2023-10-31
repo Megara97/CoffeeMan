@@ -12,14 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
-const NewProduct = ({
-   navigation,
-   setChange,
-   visible,
-   setVisible,
-   list,
-   setList,
-}) => {
+const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 

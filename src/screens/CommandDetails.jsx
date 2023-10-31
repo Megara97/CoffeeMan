@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import InfoCommand from '../components/atoms/InfoCommand';
 import BottomCommand from '../components/molecules/BottomCommand';
-import DetailsList from '../components/organisms/DetailsList';
-//import DetailsList from '../components/organisms/DetailsListGeneral';
+import DetailsList from '../components/molecules/DetailsListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
 import {useTheme} from '@react-navigation/native';
@@ -23,41 +22,34 @@ const CommandDetails = ({navigation, route}) => {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const currentValue = await AsyncStorage.getItem('commands');
-            const currentProducts = await AsyncStorage.getItem('products');
-
-            let productList = [];
-            if (currentProducts) {
-               productList = JSON.parse(currentProducts);
-            } /**/
-
-            if (currentValue) {
-               let commands = JSON.parse(currentValue);
-               const index = commands.findIndex(
-                  element => element.id === route.params.id,
+            const productsList = await AsyncStorage.getItem('products');
+            const products = productsList ? JSON.parse(productsList) : [];
+            const commandsList = await AsyncStorage.getItem('commands');
+            const commands = commandsList ? JSON.parse(commandsList) : [];
+            const index = commands.findIndex(
+               element => element.id === route.params.id,
+            );
+            if (index !== -1) {
+               setName(commands[index].client);
+               setNotes(commands[index].notes);
+               setNumber(
+                  commands[index].products.reduce(
+                     (total, product) => total + product.quantity,
+                     0,
+                  ),
                );
-               if (index !== -1) {
-                  console.log(commands[index].products);
-                  setName(commands[index].client);
-                  setNotes(commands[index].notes);
-                  setNumber(
-                     commands[index].products.reduce(
-                        (total, product) => total + product.quantity,
-                        0,
-                     ),
+               setSubtotal(commands[index].subtotal);
+               //Agregar el precio y el nombre de cada producto de la comanda
+               commands[index].products.forEach(productInOrder => {
+                  const productInfo = products.find(
+                     productInMenu => productInMenu.id === productInOrder.id,
                   );
-                  setSubtotal(commands[index].subtotal);
-                  commands[index].products.forEach(productInOrder => {
-                     const productInfo = productList.find(
-                        productInfo => productInfo.id === productInOrder.id, //busca por id o por product
-                     );
-                     if (productInfo) {
-                        productInOrder.price = productInfo.price;
-                        productInOrder.product = productInfo.product; //si cambia el nombre
-                     }
-                  });
-                  setList(commands[index].products); /**/
-               }
+                  if (productInfo) {
+                     productInOrder.price = productInfo.price;
+                     productInOrder.product = productInfo.product;
+                  }
+               });
+               setList(commands[index].products);
             }
          } catch (error) {
             console.error(error);
@@ -90,7 +82,6 @@ const CommandDetails = ({navigation, route}) => {
                navigation={navigation}
                id={route.params.id}
                list={list}
-               change={change}
                setChange={setChange}
                dynamic
             />
@@ -141,3 +132,35 @@ const ComponentStyle = colors => {
 };
 
 export default CommandDetails;
+
+/* 
+   //No se actualiza al agregar o eliminar productos desde la screen Products
+   //Se probo pasar màs parametros como change al hook y obtener fetchData desde el hook y usarlo en el useEffect
+   const [command, products] = useCombineLocalStorage(route.params.id, change);
+
+   useEffect(() => {
+      if (command) {
+         setName(command.client);
+         setNotes(command.notes);
+         setNumber(
+            command.products.reduce(
+               (total, product) => total + product.quantity,
+               0,
+            ),
+         );
+         setSubtotal(command.subtotal);
+
+         //Copia de la comanda donde se agrega el precio y el nombre de cada producto
+         let details = {...command};
+         details.products.forEach(productInOrder => {
+            const productInfo = products.find(
+               productInMenu => productInMenu.id === productInOrder.id,
+            );
+            if (productInfo) {
+               productInOrder.price = productInfo.price;
+               productInOrder.product = productInfo.product;
+            }
+         });
+         setList(details.products);
+      }
+   }, [change, route.params, command, products]);*/

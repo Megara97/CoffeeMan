@@ -1,5 +1,5 @@
 import {StyleSheet, View, FlatList} from 'react-native';
-import Item from './ProductItem';
+import Item from '../atoms/ProductItem';
 import {typography, spacing, radius} from '../../styles/index';
 
 const ProductList = ({navigation, list, setVisible, setId}) => {

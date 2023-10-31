@@ -2,7 +2,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
-const Item = ({number, product, idProduct, subtotal}) => {
+const Item = ({number, product, subtotal}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 

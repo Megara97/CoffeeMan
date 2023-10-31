@@ -1,7 +1,7 @@
 import {StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
 import Logo from '../atoms/Logo';
 import {useTheme} from '@react-navigation/native';
-import SideMenu from './SideMenuModal';
+import SideMenu from '../molecules/SideMenuModal';
 import {useState} from 'react';
 import {typography, spacing, radius} from '../../styles/index';
 import imageCommands from '../../assets/images/Command.png';

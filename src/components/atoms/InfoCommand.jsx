@@ -3,33 +3,12 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
-import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 
 const InfoCommand = ({id, name, setName, notes, setNotes}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const [command, deleteCommand, changeCommand] = usePartLocalStorage(
-      'commands',
-      id,
-   );
-
-   const commandChanges = (key, value) => {
-      if (key === 'client') {
-         setName(value);
-      } else if (key === 'notes') {
-         setNotes(value);
-      }
-      if (command) {
-         let newValue = {...command};
-         //newValue.client = name;
-         //newValue.notes = notes;
-         newValue[key] = value;
-         changeCommand(newValue);
-      }
-   };
-
-   /*const onSave = async (key, value) => {
+   const commandChanges = async (key, value) => {
       try {
          if (key === 'client') {
             setName(value);
@@ -37,21 +16,17 @@ const InfoCommand = ({id, name, setName, notes, setNotes}) => {
             setNotes(value);
          }
          const currentValue = await AsyncStorage.getItem('commands');
-         if (currentValue) {
-            let commandList = JSON.parse(currentValue);
-            const index = commandList.findIndex(element => element.id === id);
-            if (index !== -1) {
-               //commandList[index].client = name;
-               //commandList[index].notes = notes;
-               commandList[index][key] = value;
-               const jsonValue = JSON.stringify(commandList);
-               await AsyncStorage.setItem('commands', jsonValue);
-            }
+         const commandList = currentValue ? JSON.parse(currentValue) : [];
+         const index = commandList.findIndex(element => element.id === id);
+         if (index !== -1) {
+            commandList[index][key] = value;
+            const jsonValue = JSON.stringify(commandList);
+            await AsyncStorage.setItem('commands', jsonValue);
          }
       } catch (e) {
          console.error(e);
       }
-   };*/
+   };
 
    return (
       <View style={styles.infoContainer}>
@@ -109,3 +84,26 @@ const ComponentStyle = colors => {
 };
 
 export default InfoCommand;
+
+/*
+// Si agrego o elimino productos y luego cambio nombre o notas, se revierten los cambios en los productos por se guarda el estado del AsyncStorage en el hook 
+   const [command, deleteCommand, changeCommand] = usePartLocalStorage(
+      'commands',
+      id,
+   );
+
+   const commandChanges = (key, value) => {
+      if (key === 'client') {
+         setName(value);
+      } else if (key === 'notes') {
+         setNotes(value);
+      }
+      if (command) {
+         let newValue = {...command};
+         //newValue.client = name;
+         //newValue.notes = notes;
+         newValue[key] = value;
+         changeCommand(newValue);
+      }
+   };
+   */

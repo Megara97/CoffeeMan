@@ -8,7 +8,7 @@ import CommandDetails from './src/screens/CommandDetails';
 import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
 import PayDetails from './src/screens/PayDetails';
-import CustomHeader from './src/components/molecules/CustomHeader';
+import CustomHeader from './src/components/organisms/CustomHeader';
 import {getHeaderTitle} from '@react-navigation/elements';
 import {useColorScheme} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';

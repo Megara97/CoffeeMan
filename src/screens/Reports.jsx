@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import CommandList from '../components/molecules/CommandList';
-import PaidList from '../components/molecules/PaidList';
+import CommandList from '../components/molecules/CommandListGeneral';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
 import {useLocalStorage} from '../customHooks/useLocalStorage';
-import InfoPaidCommand from '../components/organisms/InfoPaidCommand';
+import InfoPaidCommands from '../components/atoms/InfoPaidCommands';
 
 const Reports = ({navigation, route}) => {
    const colors = useTheme().colors;
@@ -24,11 +23,11 @@ const Reports = ({navigation, route}) => {
          <View style={styles.principal}>
             <Text style={styles.title}> Comandas pagadas </Text>
             <View style={styles.list}>
-               <PaidList navigation={navigation} list={commands} />
+               <CommandList navigation={navigation} list={commands} paid />
             </View>
          </View>
          <View style={styles.bottom}>
-            <InfoPaidCommand navigation={navigation} list={commands} />
+            <InfoPaidCommands navigation={navigation} list={commands} />
          </View>
       </View>
    );

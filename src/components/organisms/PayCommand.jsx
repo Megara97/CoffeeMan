@@ -24,7 +24,7 @@ const PayCommand = ({navigation, id}) => {
    const [tipType, setTipType] = useState(0);
    const [method, setMethod] = useState(0);
    const [tipQuantity, setTipQuantity] = useState('0');
-   const [money, setMoney] = useState('0');
+   const [money, setMoney] = useState('');
 
    const [command, deleteCommand, changeCommand] = usePartLocalStorage(
       'commands',
@@ -79,7 +79,6 @@ const PayCommand = ({navigation, id}) => {
 
    useEffect(() => {
       getLocalStorage('commands', id).then(([commands, index]) => {
-         //console.log(commands, index);
          if (index !== -1) {
             setNumber(
                commands[index].products.reduce(
@@ -263,7 +262,6 @@ const ComponentStyle = colors => {
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'center',
-         //borderWidth: 1,
       },
       moneyMenu: {
          width: '100%',
@@ -284,14 +282,12 @@ const ComponentStyle = colors => {
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
-         //borderWidth: 1,
       },
       content: {
          ...typography.body,
          color: colors.typography,
       },
       inputContainer: {
-         //width: '42%',
          paddingLeft: spacing.xs,
          backgroundColor: colors.background,
          flexDirection: 'row',
@@ -299,9 +295,6 @@ const ComponentStyle = colors => {
          alignItems: 'center',
       },
       input: {
-         //width: '40%',
-         //paddingHorizontal: spacing.xs,
-         //backgroundColor: colors.background,
          paddingVertical: 0,
          textAlign: 'right',
          ...typography.body,

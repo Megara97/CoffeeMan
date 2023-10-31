@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
-import CommandList from '../components/molecules/CommandList';
+import CommandList from '../components/molecules/CommandListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';

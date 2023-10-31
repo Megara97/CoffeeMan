@@ -14,7 +14,9 @@ const BottomCommand = ({navigation, id, numberProducts, subtotal}) => {
             <View style={styles.subtotal}>
                <Text style={styles.title}> Productos ({numberProducts}) </Text>
                <Text style={styles.title}>
-                  {subtotal !== null ? `$ ${subtotal.toFixed(2)}` : null}
+                  {subtotal !== undefined || null
+                     ? `$ ${subtotal.toFixed(2)}`
+                     : null}
                </Text>
             </View>
             <View style={styles.buttons}>

@@ -1,16 +1,12 @@
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import CustomButton from '../atoms/CustomButton/CustomButton';
+import {StyleSheet, View, Text} from 'react-native';
 import {Shadow} from 'react-native-shadow-2';
 import {useEffect, useState} from 'react';
-import ButtonGroup from '../molecules/ButtonGroup';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
-import {getLocalStorage} from '../../functions/getLocalStorage';
-import {setLocalStorage} from '../../functions/setLocalStorage';
 import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 import CustomLittleButton from '../atoms/CustomLittleButton/CustomLittleButton';
 
-const PayPaidCommand = ({navigation, id}) => {
+const BottomPaidCommand = ({id}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -19,10 +15,7 @@ const PayPaidCommand = ({navigation, id}) => {
    const [tip, setTip] = useState(0);
    const [method, setMethod] = useState('');
 
-   const [command, deleteCommand, changeCommand] = usePartLocalStorage(
-      'commands',
-      id,
-   );
+   const [command] = usePartLocalStorage('commands', id);
 
    useEffect(() => {
       if (command) {
@@ -119,4 +112,4 @@ const ComponentStyle = colors => {
    });
 };
 
-export default PayPaidCommand;
+export default BottomPaidCommand;
