@@ -4,6 +4,7 @@ const lFlavor = variants.latte;
 const dFlavor = variants.mocha; //frappe o macchiato
 
 const light = {
+   dark: false,
    colors: {
       background: lFlavor.base.hex,
       typography: lFlavor.text.hex,
@@ -19,6 +20,7 @@ const light = {
 };
 
 const dark = {
+   dark: true,
    colors: {
       background: dFlavor.base.hex,
       typography: dFlavor.text.hex,

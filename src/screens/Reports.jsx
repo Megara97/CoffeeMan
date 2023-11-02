@@ -5,6 +5,7 @@ import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
 import {useLocalStorage} from '../customHooks/useLocalStorage';
 import InfoPaidCommands from '../components/atoms/InfoPaidCommands';
+import PeriodSelector from '../components/organisms/PeriodSelector';
 
 const Reports = ({navigation, route}) => {
    const colors = useTheme().colors;
@@ -12,16 +13,22 @@ const Reports = ({navigation, route}) => {
 
    const [list, setList] = useLocalStorage('commands', [], route.params);
    const [commands, setCommands] = useState([]);
+   const [selectedPeriod, setSelectedPeriod] = useState();
 
    useEffect(() => {
       const paidCommands = list.filter(item => item.status === 'paid');
-      setCommands(paidCommands);
-   }, [list]);
+      const filteredCommands = paidCommands.filter(item => {
+         const itemDate = new Date(item.date);
+         return itemDate >= selectedPeriod[0] && itemDate <= selectedPeriod[1];
+      });
+      setCommands(filteredCommands);
+   }, [list, selectedPeriod]);
 
    return (
       <View style={styles.container}>
          <View style={styles.principal}>
             <Text style={styles.title}> Comandas pagadas </Text>
+            <PeriodSelector setSelection={setSelectedPeriod} />
             <View style={styles.list}>
                <CommandList navigation={navigation} list={commands} paid />
             </View>

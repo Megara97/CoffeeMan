@@ -28,11 +28,11 @@ const PayPaidCommand = ({list}) => {
       <View style={styles.container}>
          <View style={styles.status}>
             <View style={styles.data}>
-               <Text style={styles.title}> Ingresos </Text>
+               <Text style={styles.titleBold}> Ingresos </Text>
                <Text style={styles.title}> $ {income.toFixed(2)} </Text>
             </View>
             <View style={styles.data}>
-               <Text style={styles.title}> Propinas </Text>
+               <Text style={styles.titleBold}> Propinas </Text>
                <Text style={styles.title}> $ {tip.toFixed(2)} </Text>
             </View>
          </View>
@@ -49,7 +49,7 @@ const ComponentStyle = colors => {
       container: {
          width: '80%',
          height: 80,
-         backgroundColor: colors.surface,
+         backgroundColor: colors.secondary,
          flexDirection: 'column',
          justifyContent: 'space-evenly',
          alignItems: 'center',
@@ -73,6 +73,10 @@ const ComponentStyle = colors => {
       },
       title: {
          ...typography.title,
+         color: colors.typography,
+      },
+      titleBold: {
+         ...typography.titleBold,
          color: colors.typography,
       },
    });
