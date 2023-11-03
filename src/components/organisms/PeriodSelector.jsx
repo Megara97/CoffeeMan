@@ -60,6 +60,10 @@ const PeriodSelector = ({setSelection}) => {
                today.getFullYear(),
                today.getMonth() + 1,
                0,
+               23,
+               59,
+               59,
+               999,
             );
             setSelection([firstDay, lastDay]);
             break;
@@ -74,6 +78,10 @@ const PeriodSelector = ({setSelection}) => {
                today.getFullYear(),
                today.getMonth(),
                0,
+               23,
+               59,
+               59,
+               999,
             );
             setSelection([firstDayPast, lastDayPast]);
             break;
@@ -81,7 +89,6 @@ const PeriodSelector = ({setSelection}) => {
             setDate1(today);
             setDate2(today);
             setOpen1(true);
-            //setSelection([date1, date2]);
             break;
          default:
             break;
