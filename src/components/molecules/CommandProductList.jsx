@@ -1,9 +1,47 @@
-import {StyleSheet, View, FlatList} from 'react-native';
-import {useState} from 'react';
+import {
+   StyleSheet,
+   View,
+   FlatList,
+   Dimensions,
+   DeviceEventEmitter,
+} from 'react-native';
+import {useEffect, useState} from 'react';
 import Item from '../atoms/CommandProductItem';
 import {typography, spacing, radius} from '../../styles/index';
 
 const CommandProductList = ({navigation, list, onSelect}) => {
+   const [windowWidth, setWindowWidth] = useState(
+      Dimensions.get('window').width,
+   );
+   const [column, setColumn] = useState(3);
+
+   useEffect(() => {
+      const updateWindowWidth = () => {
+         setWindowWidth(Dimensions.get('window').width);
+      };
+      // Suscribirse al evento de cambio de orientación
+      const orientationChangeSubscription = DeviceEventEmitter.addListener(
+         'didUpdateDimensions',
+         updateWindowWidth,
+      );
+      return () => {
+         // Desuscribirse del evento al desmontar el componente
+         orientationChangeSubscription.remove();
+      };
+   }, []);
+
+   useEffect(() => {
+      let columnsNumber = (windowWidth - 60) / 110;
+      columnsNumber = Math.floor(columnsNumber);
+      setColumn(columnsNumber);
+   }, [windowWidth]);
+
+   /*const setColumns = () => {
+      let columnsNumber = (windowWidth - 60) / 110;
+      columnsNumber = Math.floor(columnsNumber);
+      return columnsNumber;
+   };*/
+
    const [selectedItems, setSelectedItems] = useState([]);
 
    const substractItem = id => {
@@ -38,7 +76,8 @@ const CommandProductList = ({navigation, list, onSelect}) => {
    return (
       <View style={styles.container}>
          <FlatList
-            numColumns={3}
+            key={column}
+            numColumns={column} //3,setColumns()
             data={list}
             renderItem={({item}) => (
                <Item
@@ -64,7 +103,6 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingVertical: spacing.s,
    },
 });
 

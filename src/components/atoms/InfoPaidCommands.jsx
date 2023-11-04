@@ -2,6 +2,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
+import {Shadow} from 'react-native-shadow-2';
 
 const PayPaidCommand = ({list}) => {
    const colors = useTheme().colors;
@@ -49,11 +50,13 @@ const ComponentStyle = colors => {
       container: {
          width: '80%',
          height: 80,
+         //flex: 1,
          backgroundColor: colors.secondary,
          flexDirection: 'column',
          justifyContent: 'space-evenly',
          alignItems: 'center',
          borderRadius: radius.s,
+         paddingVertical: spacing.m,
       },
       status: {
          width: '100%',
@@ -78,6 +81,13 @@ const ComponentStyle = colors => {
       titleBold: {
          ...typography.titleBold,
          color: colors.typography,
+      },
+      shadow: {
+         distance: spacing.s,
+         ...colors.shadow,
+         style: {
+            flexDirection: 'column',
+         },
       },
    });
 };

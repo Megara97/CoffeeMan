@@ -34,9 +34,11 @@ const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
             value={textToSearch}
             onFocus={() => _onChangeText('')}
          />
-         <TouchableOpacity onPress={() => _onChangeText('')}>
-            <Delete width={15} height={15} fill={colors.typography} />
-         </TouchableOpacity>
+         {textToSearch != '' && (
+            <TouchableOpacity onPress={() => _onChangeText('')}>
+               <Delete width={15} height={15} fill={colors.typography} />
+            </TouchableOpacity>
+         )}
       </View>
    );
 };
@@ -45,7 +47,6 @@ const ComponentStyle = colors => {
    return StyleSheet.create({
       container: {
          width: '70%',
-         height: 35,
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
@@ -53,14 +54,15 @@ const ComponentStyle = colors => {
          borderRadius: radius.xs,
          paddingLeft: spacing.m,
          paddingRight: spacing.xl,
+         paddingVertical: spacing.xs,
+         marginBottom: spacing.xs,
       },
       input: {
          width: '90%',
-         height: '100%',
          paddingVertical: 0,
          color: colors.typography,
          ...typography.body,
-         paddingHorizontal: spacing.s,
+         paddingHorizontal: spacing.m,
       },
    });
 };

@@ -132,21 +132,24 @@ const ComponentStyle = colors => {
       },
       principal: {
          width: '100%',
-         height: '57%',
+         flex: 1,
+         //height: '57%',
          justifyContent: 'flex-start',
          alignItems: 'center',
+         marginVertical: spacing.s,
+      },
+      title: {
+         marginBottom: spacing.s,
+         color: colors.typography,
+         ...typography.title,
       },
       bottom: {
          width: '100%',
-         height: '43%',
+         //height: '43%',
          flexDirection: 'column',
          justifyContent: 'flex-end',
          alignItems: 'center',
-      },
-      title: {
-         marginBottom: spacing.xs,
-         color: colors.typography,
-         ...typography.title,
+         marginTop: spacing.xs,
       },
    });
 };

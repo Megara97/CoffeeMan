@@ -72,6 +72,7 @@ const CoffeeMan = () => {
                         title={title} //options.title
                         navigation={navigation}
                         setChange={setChange}
+                        change={change}
                      />
                   );
                },

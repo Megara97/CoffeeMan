@@ -194,7 +194,6 @@ const ComponentStyle = colors => {
    return StyleSheet.create({
       container: {
          width: '90%',
-         //height: '17%',
          flexDirection: 'column',
          alignItems: 'center',
          justifyContent: 'center',

@@ -124,7 +124,7 @@ const ComponentStyle = colors => {
       },
       container: {
          width: '80%',
-         height: '25%',
+         height: 170,
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'center',
@@ -134,7 +134,7 @@ const ComponentStyle = colors => {
       message: {
          textAlign: 'center',
          color: colors.typography,
-         paddingVertical: spacing.s,
+         marginVertical: spacing.s,
          paddingHorizontal: spacing.l,
          ...typography.title,
       },
@@ -146,7 +146,7 @@ const ComponentStyle = colors => {
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
-         paddingVertical: spacing.s,
+         marginVertical: spacing.s,
       },
    });
 };

@@ -8,7 +8,7 @@ import imageCommands from '../../assets/images/Command.png';
 import imageReports from '../../assets/images/Report.png';
 import imageMenu from '../../assets/images/Coffee.png';
 
-const CustomHeader = ({navigation, title, name, setChange}) => {
+const CustomHeader = ({navigation, title, name, setChange, change}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -47,7 +47,7 @@ const CustomHeader = ({navigation, title, name, setChange}) => {
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             setChange={setChange}
-            origin={name}
+            change={change}
          />
       </>
    );
@@ -64,8 +64,6 @@ const ComponentStyle = colors => {
          width: '100%',
          height: 55,
          backgroundColor: colors.color1,
-         shadowColor: colors.typography,
-         elevation: 10,
          flexDirection: 'row',
          justifyContent: 'flex-start',
          borderBottomLeftRadius: radius.s,

@@ -140,7 +140,7 @@ const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
    return (
       <View style={styles.item}>
          <View style={styles.quantity}>
-            <TouchableOpacity style={styles.button} onPress={onLess}>
+            <TouchableOpacity onPress={onLess}>
                <Less width={size} height={size} fill={colors.color1} />
             </TouchableOpacity>
             <TextInput
@@ -150,7 +150,7 @@ const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
                keyboardType="numeric"
                placeholderTextColor={colors.typography}
             />
-            <TouchableOpacity style={styles.button} onPress={onMore}>
+            <TouchableOpacity onPress={onMore}>
                <More width={size} height={size} fill={colors.color1} />
             </TouchableOpacity>
          </View>
@@ -168,12 +168,13 @@ const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
 const ComponentStyle = colors => {
    return StyleSheet.create({
       item: {
-         width: '97%',
-         height: 60,
+         width: '99%',
+         flex: 1,
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
-         paddingHorizontal: spacing.s,
+         paddingVertical: spacing.xs,
+         paddingHorizontal: spacing.l,
          borderBottomColor: colors.surface,
          borderBottomWidth: 1,
       },
@@ -181,12 +182,6 @@ const ComponentStyle = colors => {
          width: '30%',
          flexDirection: 'row',
          justifyContent: 'flex-start',
-         alignItems: 'center',
-      },
-      button: {
-         height: 50,
-         flexDirection: 'column',
-         justifyContent: 'center',
          alignItems: 'center',
       },
       product: {
@@ -206,14 +201,15 @@ const ComponentStyle = colors => {
       },
       input: {
          width: '40%',
-         height: 50,
          backgroundColor: colors.background,
-         marginHorizontal: spacing.xs,
+         marginHorizontal: spacing.xxs,
          textAlign: 'center',
+         textAlignVertical: 'center',
          ...typography.title,
          fontSize: 20,
          color: colors.typography,
-         paddingVertical: 0,
+         //height: 50,
+         //paddingVertical: 0,
       },
       text: {
          ...typography.body,

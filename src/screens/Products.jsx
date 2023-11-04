@@ -180,17 +180,18 @@ const ComponentStyle = colors => {
       },
       list: {
          width: '100%',
-         height: '87%',
+         flex: 1,
          justifyContent: 'flex-start',
          alignItems: 'center',
+         marginBottom: spacing.xs,
       },
       accept: {
          width: '100%',
-         height: '13%',
          flexDirection: 'column',
          justifyContent: 'flex-end',
          alignItems: 'center',
-         paddingBottom: spacing.l,
+         marginBottom: spacing.l,
+         paddingHorizontal: spacing.l,
       },
    });
 };

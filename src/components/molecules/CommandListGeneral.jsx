@@ -45,7 +45,7 @@ const CommandList = ({navigation, list, paid = false}) => {
 const styles = StyleSheet.create({
    container: {
       width: '100%',
-      height: '100%',
+      flex: 1,
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',

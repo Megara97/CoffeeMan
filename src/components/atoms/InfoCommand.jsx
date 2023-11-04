@@ -56,24 +56,25 @@ const InfoCommand = ({id, name, setName, notes, setNotes}) => {
 const ComponentStyle = colors => {
    return StyleSheet.create({
       infoContainer: {
-         width: '80%', //'90%',
-         height: 80,
+         flex: 1,
          backgroundColor: colors.secondary,
          flexDirection: 'column',
          justifyContent: 'space-evenly',
          alignItems: 'center',
          borderRadius: radius.s,
+         paddingVertical: spacing.xs,
+         marginLeft: spacing.l,
       },
       inputContainer: {
-         width: '90%',
-         height: '35%',
+         width: '100%',
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
+         marginVertical: spacing.xxs,
+         paddingHorizontal: spacing.m,
       },
       input: {
          width: '100%',
-         height: '100%',
          paddingVertical: 0,
          paddingHorizontal: spacing.s,
          backgroundColor: colors.background,

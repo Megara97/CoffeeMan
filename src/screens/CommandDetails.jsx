@@ -108,25 +108,26 @@ const ComponentStyle = colors => {
          alignItems: 'center',
          backgroundColor: colors.background,
       },
+      principal: {
+         width: '100%',
+         flex: 1,
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+         marginVertical: spacing.s,
+      },
       containerTop: {
          width: '90%',
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
-         marginVertical: spacing.s,
-      },
-      principal: {
-         width: '100%',
-         height: '77%',
-         justifyContent: 'flex-start',
-         alignItems: 'center',
+         marginBottom: spacing.s,
       },
       bottom: {
          width: '100%',
-         height: '23%',
          flexDirection: 'column',
          justifyContent: 'flex-end',
          alignItems: 'center',
+         marginTop: spacing.xs,
       },
    });
 };

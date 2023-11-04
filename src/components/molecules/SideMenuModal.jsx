@@ -5,6 +5,7 @@ import {
    TouchableOpacity,
    Modal,
    Switch,
+   ScrollView,
 } from 'react-native';
 import Logo from '../atoms/Logo';
 import {useTheme} from '@react-navigation/native';
@@ -18,7 +19,7 @@ const SideMenu = ({
    modalVisible,
    setModalVisible,
    setChange,
-   origin,
+   change,
 }) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
@@ -26,8 +27,9 @@ const SideMenu = ({
    const [systemMode, setSystemMode] = useLocalStorage(
       'systemColorScheme',
       true,
+      change,
    );
-   const [darkMode, setDarkMode] = useLocalStorage('darkScheme', false);
+   const [darkMode, setDarkMode] = useLocalStorage('darkScheme', false, change);
 
    /* const [systemMode, setSystemMode] = useState(true);
    const [darkMode, setDarkMode] = useState(false);
@@ -77,71 +79,80 @@ const SideMenu = ({
             setModalVisible(!modalVisible);
          }}>
          <View style={styles.backdrop}>
-            <View style={styles.side}>
-               <View style={styles.sections}>
-                  <TouchableOpacity
-                     onPress={() => {
-                        setModalVisible(false);
-                        //navigation.navigate('Commands');
-                        navigation.push('Commands'); //Arregla el problema en Switch Modo oscuro
-                     }}>
-                     <Text style={styles.titleHeader}>
-                        Administración de comandas
-                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     onPress={() => {
-                        setModalVisible(false);
-                        navigation.navigate('Menu');
-                     }}>
-                     <Text style={styles.titleHeader}>
-                        Configuración del menú
-                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     onPress={() => {
-                        setModalVisible(false);
-                        navigation.navigate('Reports');
-                     }}>
-                     <Text style={styles.titleHeader}>Reportes</Text>
-                  </TouchableOpacity>
-               </View>
-               <View style={styles.aparience}>
-                  <Text style={styles.title}>Modo oscuro</Text>
-                  <Text style={[styles.body]}>
-                     Usar configuración del sistema
-                  </Text>
-                  <Switch
-                     value={systemMode}
-                     onValueChange={() => {
-                        setSystemMode(!systemMode);
-                        setChange('Edit' + systemMode + darkMode);
-                     }}
-                     trackColor={{true: colors.overlay}}
-                  />
-                  {!systemMode && (
-                     <View style={styles.switch}>
-                        <Text style={[styles.body]}>
-                           {darkMode ? 'Activado' : 'Desactivado'}
+            <View style={styles.modal}>
+               <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  style={styles.header}
+               />
+               <View style={styles.side}>
+                  <View style={styles.sections}>
+                     <TouchableOpacity
+                        onPress={() => {
+                           setModalVisible(false);
+                           navigation.navigate('Commands');
+                        }}>
+                        <Text style={styles.titleHeader}>
+                           Administración de comandas
                         </Text>
-                        <Switch
-                           value={darkMode}
-                           onValueChange={() => {
-                              setDarkMode(!darkMode);
-                              setChange('Edit' + systemMode + darkMode);
-                           }}
-                           disabled={systemMode}
-                           trackColor={{true: colors.overlay}}
-                        />
-                     </View>
-                  )}
+                     </TouchableOpacity>
+                     <TouchableOpacity
+                        onPress={() => {
+                           setModalVisible(false);
+                           navigation.navigate('Menu');
+                        }}>
+                        <Text style={styles.titleHeader}>
+                           Configuración del menú
+                        </Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity
+                        onPress={() => {
+                           setModalVisible(false);
+                           navigation.navigate('Reports');
+                        }}>
+                        <Text style={styles.titleHeader}>Reportes</Text>
+                     </TouchableOpacity>
+                  </View>
+                  <View style={styles.aparience}>
+                     <Text style={styles.title}>Modo oscuro</Text>
+                     <Text style={[styles.body]}>
+                        Usar configuración del sistema
+                     </Text>
+                     <Switch
+                        value={systemMode}
+                        onValueChange={() => {
+                           setSystemMode(!systemMode);
+                           setChange('Edit' + systemMode + darkMode);
+                        }}
+                        trackColor={{true: colors.overlay}}
+                     />
+                     {!systemMode && (
+                        <View style={styles.switch}>
+                           <Text style={[styles.body]}>
+                              {darkMode ? 'Activado' : 'Desactivado'}
+                           </Text>
+                           <Switch
+                              value={darkMode}
+                              onValueChange={() => {
+                                 setDarkMode(!darkMode);
+                                 setChange('Edit' + systemMode + darkMode);
+                              }}
+                              disabled={systemMode}
+                              trackColor={{true: colors.overlay}}
+                           />
+                        </View>
+                     )}
+                  </View>
+               </View>
+               <View style={styles.logo}>
+                  <TouchableOpacity onPress={() => setModalVisible(false)}>
+                     <Logo navigation={navigation} menu={true} />
+                  </TouchableOpacity>
                </View>
             </View>
-            <View style={styles.logo}>
-               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Logo navigation={navigation} menu={true} />
-               </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+               onPress={() => setModalVisible(false)}
+               style={styles.skip}
+            />
          </View>
       </Modal>
    );
@@ -152,45 +163,60 @@ const SideMenu = ({
 const ComponentStyle = colors => {
    return StyleSheet.create({
       backdrop: {
-         width: '100%',
          height: '100%',
+         width: '100%',
          backgroundColor: colors.typography + '70',
          flexDirection: 'row',
-         justifyContent: 'flex-start',
+         justifyContent: 'space-between',
+      },
+      modal: {
+         height: '100%',
+         width: '70%',
+         flexDirection: 'column',
+         justifyContent: 'center',
          alignItems: 'flex-start',
       },
-      side: {
-         position: 'absolute',
-         top: 55,
-         width: '70%',
+      skip: {
          height: '100%',
+         width: '30%',
+      },
+      header: {
+         width: '100%',
+         height: 55,
+      },
+      side: {
+         flex: 1,
+         width: '100%',
          backgroundColor: colors.color1,
          flexDirection: 'column',
          justifyContent: 'space-between',
       },
       logo: {
-         width: '30%',
-         flexDirection: 'row',
-         justifyContent: 'center',
+         position: 'absolute',
+         top: 0,
+         width: '43%',
+         alignItems: 'center',
       },
       sections: {
          width: '100%',
-         height: '70%',
          flexDirection: 'column',
          justifyContent: 'flex-start',
          alignItems: 'flex-end',
-         paddingVertical: spacing.xl,
+         paddingVertical: spacing.m,
          paddingHorizontal: spacing.m,
       },
       aparience: {
          width: '100%',
-         height: '30%',
          flexDirection: 'column',
          alignItems: 'center',
-         justifyContent: 'flex-start',
-         paddingVertical: spacing.l,
+         justifyContent: 'flex-end',
+         paddingVertical: spacing.s,
          borderTopWidth: 1,
          borderColor: colors.surface,
+      },
+      scroll: {
+         height: 150,
+         width: '100%',
       },
       switch: {
          width: '50%',

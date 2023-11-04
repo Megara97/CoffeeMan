@@ -147,10 +147,12 @@ const ComponentStyle = colors => {
       },
       container: {
          width: '100%',
-         height: 180,
+         height: 170,
+         //flex: 1,
          flexDirection: 'column',
          justifyContent: 'flex-end',
          alignItems: 'center',
+         paddingTop: spacing.s,
          backgroundColor: colors.secondary,
          borderTopLeftRadius: radius.l,
          borderTopRightRadius: radius.l,
@@ -160,7 +162,6 @@ const ComponentStyle = colors => {
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'center',
-         paddingBottom: spacing.m,
       },
       price: {
          width: '100%',
@@ -173,7 +174,8 @@ const ComponentStyle = colors => {
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',
-         paddingBottom: spacing.xl,
+         marginBottom: spacing.l,
+         marginTop: spacing.m,
       },
       inputName: {
          width: '70%',

@@ -28,11 +28,12 @@ const ComponentStyle = colors => {
    return StyleSheet.create({
       item: {
          width: '100%',
-         height: 40,
+         flex: 1,
          flexDirection: 'row',
          justifyContent: 'flex-start',
          alignItems: 'center',
-         paddingHorizontal: spacing.m,
+         paddingVertical: spacing.s,
+         paddingHorizontal: spacing.xl,
          borderBottomColor: colors.surface,
          borderBottomWidth: 1,
       },

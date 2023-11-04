@@ -154,17 +154,17 @@ const ComponentStyle = colors => {
       },
       list: {
          width: '100%',
-         height: '85%',
+         flex: 1,
          justifyContent: 'flex-start',
          alignItems: 'center',
+         marginBottom: spacing.xs,
       },
       new: {
          width: '100%',
-         height: '15%',
          flexDirection: 'row',
          justifyContent: 'flex-end',
          alignItems: 'center',
-         paddingBottom: spacing.l,
+         marginBottom: spacing.l,
          paddingHorizontal: spacing.l,
       },
    });

@@ -86,7 +86,6 @@ const ComponentStyle = colors => {
          flexDirection: 'column',
          alignItems: 'center',
          justifyContent: 'flex-start',
-         paddingVertical: spacing.xs,
       },
       listContainer: {
          width: '90%',

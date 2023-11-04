@@ -29,9 +29,7 @@ const Reports = ({navigation, route}) => {
          <View style={styles.principal}>
             <Text style={styles.title}> Comandas pagadas </Text>
             <PeriodSelector setSelection={setSelectedPeriod} />
-            <View style={styles.list}>
-               <CommandList navigation={navigation} list={commands} paid />
-            </View>
+            <CommandList navigation={navigation} list={commands} paid />
          </View>
          <View style={styles.bottom}>
             <InfoPaidCommands navigation={navigation} list={commands} />
@@ -52,29 +50,21 @@ const ComponentStyle = colors => {
       },
       principal: {
          width: '100%',
-         height: '83%',
-         flexDirection: 'column',
+         flex: 1,
          justifyContent: 'flex-start',
          alignItems: 'center',
-      },
-      list: {
-         width: '100%',
-         height: '95%',
-         justifyContent: 'flex-start',
-         alignItems: 'center',
+         marginVertical: spacing.s,
       },
       title: {
-         height: '5%',
-         marginBottom: spacing.xs,
+         marginBottom: spacing.s,
          color: colors.typography,
          ...typography.title,
       },
       bottom: {
          width: '100%',
-         height: '17%',
          flexDirection: 'column',
          justifyContent: 'flex-end',
-         paddingBottom: spacing.l,
+         marginBottom: spacing.l,
          alignItems: 'center',
       },
    });
