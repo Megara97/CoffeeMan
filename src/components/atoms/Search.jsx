@@ -33,6 +33,7 @@ const Search = ({_onChangeText, textToSearch, data, _setDataSort}) => {
             onChangeText={_onChangeText}
             value={textToSearch}
             onFocus={() => _onChangeText('')}
+            maxLength={20}
          />
          {textToSearch != '' && (
             <TouchableOpacity onPress={() => _onChangeText('')}>
@@ -48,7 +49,7 @@ const ComponentStyle = colors => {
       container: {
          width: '70%',
          flexDirection: 'row',
-         justifyContent: 'space-between',
+         justifyContent: 'flex-start',
          alignItems: 'center',
          backgroundColor: colors.secondary,
          borderRadius: radius.xs,

@@ -165,6 +165,16 @@ const PayCommand = ({navigation, id}) => {
       return change;
    };
 
+   const calcMoney = text => {
+      let number = parseFloat(text);
+      if (!isNaN(number)) {
+         number = number.toFixed(2);
+         setMoney(number);
+      } else {
+         setMoney('');
+      }
+   };
+
    return (
       <Shadow {...styles.shadow}>
          <View style={styles.container}>
@@ -213,11 +223,7 @@ const PayCommand = ({navigation, id}) => {
                         <Text style={styles.content}>$ </Text>
                         <TextInput
                            style={styles.input}
-                           onEndEditing={e =>
-                              setMoney(
-                                 parseFloat(e.nativeEvent.text).toFixed(2),
-                              )
-                           }
+                           onEndEditing={e => calcMoney(e.nativeEvent.text)}
                            onChangeText={setMoney}
                            value={money}
                            keyboardType="numeric"
@@ -277,10 +283,10 @@ const ComponentStyle = colors => {
          width: '50%',
          flexDirection: 'column',
          justifyContent: 'center',
-         alignItems: 'center',
+         alignItems: 'flex-start',
       },
       moneyMenu: {
-         width: '100%',
+         width: 150, //'100%'
          flexDirection: 'row',
          justifyContent: 'space-between',
          alignItems: 'center',

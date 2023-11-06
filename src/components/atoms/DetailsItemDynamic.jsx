@@ -119,7 +119,10 @@ const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
                const before = commands[index].products[indexProduct].quantity;
                commands[index].products[indexProduct].quantity =
                   parseInt(value);
-
+               // Eliminar productos con cantidad igual a 0
+               commands[index].products = commands[index].products.filter(
+                  item => item.quantity > 0,
+               );
                //Obtener informaciòn del producto editado para modificar el subtotal de la comanda
                const productInfo = products.find(
                   productInfo => productInfo.id === idProduct,
@@ -185,7 +188,7 @@ const ComponentStyle = colors => {
          alignItems: 'center',
       },
       product: {
-         width: '40%',
+         width: '35%',
          textAlign: 'left',
          textAlignVertical: 'center',
          ...typography.title,
@@ -194,7 +197,7 @@ const ComponentStyle = colors => {
          lineHeight: spacing.l,
       },
       money: {
-         width: '25%',
+         width: '30%',
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'flex-end',

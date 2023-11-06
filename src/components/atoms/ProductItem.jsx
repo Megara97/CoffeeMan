@@ -16,7 +16,7 @@ const Item = ({id, product, price, setId, setVisible}) => {
       <TouchableOpacity onPress={callInfoProduct}>
          <Shadow {...styles.shadow}>
             <View style={styles.item}>
-               <Text style={styles.product}> {product} </Text>
+               <Text style={styles.product}>{product}</Text>
                <Text style={styles.price}>
                   $ {parseFloat(price).toFixed(2)}
                </Text>

@@ -1,40 +1,17 @@
-import {
-   StyleSheet,
-   View,
-   FlatList,
-   Dimensions,
-   DeviceEventEmitter,
-} from 'react-native';
+import {StyleSheet, View, FlatList, useWindowDimensions} from 'react-native';
 import Item from '../atoms/ProductItem';
 import {typography, spacing, radius} from '../../styles/index';
 import {useEffect, useState} from 'react';
 
 const ProductList = ({navigation, list, setVisible, setId}) => {
-   const [windowWidth, setWindowWidth] = useState(
-      Dimensions.get('window').width,
-   );
+   const {height, width} = useWindowDimensions();
    const [column, setColumn] = useState(3);
 
    useEffect(() => {
-      const updateWindowWidth = () => {
-         setWindowWidth(Dimensions.get('window').width);
-      };
-      // Suscribirse al evento de cambio de orientación
-      const orientationChangeSubscription = DeviceEventEmitter.addListener(
-         'didUpdateDimensions',
-         updateWindowWidth,
-      );
-      return () => {
-         // Desuscribirse del evento al desmontar el componente
-         orientationChangeSubscription.remove();
-      };
-   }, []);
-
-   useEffect(() => {
-      let columnsNumber = (windowWidth - 60) / 110;
+      let columnsNumber = (width - 60) / 110;
       columnsNumber = Math.floor(columnsNumber);
       setColumn(columnsNumber);
-   }, [windowWidth]);
+   }, [width]);
 
    return (
       <View style={styles.container}>

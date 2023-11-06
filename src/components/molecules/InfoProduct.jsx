@@ -109,6 +109,7 @@ const InfoProduct = ({
                         onChangeText={setPrice}
                         value={price}
                         keyboardType="numeric"
+                        maxLength={7}
                      />
                   </View>
                </View>
@@ -178,7 +179,7 @@ const ComponentStyle = colors => {
          marginTop: spacing.m,
       },
       inputName: {
-         width: '70%',
+         width: 200, // '50%',
          paddingHorizontal: spacing.xs,
          backgroundColor: colors.background,
          paddingVertical: 0,
@@ -187,7 +188,7 @@ const ComponentStyle = colors => {
          color: colors.typography,
       },
       inputPrice: {
-         width: '15%',
+         width: 80, //'15%',
          paddingHorizontal: spacing.xs,
          backgroundColor: colors.background,
          paddingVertical: 0,

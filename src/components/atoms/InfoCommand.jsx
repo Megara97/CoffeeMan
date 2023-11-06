@@ -37,6 +37,7 @@ const InfoCommand = ({id, name, setName, notes, setNotes}) => {
                value={name}
                placeholder={'Comanda ' + id}
                placeholderTextColor={colors.overlay}
+               maxLength={50}
             />
          </View>
          <View style={styles.inputContainer}>

@@ -33,7 +33,7 @@ const Item = ({id, product, price, number, addItem, substractItem}) => {
          <TouchableOpacity onPress={() => addProduct()}>
             <Shadow {...styles.shadow}>
                <View style={[styles.item, quantity > 0 && styles.selectedItem]}>
-                  <Text style={styles.product}> {product} </Text>
+                  <Text style={styles.product}>{product}</Text>
                   <Text style={styles.price}>
                      $ {parseFloat(price).toFixed(2)}
                   </Text>
@@ -67,7 +67,7 @@ const ComponentStyle = colors => {
          flexDirection: 'column',
          justifyContent: 'space-between',
          alignItems: 'center',
-         paddingVertical: spacing.s,
+         padding: spacing.s,
          //margin: spacing.xs,
       },
       selectedItem: {
@@ -95,7 +95,7 @@ const ComponentStyle = colors => {
       },
       product: {
          height: 40,
-         ...typography.body,
+         ...typography.title,
          textAlign: 'center',
          textAlignVertical: 'top',
          lineHeight: spacing.l,

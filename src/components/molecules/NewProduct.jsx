@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+   Alert,
    Modal,
    StyleSheet,
    Text,
@@ -20,22 +21,33 @@ const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
    const [name, setName] = useState('');
 
    const recordNewProduct = () => {
-      //SUBIR A BASE DE DATOS
-      let lastId = 1;
-      if (list.length !== 0) {
-         lastId = list[list.length - 1].id + 1;
+      if (name != '') {
+         //SUBIR A BASE DE DATOS
+         let lastId = 1;
+         if (list.length !== 0) {
+            lastId = list[list.length - 1].id + 1;
+         }
+         money = parseFloat(price);
+         if (isNaN(money)) {
+            money = 0;
+         }
+         const newElement = {
+            id: lastId,
+            product: name,
+            //price: price === '' ? 0 : parseFloat(price),
+            price: money,
+         };
+         let newValue = list.slice();
+         newValue.push(newElement);
+         setList(newValue);
+         setVisible(!visible);
+         setPrice('');
+         setName('');
+      } else {
+         Alert.alert('', 'Falta determinar un nombre para el nuevo producto', [
+            {text: 'OK'},
+         ]);
       }
-      const newElement = {
-         id: lastId,
-         product: name,
-         price: price === '' ? 0 : parseFloat(price),
-      };
-      let newValue = list.slice();
-      newValue.push(newElement);
-      setList(newValue);
-      setVisible(!visible);
-      setPrice('');
-      setName('');
    };
 
    /*const newProduct = async () => {
@@ -79,43 +91,47 @@ const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
 */
 
    return (
-      <Modal
-         animationType="slide"
-         transparent={true}
-         visible={visible}
-         onRequestClose={() => {
-            setVisible(!visible);
-         }}>
-         <View style={styles.backdrop}>
-            <View style={styles.container}>
-               <View style={styles.info}>
-                  <TextInput
-                     style={[styles.inputName]}
-                     onChangeText={setName}
-                     value={name}
-                     placeholder="Producto"
-                     placeholderTextColor={colors.overlay}
-                  />
-                  <View style={styles.price}>
-                     <Text style={styles.textPrice}> Precio $ </Text>
+      <>
+         <Modal
+            animationType="slide"
+            transparent={true}
+            visible={visible}
+            onRequestClose={() => {
+               setVisible(!visible);
+            }}>
+            <View style={styles.backdrop}>
+               <View style={styles.container}>
+                  <View style={styles.info}>
                      <TextInput
-                        style={[styles.inputPrice]}
-                        onChangeText={setPrice}
-                        value={price}
-                        keyboardType="numeric"
-                        placeholder="0.00"
+                        style={[styles.inputName]}
+                        onChangeText={setName}
+                        value={name}
+                        placeholder="Producto"
                         placeholderTextColor={colors.overlay}
+                        maxLength={20}
                      />
+                     <View style={styles.price}>
+                        <Text style={styles.textPrice}> Precio $ </Text>
+                        <TextInput
+                           style={[styles.inputPrice]}
+                           onChangeText={setPrice}
+                           value={price}
+                           keyboardType="numeric"
+                           placeholder="0.00"
+                           placeholderTextColor={colors.overlay}
+                           maxLength={7}
+                        />
+                     </View>
+                  </View>
+                  <View style={styles.buttons}>
+                     <TouchableOpacity onPress={recordNewProduct}>
+                        <CustomButton type={3} />
+                     </TouchableOpacity>
                   </View>
                </View>
-               <View style={styles.buttons}>
-                  <TouchableOpacity onPress={recordNewProduct}>
-                     <CustomButton type={3} />
-                  </TouchableOpacity>
-               </View>
             </View>
-         </View>
-      </Modal>
+         </Modal>
+      </>
    );
 };
 
@@ -162,7 +178,7 @@ const ComponentStyle = colors => {
          marginTop: spacing.m,
       },
       inputName: {
-         width: '70%',
+         width: 200, // '50%',
          paddingHorizontal: spacing.xs,
          backgroundColor: colors.background,
          paddingVertical: 0,
@@ -171,7 +187,7 @@ const ComponentStyle = colors => {
          color: colors.typography,
       },
       inputPrice: {
-         width: '15%',
+         width: 80, //'15%',
          paddingHorizontal: spacing.xs,
          backgroundColor: colors.background,
          paddingVertical: 0,

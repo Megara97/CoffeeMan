@@ -30,6 +30,7 @@ const Commands = ({navigation, route}) => {
          notes: '',
          products: [],
          subtotal: 0,
+         openingDate: new Date(),
          status: 'active',
       };
       let newValue = list.slice();

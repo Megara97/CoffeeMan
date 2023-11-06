@@ -12,32 +12,30 @@ const CommandList = ({navigation, list, paid = false}) => {
 
    return (
       <View style={styles.container}>
-         <View style={styles.listContainer}>
-            <FlatList
-               numColumns={1}
-               data={commands}
-               renderItem={({item}) =>
-                  paid ? (
-                     <Item
-                        navigation={navigation}
-                        client={item.client}
-                        subtotal={item.subtotal}
-                        id={item.id}
-                        date={item.date}
-                        paid
-                     />
-                  ) : (
-                     <Item
-                        navigation={navigation}
-                        client={item.client}
-                        subtotal={item.subtotal}
-                        id={item.id}
-                     />
-                  )
-               }
-               keyExtractor={item => item.id}
-            />
-         </View>
+         <FlatList
+            numColumns={1}
+            data={commands}
+            renderItem={({item}) =>
+               paid ? (
+                  <Item
+                     navigation={navigation}
+                     client={item.client}
+                     subtotal={item.subtotal}
+                     id={item.id}
+                     date={item.date}
+                     paid
+                  />
+               ) : (
+                  <Item
+                     navigation={navigation}
+                     client={item.client}
+                     subtotal={item.subtotal}
+                     id={item.id}
+                  />
+               )
+            }
+            keyExtractor={item => item.id}
+         />
       </View>
    );
 };
@@ -50,10 +48,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       alignItems: 'center',
       paddingVertical: spacing.s,
-   },
-   listContainer: {
-      width: '90%',
-      height: '100%',
    },
 });
 
