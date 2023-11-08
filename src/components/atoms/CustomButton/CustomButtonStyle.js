@@ -1,25 +1,23 @@
 import {useThemeColors} from '../../../customHooks/useThemeColors';
-const {StyleSheet, useColorScheme} = require('react-native');
-//import Theme from '../../../assets/theme';
+const {StyleSheet} = require('react-native');
+import {typography, spacing, radius} from '../../../styles/index';
 
-const ComponentStyle = () => {
-   //const theme = useColorScheme();
-   //const colors = theme === 'dark' ? Theme.dark.colors : Theme.light.colors;
-   const colors = useThemeColors();
+const ComponentStyle = colors => {
+   //const colors = useThemeColors();
 
    return StyleSheet.create({
       circle: {
          width: 60,
          height: 60,
-         borderRadius: 30,
-         backgroundColor: colors.color,
+         borderRadius: radius.m,
+         backgroundColor: colors.color1,
          alignItems: 'center',
          justifyContent: 'center',
-         //elevation:7,
       },
-      icon: {
-         width: 25,
-         height: 25,
+      shadow: {
+         distance: spacing.xs,
+         ...colors.shadow,
+         offset: [2, 2],
       },
    });
 };

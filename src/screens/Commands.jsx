@@ -1,52 +1,58 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import CustomButton from '../components/atoms/CustomButton/CustomButton';
-import colors from '../assets/colors';
-import CommandList from '../components/molecules/CommandList';
+import CommandList from '../components/molecules/CommandListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../styles/index';
+import {useLocalStorage} from '../customHooks/useLocalStorage';
 
 const Commands = ({navigation, route}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      container: {
-         backgroundColor: colors.background,
-         width: '100%',
-         flex: 1,
-         flexDirection: 'column',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-         //height: '90%',
-      },
-      commandList: {
-         //flex:1,
-         width: '100%',
-         //height: '90%',
-         justifyContent: 'flex-start',
-         alignItems: 'center',
-      },
-      new: {
-         //flex:0,
-         width: '100%',
-         height: 80,
-         justifyContent: 'center',
-         alignItems: 'center',
-      },
-   });
+   const styles = ComponentStyle(colors);
 
-   const [list, setList] = useState([]);
-   const fetchData = async () => {
-      try {
-         const storedList = await AsyncStorage.getItem('commands');
-         if (storedList) {
-            setList(JSON.parse(storedList));
-         }
-      } catch (error) {
-         console.error(error);
-      }
-   };
+   const [list, setList] = useLocalStorage('commands', [], route.params);
+   const [commands, setCommands] = useState([]);
 
    useEffect(() => {
+      activeCommands = list.filter(item => item.status === 'active');
+      setCommands(activeCommands);
+   }, [list]);
+
+   const newCommand = () => {
+      let lastId = 1;
+      if (list.length !== 0) {
+         lastId = list[list.length - 1].id + 1;
+      }
+      const newElement = {
+         id: lastId,
+         client: '',
+         notes: '',
+         products: [],
+         subtotal: 0,
+         openingDate: new Date(),
+         status: 'active',
+      };
+      let newValue = list.slice();
+      newValue.push(newElement);
+      setList(newValue);
+      navigation.navigate('CommandDetails', {id: lastId});
+   };
+
+   /*
+   const [list, setList] = useState([]);
+   
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const storedList = await AsyncStorage.getItem('commands');
+            if (storedList) {
+               setList(JSON.parse(storedList));
+            }
+         } catch (error) {
+            console.error(error);
+         }
+      };
       fetchData();
    }, [route.params]);
 
@@ -57,11 +63,12 @@ const Commands = ({navigation, route}) => {
          if (currentValue) {
             commandList = JSON.parse(currentValue);
          }
+         
          /*const Id = await AsyncStorage.getItem('numberCommands');
          let lastId = JSON.parse(Id) + 1;
          if (!lastId) {
             lastId = 1;
-         }*/
+         }*/ /*
 
          let lastId = 1;
          if (commandList.length !== 0) {
@@ -85,11 +92,12 @@ const Commands = ({navigation, route}) => {
          console.error(e);
       }
    };
+   
 
    const deleteData = async () => {
       try {
          await AsyncStorage.removeItem('commands');
-         await AsyncStorage.removeItem('numberCommands');
+         //await AsyncStorage.removeItem('numberCommands');
          setList([]);
       } catch (e) {
          console.error(e);
@@ -104,29 +112,63 @@ const Commands = ({navigation, route}) => {
       } catch (e) {
          console.error(e);
       }
-   };
+   };*/
 
    return (
       <View style={styles.container}>
-         <View style={styles.commandList}>
-            <CommandList navigation={navigation} list={list} />
+         <View style={styles.list}>
+            <CommandList navigation={navigation} list={commands} />
          </View>
          <View style={styles.new}>
-            <TouchableOpacity onPress={onNew}>
+            <TouchableOpacity onPress={newCommand}>
                <CustomButton type={1} />
             </TouchableOpacity>
          </View>
       </View>
    );
 };
-
 /*              
+            <TouchableOpacity onPress={() => setList([])}>
+               <CustomButton type={4} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log(list)}>
+               <CustomButton type={3} />
+            </TouchableOpacity>
+
 <TouchableOpacity onPress={() =>deleteData()} >
-   <CustomButton type={2}/>
+   <CustomButton type={4}/>
 </TouchableOpacity>
 <TouchableOpacity onPress={() => getData()} >
     <CustomButton type={3}/>
 </TouchableOpacity> 
 */
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      container: {
+         width: '100%',
+         height: '100%',
+         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         backgroundColor: colors.background,
+      },
+      list: {
+         width: '100%',
+         flex: 1,
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+         marginBottom: spacing.xs,
+      },
+      new: {
+         width: '100%',
+         flexDirection: 'row',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+         marginBottom: spacing.l,
+         paddingHorizontal: spacing.l,
+      },
+   });
+};
 
 export default Commands;

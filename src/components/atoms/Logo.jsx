@@ -1,62 +1,34 @@
-import {StyleSheet, Image, TouchableOpacity, View} from 'react-native';
-import colors from '../../assets/colors';
+import {StyleSheet, Image, View} from 'react-native';
 import imageLogo from '../../assets/images/Calcifer.png';
-import {useState} from 'react';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
-const Logo = ({navigation}) => {
+const Logo = () => {
    const colors = useTheme().colors;
+   const styles = ComponentStyle(colors);
 
-   const styles = StyleSheet.create({
+   return (
+      <View style={styles.circle}>
+         <Image source={imageLogo} style={styles.image} />
+      </View>
+   );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
       circle: {
          width: 70,
          height: 70,
-         borderRadius: 35,
-         backgroundColor: colors.gray1,
+         borderRadius: radius.l,
+         backgroundColor: colors.surface,
          alignItems: 'center',
          justifyContent: 'center',
       },
       image: {
-         width: 50,
-         height: 50,
+         width: 45,
+         height: 45,
       },
    });
-
-   return (
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-         <View style={styles.circle}>
-            <Image source={imageLogo} style={styles.image} />
-         </View>
-      </TouchableOpacity>
-   );
 };
 
-/*
-   return (
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-         <View style={styles.circle}>
-            <Image source={imageLogo} style={styles.image} />
-         </View>
-      </TouchableOpacity>
-   );
-   
-   const [modalVisible, setModalVisible] = useState(false);
-   return (
-      <>
-         <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <View style={styles.circle}>
-               <Image source={imageLogo} style={styles.image} />
-            </View>
-         </TouchableOpacity>
-         <SideMenu
-            navigation={navigation}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-         />
-      </>
-*/
-
 export default Logo;
-
-//Otra forma de llamar el archivo de imagen para utilizarlo
-//const imageLogo = require('../../assets/images/Calcifer.png');

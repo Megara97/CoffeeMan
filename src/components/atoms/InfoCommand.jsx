@@ -1,46 +1,14 @@
 import React from 'react';
-import {Text, StyleSheet, TextInput, View} from 'react-native';
-import colors from '../../assets/colors';
+import {StyleSheet, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
-const InfoCommandEntry = ({id, name, setName, notes, setNotes}) => {
+const InfoCommand = ({id, name, setName, notes, setNotes}) => {
    const colors = useTheme().colors;
-   const styles = StyleSheet.create({
-      infoContainer: {
-         width: '80%', //'90%',
-         height: 80,
-         backgroundColor: colors.gray2,
-         flexDirection: 'column',
-         justifyContent: 'space-evenly',
-         alignItems: 'center',
-         borderRadius: 7,
-      },
-      inputContainer: {
-         display: 'flex',
-         width: '90%',
-         height: '40%',
-         justifyContent: 'space-between',
-         flexDirection: 'row',
-         alignItems: 'center',
-      },
-      input: {
-         flex: 1,
-         paddingHorizontal: 10,
-         backgroundColor: colors.background,
-         paddingVertical: 0,
-         height: '100%',
-         fontFamily: 'Jaldi-Regular',
-         color: colors.typography,
-      },
-      placeholder: {
-         width: 50,
-         color: colors.typography,
-         fontFamily: 'Jaldi-Regular',
-      },
-   });
+   const styles = ComponentStyle(colors);
 
-   const onSave = async (key, value) => {
+   const commandChanges = async (key, value) => {
       try {
          if (key === 'client') {
             setName(value);
@@ -48,16 +16,12 @@ const InfoCommandEntry = ({id, name, setName, notes, setNotes}) => {
             setNotes(value);
          }
          const currentValue = await AsyncStorage.getItem('commands');
-         if (currentValue) {
-            let commandList = JSON.parse(currentValue);
-            const index = commandList.findIndex(element => element.id === id);
-            if (index !== -1) {
-               //commandList[index].client = name;
-               //commandList[index].notes = notes;
-               commandList[index][key] = value;
-               const jsonValue = JSON.stringify(commandList);
-               await AsyncStorage.setItem('commands', jsonValue);
-            }
+         const commandList = currentValue ? JSON.parse(currentValue) : [];
+         const index = commandList.findIndex(element => element.id === id);
+         if (index !== -1) {
+            commandList[index][key] = value;
+            const jsonValue = JSON.stringify(commandList);
+            await AsyncStorage.setItem('commands', jsonValue);
          }
       } catch (e) {
          console.error(e);
@@ -67,21 +31,22 @@ const InfoCommandEntry = ({id, name, setName, notes, setNotes}) => {
    return (
       <View style={styles.infoContainer}>
          <View style={styles.inputContainer}>
-            <Text style={[styles.placeholder, {fontSize: 15}]}>Nombre</Text>
             <TextInput
-               style={[styles.input, {fontSize: 15}]}
-               onChangeText={text => onSave('client', text)}
+               style={[styles.input]}
+               onChangeText={text => commandChanges('client', text)}
                value={name}
                placeholder={'Comanda ' + id}
-               placeholderTextColor={colors.mediumGray}
+               placeholderTextColor={colors.overlay}
+               maxLength={50}
             />
          </View>
          <View style={styles.inputContainer}>
-            <Text style={[styles.placeholder, {fontSize: 13}]}>Notas</Text>
             <TextInput
                style={[styles.input, {fontSize: 13}]}
-               onChangeText={text => onSave('notes', text)}
+               onChangeText={text => commandChanges('notes', text)}
                value={notes}
+               placeholder={'Notas'}
+               placeholderTextColor={colors.overlay}
                multiline
             />
          </View>
@@ -89,4 +54,58 @@ const InfoCommandEntry = ({id, name, setName, notes, setNotes}) => {
    );
 };
 
-export default InfoCommandEntry;
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      infoContainer: {
+         flex: 1,
+         backgroundColor: colors.secondary,
+         flexDirection: 'column',
+         justifyContent: 'space-evenly',
+         alignItems: 'center',
+         borderRadius: radius.s,
+         paddingVertical: spacing.xs,
+         marginLeft: spacing.l,
+      },
+      inputContainer: {
+         width: '100%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         marginVertical: spacing.xxs,
+         paddingHorizontal: spacing.m,
+      },
+      input: {
+         width: '100%',
+         paddingVertical: 0,
+         paddingHorizontal: spacing.s,
+         backgroundColor: colors.background,
+         color: colors.typography,
+         ...typography.title,
+      },
+   });
+};
+
+export default InfoCommand;
+
+/*
+// Si agrego o elimino productos y luego cambio nombre o notas, se revierten los cambios en los productos por se guarda el estado del AsyncStorage en el hook 
+   const [command, deleteCommand, changeCommand] = usePartLocalStorage(
+      'commands',
+      id,
+   );
+
+   const commandChanges = (key, value) => {
+      if (key === 'client') {
+         setName(value);
+      } else if (key === 'notes') {
+         setNotes(value);
+      }
+      if (command) {
+         let newValue = {...command};
+         //newValue.client = name;
+         //newValue.notes = notes;
+         newValue[key] = value;
+         changeCommand(newValue);
+      }
+   };
+   */

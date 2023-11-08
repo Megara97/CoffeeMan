@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {
+   Alert,
+   Modal,
    StyleSheet,
    Text,
    TextInput,
@@ -7,76 +9,49 @@ import {
    View,
 } from 'react-native';
 import CustomButton from '../atoms/CustomButton/CustomButton';
-import colors from '../../assets/colors';
-import {Shadow} from 'react-native-shadow-2';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
+import {typography, spacing, radius} from '../../styles/index';
 
-const NewProduct = ({navigation}) => {
+const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
    const colors = useTheme().colors;
-   const ShadowPresets = {
-      general: {
-         distance: 10,
-         startColor: colors.typography + '30',
-         endColor: colors.background,
-         style: {
-            borderTopStartRadius: 17,
-            borderTopRightRadius: 17,
-            flexDirection: 'row',
-         },
-      },
-   };
-   const styles = StyleSheet.create({
-      container: {
-         width: '100%', //80
-         height: 180,
-         flexDirection: 'column',
-         justifyContent: 'flex-end',
-         alignItems: 'center',
-         backgroundColor: colors.gray2,
-         borderTopLeftRadius: 17,
-         borderTopRightRadius: 17,
-      },
-      info: {
-         width: '100%',
-         flexDirection: 'column',
-         justifyContent: 'center',
-         alignItems: 'center',
-         paddingBottom: 15,
-      },
-      price: {
-         width: '100%',
-         flexDirection: 'row',
-         justifyContent: 'center',
-         alignItems: 'center',
-      },
-      buttons: {
-         width: '100%',
-         flexDirection: 'row',
-         justifyContent: 'center',
-         paddingHorizontal: 100,
-         alignItems: 'center',
-         paddingBottom: 25,
-      },
-      input: {
-         paddingHorizontal: 10,
-         backgroundColor: colors.background,
-         paddingVertical: 0,
-         fontFamily: 'Jaldi-Regular',
-         textAlign: 'center',
-         color: colors.typography,
-      },
-      textPrice: {
-         color: colors.typography,
-         fontFamily: 'Jaldi-Regular',
-         fontSize: 13,
-      },
-   });
+   const styles = ComponentStyle(colors);
 
    const [price, setPrice] = useState('');
-   const [product, setProduct] = useState('');
+   const [name, setName] = useState('');
 
-   const onNew = async () => {
+   const recordNewProduct = () => {
+      if (name != '') {
+         //SUBIR A BASE DE DATOS
+         let lastId = 1;
+         if (list.length !== 0) {
+            lastId = list[list.length - 1].id + 1;
+         }
+         money = parseFloat(price);
+         if (isNaN(money)) {
+            money = 0;
+         }
+         const newElement = {
+            id: lastId,
+            product: name,
+            //price: price === '' ? 0 : parseFloat(price),
+            price: money,
+         };
+         let newValue = list.slice();
+         newValue.push(newElement);
+         setList(newValue);
+         setVisible(!visible);
+         setPrice('');
+         setName('');
+      } else {
+         Alert.alert('', 'Falta determinar un nombre para el nuevo producto', [
+            {text: 'OK'},
+         ]);
+      }
+   };
+
+   /*const newProduct = async () => {
+      let lastId = 1;
       try {
          let productList = [];
          const currentValue = await AsyncStorage.getItem('products');
@@ -87,9 +62,8 @@ const NewProduct = ({navigation}) => {
          let lastId = JSON.parse(Id) + 1;
          if (!lastId) {
             lastId = 1;
-         }*/
+         }/*
 
-         let lastId = 1;
          if (productList.length !== 0) {
             lastId = productList[productList.length - 1].id + 1;
          }
@@ -105,44 +79,127 @@ const NewProduct = ({navigation}) => {
          /*await AsyncStorage.setItem(
             'numberProducts',
             JSON.stringify(lastId),
-         );*/
+         );/*
       } catch (e) {
          console.error(e);
       }
-      navigation.navigate('Menu', {change: 'New' + product + price});
+      setVisible(!visible);
+      setChange('New' + lastId + product + price);
+      setPrice('');
+      setProduct('');
    };
+*/
 
    return (
-      <Shadow {...ShadowPresets.general}>
-         <View style={styles.container}>
-            <View style={styles.info}>
-               <TextInput
-                  style={[styles.input, {fontSize: 15, width: 250}]}
-                  onChangeText={setProduct}
-                  value={product}
-                  placeholder="Producto"
-                  placeholderTextColor={colors.mediumGray}
-               />
-               <View style={styles.price}>
-                  <Text style={styles.textPrice}> Precio $ </Text>
-                  <TextInput
-                     style={[styles.input, {fontSize: 13, width: 60}]}
-                     onChangeText={setPrice}
-                     value={price}
-                     keyboardType="numeric"
-                     placeholder="0.00"
-                     placeholderTextColor={colors.mediumGray}
-                  />
+      <>
+         <Modal
+            animationType="slide"
+            transparent={true}
+            visible={visible}
+            onRequestClose={() => {
+               setVisible(!visible);
+            }}>
+            <View style={styles.backdrop}>
+               <View style={styles.container}>
+                  <View style={styles.info}>
+                     <TextInput
+                        style={[styles.inputName]}
+                        onChangeText={setName}
+                        value={name}
+                        placeholder="Producto"
+                        placeholderTextColor={colors.overlay}
+                        maxLength={20}
+                     />
+                     <View style={styles.price}>
+                        <Text style={styles.textPrice}> Precio $ </Text>
+                        <TextInput
+                           style={[styles.inputPrice]}
+                           onChangeText={setPrice}
+                           value={price}
+                           keyboardType="numeric"
+                           placeholder="0.00"
+                           placeholderTextColor={colors.overlay}
+                           maxLength={7}
+                        />
+                     </View>
+                  </View>
+                  <View style={styles.buttons}>
+                     <TouchableOpacity onPress={recordNewProduct}>
+                        <CustomButton type={3} />
+                     </TouchableOpacity>
+                  </View>
                </View>
             </View>
-            <View style={styles.buttons}>
-               <TouchableOpacity onPress={onNew}>
-                  <CustomButton type={3} />
-               </TouchableOpacity>
-            </View>
-         </View>
-      </Shadow>
+         </Modal>
+      </>
    );
+};
+
+const ComponentStyle = colors => {
+   return StyleSheet.create({
+      backdrop: {
+         width: '100%',
+         height: '100%',
+         backgroundColor: colors.typography + '70',
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+      },
+      container: {
+         width: '100%',
+         height: 170,
+         //flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+         paddingTop: spacing.s,
+         backgroundColor: colors.secondary,
+         borderTopLeftRadius: radius.l,
+         borderTopRightRadius: radius.l,
+      },
+      info: {
+         width: '100%',
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      price: {
+         width: '100%',
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      buttons: {
+         width: '100%',
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+         marginBottom: spacing.l,
+         marginTop: spacing.m,
+      },
+      inputName: {
+         width: 200, // '50%',
+         paddingHorizontal: spacing.xs,
+         backgroundColor: colors.background,
+         paddingVertical: 0,
+         textAlign: 'center',
+         ...typography.titleBold,
+         color: colors.typography,
+      },
+      inputPrice: {
+         width: 80, //'15%',
+         paddingHorizontal: spacing.xs,
+         backgroundColor: colors.background,
+         paddingVertical: 0,
+         textAlign: 'center',
+         ...typography.title,
+         color: colors.typography,
+      },
+      textPrice: {
+         color: colors.typography,
+         ...typography.title,
+      },
+   });
 };
 
 export default NewProduct;
