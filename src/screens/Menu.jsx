@@ -9,6 +9,7 @@ import InfoProduct from '../components/molecules/InfoProduct';
 import DeleteProduct from '../components/molecules/DeleteProduct';
 import {typography, spacing, radius} from '../styles/index';
 import {useLocalStorage} from '../customHooks/useLocalStorage';
+import {getProducts, getProduct, countProducts} from '../../api';
 
 const Menu = ({navigation, route}) => {
    const colors = useTheme().colors;
@@ -16,6 +17,22 @@ const Menu = ({navigation, route}) => {
 
    const [change, setChange] = useState('');
    const [list, setList] = useLocalStorage('products', [], change);
+
+   /*//Opcion usando info de base de datos
+   const [list, setList] = useState([]);
+   const loadProducts = async () => {
+      const data = await getProducts();
+      const number = await countProducts();
+      const product = await getProduct(1);
+      //console.log('Informaciòn de los productos en DB',data);
+      //console.log('Numero de productos en DB', number);
+      //console.log('Informaciòn del producto 1', product);
+      setList(data);
+   };
+   useEffect(() => {
+      loadProducts();
+   }, []);*/
+
    /*const sortedData = [...list];
 
    useEffect(() => {

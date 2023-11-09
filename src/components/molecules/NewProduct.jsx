@@ -12,6 +12,7 @@ import CustomButton from '../atoms/CustomButton/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
+import {saveProduct} from '../../../api';
 
 const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
    const colors = useTheme().colors;
@@ -20,31 +21,42 @@ const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
    const [price, setPrice] = useState('');
    const [name, setName] = useState('');
 
-   const recordNewProduct = () => {
+   const recordNewProduct = async () => {
       if (name != '') {
-         //SUBIR A BASE DE DATOS
-         let lastId = 1;
-         if (list.length !== 0) {
-            lastId = list[list.length - 1].id + 1;
-         }
          money = parseFloat(price);
          if (isNaN(money)) {
             money = 0;
          }
-         const newElement = {
-            id: lastId,
-            product: name,
-            //price: price === '' ? 0 : parseFloat(price),
-            price: money,
-         };
-         let newValue = list.slice();
-         newValue.push(newElement);
-         setList(newValue);
-         setVisible(!visible);
-         setPrice('');
-         setName('');
+
+         try {
+            //SUBIR A BASE DE DATOS
+            const newId = await saveProduct(name, money);
+            if (newId === -1) {
+               Alert.alert('', 'Ya existe un producto con este nombre', [
+                  {text: 'OK'},
+               ]);
+            } else {
+               /*let lastId = 1;
+               if (list.length !== 0) {
+                  lastId = list[list.length - 1].id + 1;
+               }*/
+               const newElement = {
+                  id: newId, //lastId,
+                  product: name,
+                  price: money,
+               };
+               let newValue = list.slice();
+               newValue.push(newElement);
+               setList(newValue);
+               setVisible(!visible);
+               setPrice('');
+               setName('');
+            }
+         } catch (error) {
+            console.error('No hay conexion con el servidor');
+         }
       } else {
-         Alert.alert('', 'Falta determinar un nombre para el nuevo producto', [
+         Alert.alert('', 'Establezca un nombre para el nuevo producto', [
             {text: 'OK'},
          ]);
       }
@@ -124,7 +136,10 @@ const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
                      </View>
                   </View>
                   <View style={styles.buttons}>
-                     <TouchableOpacity onPress={recordNewProduct}>
+                     <TouchableOpacity
+                        onPress={recordNewProduct}
+                        //disabled={name === ''}
+                     >
                         <CustomButton type={3} />
                      </TouchableOpacity>
                   </View>

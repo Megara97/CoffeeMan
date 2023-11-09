@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
+import {editPriceProduct} from '../../../api';
 
 const InfoProduct = ({
    id,
@@ -37,16 +38,27 @@ const InfoProduct = ({
       }
    }, [product]);
 
-   const recordProductChanges = () => {
-      //SUBIR A BASE DE DATOS
-      if (product) {
-         let newValue = {...product};
-         newValue.price = parseFloat(price);
-         newValue.product = name;
-         changeProduct(newValue);
+   const recordProductChanges = async () => {
+      money = parseFloat(price);
+      if (isNaN(money)) {
+         money = 0;
       }
-      setVisible(!visible);
-      setChange('Edit' + name + price);
+
+      try {
+         //SUBIR A BASE DE DATOS
+         await editPriceProduct(id, money);
+
+         if (product) {
+            let newValue = {...product};
+            newValue.price = money;
+            //newValue.product = name;
+            changeProduct(newValue);
+         }
+         setVisible(!visible);
+         setChange('Edit' + name + price);
+      } catch (error) {
+         console.error('No hay conexion con el servidor');
+      }
    };
 
    /*useEffect(() => {

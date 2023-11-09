@@ -1,6 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import Commands from './src/screens/Commands';
 import Reports from './src/screens/Reports';
 import Menu from './src/screens/Menu';
@@ -16,6 +18,7 @@ import Theme from './src/styles/colors';
 //import Theme from './src/assets/theme';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 //export const ThemeContext = React.createContext({});
 
 const CoffeeMan = () => {
@@ -60,60 +63,63 @@ const CoffeeMan = () => {
 
    return (
       //<ThemeContext.Provider value={themeMode === 'dark' ? darkTheme : theme}>
-      <NavigationContainer theme={theme === 'dark' ? Theme.dark : Theme.light}>
-         <Stack.Navigator
-            initialRouteName="Commands"
-            screenOptions={{
-               header: ({navigation, route, options}) => {
-                  const title = getHeaderTitle(options, route.name);
-                  return (
-                     <CustomHeader
-                        name={route.name}
-                        title={title} //options.title
-                        navigation={navigation}
-                        setChange={setChange}
-                        change={change}
-                     />
-                  );
-               },
-            }}>
-            <Stack.Screen
-               name="Commands"
-               component={Commands}
-               options={{title: 'Administración de comandas'}}
-            />
-            <Stack.Screen
-               name="CommandDetails"
-               component={CommandDetails}
-               options={{title: 'Comanda'}}
-            />
-            <Stack.Screen
-               name="Products"
-               component={Products}
-               options={{title: 'Productos'}}
-            />
-            <Stack.Screen
-               name="Pay"
-               component={Pay}
-               options={{title: 'Pago'}}
-            />
-            <Stack.Screen
-               name="Reports"
-               component={Reports}
-               options={{title: 'Reportes'}}
-            />
-            <Stack.Screen
-               name="PayDetails"
-               component={PayDetails}
-               options={{title: 'Comanda Pagada'}}
-            />
-            <Stack.Screen
-               name="Menu"
-               component={Menu}
-               options={{title: 'Configuración del menu'}}
-            />
-         </Stack.Navigator>
-      </NavigationContainer>
+      <>
+         <NavigationContainer
+            theme={theme === 'dark' ? Theme.dark : Theme.light}>
+            <Stack.Navigator
+               initialRouteName="Commands"
+               screenOptions={{
+                  header: ({navigation, route, options}) => {
+                     const title = getHeaderTitle(options, route.name);
+                     return (
+                        <CustomHeader
+                           name={route.name}
+                           title={title} //options.title
+                           navigation={navigation}
+                           setChange={setChange}
+                           change={change}
+                        />
+                     );
+                  },
+               }}>
+               <Stack.Screen
+                  name="Commands"
+                  component={Commands}
+                  options={{title: 'Administración de comandas'}}
+               />
+               <Stack.Screen
+                  name="CommandDetails"
+                  component={CommandDetails}
+                  options={{title: 'Comanda'}}
+               />
+               <Stack.Screen
+                  name="Products"
+                  component={Products}
+                  options={{title: 'Productos'}}
+               />
+               <Stack.Screen
+                  name="Pay"
+                  component={Pay}
+                  options={{title: 'Pago'}}
+               />
+               <Stack.Screen
+                  name="Reports"
+                  component={Reports}
+                  options={{title: 'Reportes'}}
+               />
+               <Stack.Screen
+                  name="PayDetails"
+                  component={PayDetails}
+                  options={{title: 'Comanda Pagada'}}
+               />
+               <Stack.Screen
+                  name="Menu"
+                  component={Menu}
+                  options={{title: 'Configuración del menu'}}
+               />
+            </Stack.Navigator>
+         </NavigationContainer>
+      </>
       //</ThemeContext.Provider>
    );
 };
@@ -124,4 +130,27 @@ export default CoffeeMan;
                 screenOptions={({ navigation }) => ({
                     //headerLeft: () => <Logo navigation={navigation} />,
                 })}>
+*/
+
+/*
+         <NavigationContainer>
+            <Tab.Navigator>
+               <Tab.Screen
+                  name="Commands"
+                  component={Commands}
+                  options={{title: 'Administración de comandas'}}
+               />
+               <Tab.Screen
+                  name="Menu"
+                  component={Menu}
+                  options={{title: 'Configuración del menu'}}
+               />
+               <Tab.Screen
+                  name="Reports"
+                  component={Reports}
+                  options={{title: 'Reportes'}}
+               />
+            </Tab.Navigator>
+         </NavigationContainer>
+
 */

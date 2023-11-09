@@ -5,6 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
+import {
+   changeStatusProduct,
+   deleteProduct as deleteProductDB,
+} from '../../../api';
 
 const DeleteProduct = ({
    id,
@@ -33,11 +37,19 @@ const DeleteProduct = ({
       setInfoVisible(!visible);
    };
 
-   const recordDeletedProduct = () => {
-      //SUBIR A BASE DE DATOS
-      deleteProduct();
-      closeModals();
-      setChange('Delete' + name);
+   const recordDeletedProduct = async () => {
+      try {
+         //SUBIR A BASE DE DATOS
+         //await deleteProductDB(id);
+         await changeStatusProduct(id);
+
+         deleteProduct();
+         closeModals();
+         setChange('Delete' + name);
+      } catch (error) {
+         console.error(error);
+         // console.error('No hay conexion con el servidor');
+      }
    };
 
    /*useEffect(() => {
