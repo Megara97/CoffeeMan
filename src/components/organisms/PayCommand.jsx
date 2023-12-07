@@ -14,6 +14,7 @@ import {typography, spacing, radius} from '../../styles/index';
 import {getLocalStorage} from '../../functions/getLocalStorage';
 import {setLocalStorage} from '../../functions/setLocalStorage';
 import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
+import {saveCommand} from '../../../api';
 
 const PayCommand = ({navigation, id}) => {
    const colors = useTheme().colors;
@@ -116,20 +117,33 @@ const PayCommand = ({navigation, id}) => {
       }
    }, [command]);
 
-   const recordCommandPaid = () => {
-      //SUBIR A BASE DE DATOS
-      //deleteCommand();
-      if (command) {
-         let newValue = {...command};
-         newValue.status = 'paid';
-         newValue.date = new Date();
-         newValue.tip = calcTip();
-         newValue.method = method === 0 ? 'efectivo' : 'tarjeta';
-         changeCommand(newValue);
+   const recordCommandPaid = async () => {
+      const paidDate = new Date();
+      const {products, subtotal} = command;
+      let newCommand = {products, subtotal};
+      newCommand.date = paidDate;
+      newCommand.tip = calcTip();
+      newCommand.method = method === 0 ? 'efectivo' : 'tarjeta';
+      try {
+         //SUBIR A BASE DE DATOS
+         const newId = await saveCommand(newCommand);
+         //deleteCommand();
+         if (command) {
+            let newValue = {...command, ...newCommand};
+            newValue.status = 'paid';
+            newValue.id = newId;
+            //newValue.date = paidDate;
+            //newValue.tip = calcTip();
+            //newValue.method = method === 0 ? 'efectivo' : 'tarjeta';
+            //console.log('aca', newValue);
+            changeCommand(newValue);
+         }
+         navigation.navigate('Commands', {
+            change: 'Pay' + id + numberProducts + subtotal,
+         });
+      } catch (error) {
+         console.error('No hay conexion con el servidor');
       }
-      navigation.navigate('Commands', {
-         change: 'Pay' + id + numberProducts + subtotal,
-      });
    };
 
    const calcTip = () => {
