@@ -15,6 +15,8 @@ const Pay = ({navigation, route}) => {
    const [title, setTitle] = useState('');
    const [command] = usePartLocalStorage('commands', route.params.id);
 
+   console.log(command);
+
    useEffect(() => {
       if (command) {
          setTitle(

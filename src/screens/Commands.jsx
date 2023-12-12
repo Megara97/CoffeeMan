@@ -21,7 +21,7 @@ const Commands = ({navigation, route}) => {
                tabBarLabelPosition: 'beside-icon',
                tabBarActiveTintColor: colors.background,
                tabBarInactiveTintColor: colors.typography,
-               tabBarActiveBackgroundColor: colors.color1, //colors.overlay,
+               tabBarActiveBackgroundColor: colors.color1,
                tabBarInactiveBackgroundColor: colors.secondary,
             }}>
             <Tab.Screen

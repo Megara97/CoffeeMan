@@ -25,7 +25,7 @@ const CustomHeader = ({navigation, title, name, setChange, change}) => {
       } else if (name == 'Costs') {
          Icon = <Costs width={size} height={size} fill={colors.background} />;
       } else {
-         Icon = <Command width={30} height={size} fill={colors.background} />;
+         Icon = <Command width={size} height={size} fill={colors.background} />;
       }
       return Icon;
    };

@@ -11,24 +11,39 @@ const Reports = ({navigation, route}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
-   const [list, setList] = useLocalStorage('commands', [], route.params);
+   const [listCommands, setListCommands] = useLocalStorage(
+      'commands',
+      [],
+      route.params,
+   );
+   const [listCosts, setListCosts] = useLocalStorage('costs', [], route.params);
    const [commands, setCommands] = useState([]);
+   const [costs, setCosts] = useState([]);
    const [selectedPeriod, setSelectedPeriod] = useState();
 
    useEffect(() => {
-      const paidCommands = list.filter(item => item.status === 'paid');
+      const paidCommands = listCommands.filter(item => item.status === 'paid');
       const filteredCommands = paidCommands.filter(item => {
          const itemDate = new Date(item.date);
          return itemDate >= selectedPeriod[0] && itemDate <= selectedPeriod[1];
       });
       setCommands(filteredCommands);
-   }, [list, selectedPeriod]);
+      const filteredCosts = listCosts.filter(item => {
+         const itemDate = new Date(item.date);
+         return itemDate >= selectedPeriod[0] && itemDate <= selectedPeriod[1];
+      });
+      setCosts(filteredCosts);
+   }, [listCommands, listCosts, selectedPeriod]);
 
    return (
       <View style={styles.container}>
          <View style={styles.principal}>
             <PeriodSelector setSelection={setSelectedPeriod} />
-            <InfoPaidCommands navigation={navigation} list={commands} />
+            <InfoPaidCommands
+               navigation={navigation}
+               commands={commands}
+               costs={costs}
+            />
          </View>
          <View style={styles.bottom}></View>
       </View>

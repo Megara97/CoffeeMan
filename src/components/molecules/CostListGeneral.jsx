@@ -6,7 +6,6 @@ import {useEffect, useState} from 'react';
 const costList = ({navigation, list, setVisible, setId, setType}) => {
    const [costs, setCosts] = useState([]);
 
-   console.log(list);
    useEffect(() => {
       setCosts(list.slice().reverse());
    }, [list]);

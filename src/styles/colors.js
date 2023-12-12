@@ -16,6 +16,9 @@ const light = {
          startColor: lFlavor.text.hex + '30',
          endColor: lFlavor.base.hex,
       },
+      ok: lFlavor.green.hex,
+      nok: lFlavor.red.hex,
+      neutral: lFlavor.blue.hex,
    },
 };
 
@@ -32,6 +35,9 @@ const dark = {
          startColor: dFlavor.text.hex + '30',
          endColor: dFlavor.base.hex,
       },
+      ok: dFlavor.green.hex,
+      nok: dFlavor.red.hex,
+      neutral: dFlavor.blue.hex,
    },
 };
 
