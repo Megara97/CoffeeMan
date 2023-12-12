@@ -35,7 +35,12 @@ const DeleteProduct = ({
 
    const recordDeletedProduct = () => {
       //SUBIR A BASE DE DATOS
-      deleteProduct();
+      //deleteProduct();
+      if (product) {
+         let newValue = {...product};
+         newValue.status = 'delete';
+         changeProduct(newValue);
+      }
       closeModals();
       setChange('Delete' + name);
    };

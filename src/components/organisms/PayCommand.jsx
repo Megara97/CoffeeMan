@@ -15,7 +15,7 @@ import {getLocalStorage} from '../../functions/getLocalStorage';
 import {setLocalStorage} from '../../functions/setLocalStorage';
 import {usePartLocalStorage} from '../../customHooks/usePartLocalStorage';
 
-const PayCommand = ({navigation, id}) => {
+const PayCommand = ({navigation, id, setTotal, setVisible}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
@@ -219,6 +219,24 @@ const PayCommand = ({navigation, id}) => {
                />
             </View>
             <View style={styles.buttonsMenu}>
+               <TouchableOpacity
+                  onPress={() => {
+                     setTotal(calcTotal().toFixed(2));
+                     setVisible(true);
+                  }}>
+                  <CustomButton type={8} />
+               </TouchableOpacity>
+               <TouchableOpacity onPress={recordCommandPaid}>
+                  <CustomButton type={5} />
+               </TouchableOpacity>
+            </View>
+         </View>
+      </Shadow>
+   );
+};
+
+/* 
+
                <View style={styles.changeMenu}>
                   <View style={styles.moneyMenu}>
                      <Text style={styles.content}>Recibido:</Text>
@@ -238,14 +256,8 @@ const PayCommand = ({navigation, id}) => {
                      <Text style={styles.content}>$ {calcChange()} </Text>
                   </View>
                </View>
-               <TouchableOpacity onPress={recordCommandPaid}>
-                  <CustomButton type={5} />
-               </TouchableOpacity>
-            </View>
-         </View>
-      </Shadow>
-   );
-};
+
+               */
 
 const ComponentStyle = colors => {
    return StyleSheet.create({

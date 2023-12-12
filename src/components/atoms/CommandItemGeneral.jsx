@@ -34,7 +34,7 @@ const Item = ({navigation, client, subtotal, id, date, paid = false}) => {
 
    const itemPress = () => {
       if (paid) {
-         navigation.navigate('PayDetails', {id: id});
+         navigation.navigate('PaidCommandDetails', {id: id});
       } else {
          navigation.navigate('CommandDetails', {id: id});
       }

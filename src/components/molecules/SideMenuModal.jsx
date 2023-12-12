@@ -85,42 +85,44 @@ const SideMenu = ({
                   style={styles.header}
                />
                <View style={styles.side}>
-                  <View style={styles.sections}>
-                     <TouchableOpacity
-                        onPress={() => {
-                           setModalVisible(false);
-                           navigation.navigate('Commands');
-                        }}>
-                        <Text style={styles.titleHeader}>
-                           Administración de comandas
-                        </Text>
-                     </TouchableOpacity>
-                     <TouchableOpacity
-                        onPress={() => {
-                           setModalVisible(false);
-                           navigation.navigate('Menu');
-                        }}>
-                        <Text style={styles.titleHeader}>
-                           Configuración del menú
-                        </Text>
-                     </TouchableOpacity>
-                     <TouchableOpacity
-                        onPress={() => {
-                           setModalVisible(false);
-                           navigation.navigate('Costs');
-                        }}>
-                        <Text style={styles.titleHeader}>
-                           Gastos de operación
-                        </Text>
-                     </TouchableOpacity>
-                     <TouchableOpacity
-                        onPress={() => {
-                           setModalVisible(false);
-                           navigation.navigate('Reports');
-                        }}>
-                        <Text style={styles.titleHeader}>Reportes</Text>
-                     </TouchableOpacity>
-                  </View>
+                  <ScrollView>
+                     <View style={styles.sections}>
+                        <TouchableOpacity
+                           onPress={() => {
+                              setModalVisible(false);
+                              navigation.navigate('Commands');
+                           }}>
+                           <Text style={styles.titleHeader}>
+                              Administración de comandas
+                           </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                           onPress={() => {
+                              setModalVisible(false);
+                              navigation.navigate('Menu');
+                           }}>
+                           <Text style={styles.titleHeader}>
+                              Configuración del menú
+                           </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                           onPress={() => {
+                              setModalVisible(false);
+                              navigation.navigate('Costs');
+                           }}>
+                           <Text style={styles.titleHeader}>
+                              Gastos de operación
+                           </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                           onPress={() => {
+                              setModalVisible(false);
+                              navigation.navigate('Reports');
+                           }}>
+                           <Text style={styles.titleHeader}>Reportes</Text>
+                        </TouchableOpacity>
+                     </View>
+                  </ScrollView>
                   <View style={styles.aparience}>
                      <Text style={styles.title}>Modo oscuro</Text>
                      <Text style={[styles.body]}>

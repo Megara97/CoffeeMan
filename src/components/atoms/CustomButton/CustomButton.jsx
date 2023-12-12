@@ -6,6 +6,7 @@ import Delete from '../../../assets/icons/delete.svg';
 import Accept from '../../../assets/icons/accept.svg';
 import Cancel from '../../../assets/icons/cancel.svg';
 import Back from '../../../assets/icons/back.svg';
+import Change from '../../../assets/icons/cost.svg';
 import {Shadow} from 'react-native-shadow-2';
 import {useTheme} from '@react-navigation/native';
 //import ComponentStyle from './CustomButtonStyle';
@@ -56,6 +57,11 @@ const CustomButton = props => {
                   height={resize(size, 150)}
                   fill={colors.background}
                />
+            );
+            break;
+         case 8: //Cambio
+            Icon = (
+               <Change width={size} height={size} fill={colors.background} />
             );
             break;
          default:

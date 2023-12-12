@@ -17,6 +17,11 @@ const Reports = ({navigation, route}) => {
       route.params,
    );
    const [listCosts, setListCosts] = useLocalStorage('costs', [], route.params);
+   const [listProducts, setListProducts] = useLocalStorage(
+      'products',
+      [],
+      route.params,
+   );
    const [commands, setCommands] = useState([]);
    const [costs, setCosts] = useState([]);
    const [selectedPeriod, setSelectedPeriod] = useState();
@@ -43,6 +48,7 @@ const Reports = ({navigation, route}) => {
                navigation={navigation}
                commands={commands}
                costs={costs}
+               listProducts={listProducts}
             />
          </View>
          <View style={styles.bottom}></View>

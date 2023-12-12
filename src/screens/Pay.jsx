@@ -7,6 +7,7 @@ import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
 import {usePartLocalStorage} from '../customHooks/usePartLocalStorage';
 import {useLocalStorage} from '../customHooks/useLocalStorage';
+import ChangeModal from '../components/molecules/ChangeModal';
 
 const Pay = ({navigation, route}) => {
    const colors = useTheme().colors;
@@ -103,20 +104,36 @@ const Pay = ({navigation, route}) => {
       fetchData();
    }, []);
 */
+   const [modalVisible, setModalVisible] = useState(false);
+   const [total, setTotal] = useState(0);
+
    return (
-      <View style={styles.container}>
-         <View style={styles.principal}>
-            <Text style={styles.title}> {title} </Text>
-            <DetailsList
-               navigation={navigation}
-               id={route.params.id}
-               //list={list}
-            />
+      <>
+         <View style={styles.container}>
+            <View style={styles.principal}>
+               <Text style={styles.title}> {title} </Text>
+               <DetailsList
+                  navigation={navigation}
+                  id={route.params.id}
+                  //list={list}
+               />
+            </View>
+            <View style={styles.bottom}>
+               <PayCommand
+                  navigation={navigation}
+                  id={route.params.id}
+                  setTotal={setTotal}
+                  setVisible={setModalVisible}
+               />
+            </View>
          </View>
-         <View style={styles.bottom}>
-            <PayCommand navigation={navigation} id={route.params.id} />
-         </View>
-      </View>
+         <ChangeModal
+            navigation={navigation}
+            total={total}
+            visible={modalVisible}
+            setVisible={setModalVisible}
+         />
+      </>
    );
 };
 

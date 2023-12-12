@@ -8,7 +8,7 @@ import CommandDetails from './src/screens/CommandDetails/CommandDetails';
 import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
 import Costs from './src/screens/Costs';
-import PayDetails from './src/screens/PayDetails';
+import PaidCommandDetails from './src/screens/PaidCommandDetails';
 import CustomHeader from './src/components/organisms/CustomHeader';
 import {getHeaderTitle} from '@react-navigation/elements';
 import {useColorScheme} from 'react-native';
@@ -104,8 +104,8 @@ const CoffeeMan = () => {
                options={{title: 'Reportes'}}
             />
             <Stack.Screen
-               name="PayDetails"
-               component={PayDetails}
+               name="PaidCommandDetails"
+               component={PaidCommandDetails}
                options={{title: 'Comanda Pagada'}}
             />
             <Stack.Screen

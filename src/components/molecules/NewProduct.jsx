@@ -36,6 +36,7 @@ const NewProduct = ({setChange, visible, setVisible, list, setList}) => {
             product: name,
             //price: price === '' ? 0 : parseFloat(price),
             price: money,
+            status: 'active',
          };
          let newValue = list.slice();
          newValue.push(newElement);
