@@ -27,13 +27,10 @@ const Reports = ({navigation, route}) => {
    return (
       <View style={styles.container}>
          <View style={styles.principal}>
-            <Text style={styles.title}> Comandas pagadas </Text>
             <PeriodSelector setSelection={setSelectedPeriod} />
-            <CommandList navigation={navigation} list={commands} paid />
-         </View>
-         <View style={styles.bottom}>
             <InfoPaidCommands navigation={navigation} list={commands} />
          </View>
+         <View style={styles.bottom}></View>
       </View>
    );
 };

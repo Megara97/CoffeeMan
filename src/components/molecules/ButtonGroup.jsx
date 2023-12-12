@@ -4,13 +4,19 @@ import CustomLittleButton from '../atoms/CustomLittleButton/CustomLittleButton';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
-const ButtonGroup = ({title, buttons, selectedOption, onSelect}) => {
+const ButtonGroup = ({
+   style = {},
+   title,
+   buttons,
+   selectedOption,
+   onSelect,
+}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
 
    return (
       <View style={styles.container}>
-         <Text style={styles.title}> {title} </Text>
+         <Text style={{...styles.title, ...style}}> {title} </Text>
          {buttons.map((buttonProps, i) => (
             <TouchableOpacity
                key={i}

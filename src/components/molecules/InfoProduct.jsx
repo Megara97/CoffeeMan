@@ -39,11 +39,14 @@ const InfoProduct = ({
 
    const recordProductChanges = () => {
       //SUBIR A BASE DE DATOS
-      if (product) {
-         let newValue = {...product};
-         newValue.price = parseFloat(price);
-         newValue.product = name;
-         changeProduct(newValue);
+      money = parseFloat(price);
+      if (!isNaN(money)) {
+         if (product) {
+            let newValue = {...product};
+            newValue.price = money;
+            newValue.product = name;
+            changeProduct(newValue);
+         }
       }
       setVisible(!visible);
       setChange('Edit' + name + price);

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import BottomPaidCommand from '../components/molecules/BottomPaidCommand';
 import DetailsList from '../components/molecules/DetailsListGeneral';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../styles/index';
 import {usePartLocalStorage} from '../customHooks/usePartLocalStorage';
+import CustomButton from '../components/atoms/CustomButton/CustomButton';
 
 const Pay = ({navigation, route}) => {
    const colors = useTheme().colors;
@@ -19,7 +20,7 @@ const Pay = ({navigation, route}) => {
          setTitle(
             command.client === ''
                ? formatDateTime(command.date)
-               : command.client + ' - ' + formatDateTime(command.date),
+               : ' - ' + command.client + ' - ' + formatDateTime(command.date),
          );
       }
    }, [command]);
@@ -62,7 +63,18 @@ const Pay = ({navigation, route}) => {
    return (
       <View style={styles.container}>
          <View style={styles.principal}>
-            <Text style={styles.title}> {title} </Text>
+            <View style={styles.containerTop}>
+               <TouchableOpacity
+                  onPress={() =>
+                     //navigation.navigate('Commands', {
+                     navigation.navigate('PaidCommands')
+                  }>
+                  <CustomButton type={7} />
+               </TouchableOpacity>
+               <View style={styles.infoContainer}>
+                  <Text style={styles.title}> {title} </Text>
+               </View>
+            </View>
             <DetailsList navigation={navigation} id={route.params.id} />
          </View>
          <View style={styles.bottom}>
@@ -88,6 +100,13 @@ const ComponentStyle = colors => {
          justifyContent: 'flex-start',
          alignItems: 'center',
       },
+      containerTop: {
+         width: '90%',
+         flexDirection: 'row',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         marginVertical: spacing.s,
+      },
       bottom: {
          width: '100%',
          height: '43%',
@@ -95,10 +114,22 @@ const ComponentStyle = colors => {
          justifyContent: 'flex-end',
          alignItems: 'center',
       },
+      infoContainer: {
+         flex: 1,
+         //backgroundColor: colors.secondary,
+         flexDirection: 'column',
+         justifyContent: 'space-evenly',
+         alignItems: 'center',
+         borderRadius: radius.s,
+         paddingVertical: spacing.xs,
+         marginLeft: spacing.l,
+      },
       title: {
          marginBottom: spacing.xs,
          color: colors.typography,
          ...typography.title,
+         alignContent: 'center',
+         textAlign: 'center',
       },
    });
 };

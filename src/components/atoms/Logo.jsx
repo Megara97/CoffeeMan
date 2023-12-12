@@ -1,5 +1,7 @@
 import {StyleSheet, Image, View} from 'react-native';
-import imageLogo from '../../assets/images/Calcifer.png';
+//import imageLogo from '../../assets/images/Calcifer.png';
+//import imageLogo from '../../assets/images/Logo.png';
+import imageLogo from '../../assets/images/Jahbless.png';
 import {useTheme} from '@react-navigation/native';
 import {typography, spacing, radius} from '../../styles/index';
 
@@ -19,7 +21,7 @@ const ComponentStyle = colors => {
       circle: {
          width: 70,
          height: 70,
-         borderRadius: radius.l,
+         borderRadius: radius.xl, //radius.l
          backgroundColor: colors.surface,
          alignItems: 'center',
          justifyContent: 'center',

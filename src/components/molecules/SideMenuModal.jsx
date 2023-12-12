@@ -107,6 +107,15 @@ const SideMenu = ({
                      <TouchableOpacity
                         onPress={() => {
                            setModalVisible(false);
+                           navigation.navigate('Costs');
+                        }}>
+                        <Text style={styles.titleHeader}>
+                           Gastos de operación
+                        </Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity
+                        onPress={() => {
+                           setModalVisible(false);
                            navigation.navigate('Reports');
                         }}>
                         <Text style={styles.titleHeader}>Reportes</Text>

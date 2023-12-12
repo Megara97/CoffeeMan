@@ -7,7 +7,11 @@ const CommandList = ({navigation, list, paid = false}) => {
    const [commands, setCommands] = useState([]);
 
    useEffect(() => {
-      setCommands(list.slice().reverse());
+      if (paid === false) {
+         setCommands(list.slice().reverse());
+      } else {
+         setCommands(list.sort((a, b) => new Date(b.date) - new Date(a.date)));
+      }
    }, [list]);
 
    return (

@@ -127,6 +127,9 @@ const PayCommand = ({navigation, id}) => {
          newValue.method = method === 0 ? 'efectivo' : 'tarjeta';
          changeCommand(newValue);
       }
+      navigation.navigate('ActiveCommands', {
+         change: 'Pay' + id + numberProducts + subtotal,
+      });
       navigation.navigate('Commands', {
          change: 'Pay' + id + numberProducts + subtotal,
       });

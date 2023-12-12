@@ -4,9 +4,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Commands from './src/screens/Commands';
 import Reports from './src/screens/Reports';
 import Menu from './src/screens/Menu';
-import CommandDetails from './src/screens/CommandDetails';
+import CommandDetails from './src/screens/CommandDetails/CommandDetails';
 import Products from './src/screens/Products';
 import Pay from './src/screens/Pay';
+import Costs from './src/screens/Costs';
 import PayDetails from './src/screens/PayDetails';
 import CustomHeader from './src/components/organisms/CustomHeader';
 import {getHeaderTitle} from '@react-navigation/elements';
@@ -111,6 +112,11 @@ const CoffeeMan = () => {
                name="Menu"
                component={Menu}
                options={{title: 'Configuración del menu'}}
+            />
+            <Stack.Screen
+               name="Costs"
+               component={Costs}
+               options={{title: 'Gastos de operación'}}
             />
          </Stack.Navigator>
       </NavigationContainer>

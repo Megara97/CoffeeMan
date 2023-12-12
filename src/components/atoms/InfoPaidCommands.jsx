@@ -51,7 +51,7 @@ const ComponentStyle = colors => {
          width: '80%',
          height: 80,
          //flex: 1,
-         backgroundColor: colors.secondary,
+         //backgroundColor: colors.secondary,
          flexDirection: 'column',
          justifyContent: 'space-evenly',
          alignItems: 'center',

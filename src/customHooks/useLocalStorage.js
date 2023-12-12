@@ -10,7 +10,7 @@ export function useLocalStorage(key, initialValue = [], change = 1) {
       try {
          const item = await AsyncStorage.getItem(key);
          setStoredValue(item ? JSON.parse(item) : initialValue);
-         //onsole.log('despues', key + storedValue);
+         //console.log('despues', key + storedValue);
       } catch (e) {
          setStoredValue(initialValue);
       }

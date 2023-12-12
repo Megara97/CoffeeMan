@@ -4,26 +4,30 @@ import {useTheme} from '@react-navigation/native';
 import SideMenu from '../molecules/SideMenuModal';
 import {useState} from 'react';
 import {typography, spacing, radius} from '../../styles/index';
-import imageCommands from '../../assets/images/Command.png';
-import imageReports from '../../assets/images/Report.png';
-import imageMenu from '../../assets/images/Coffee.png';
+import Command from '../../assets/icons/command.svg';
+import Menu from '../../assets/icons/menu.svg';
+import Report from '../../assets/icons/report.svg';
+import Costs from '../../assets/icons/cost.svg';
 
 const CustomHeader = ({navigation, title, name, setChange, change}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
+   const size = 30;
 
    const [modalVisible, setModalVisible] = useState(false);
 
    const selectIcon = () => {
-      let icon;
+      let Icon;
       if (name == 'Reports') {
-         icon = imageReports;
+         Icon = <Report width={size} height={size} fill={colors.background} />;
       } else if (name == 'Menu') {
-         icon = imageMenu;
+         Icon = <Menu width={size} height={size} fill={colors.background} />;
+      } else if (name == 'Costs') {
+         Icon = <Costs width={size} height={size} fill={colors.background} />;
       } else {
-         icon = imageCommands;
+         Icon = <Command width={30} height={size} fill={colors.background} />;
       }
-      return icon;
+      return Icon;
    };
 
    return (
@@ -37,8 +41,11 @@ const CustomHeader = ({navigation, title, name, setChange, change}) => {
                   </TouchableOpacity>
                </View>
                <View style={styles.section}>
-                  <Image source={selectIcon()} style={styles.image} />
-                  <Text style={styles.title}> {title}</Text>
+                  {selectIcon()}
+                  <Text style={styles.title}>
+                     {'  '}
+                     {title}
+                  </Text>
                </View>
             </View>
          </View>
@@ -79,10 +86,6 @@ const ComponentStyle = colors => {
          flexDirection: 'row',
          alignItems: 'center',
          justifyContent: 'flex-start',
-      },
-      image: {
-         width: 30,
-         height: 30,
       },
       title: {
          color: colors.background,
