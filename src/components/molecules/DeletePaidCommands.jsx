@@ -72,7 +72,8 @@ const ComponentStyle = colors => {
          alignItems: 'center',
       },
       container: {
-         width: '80%',
+         //width: '80%',
+         width: 310,
          height: 170,
          flexDirection: 'column',
          justifyContent: 'center',
