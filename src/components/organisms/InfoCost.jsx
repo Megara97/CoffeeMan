@@ -58,11 +58,7 @@ const InfoCost = ({
    useEffect(() => {
       if (cost) {
          if (type === 'new') {
-            setAmount('');
-            setMethod(0);
-            setSelectedCategory('1');
-            setDetails('');
-            setDate(today);
+            cleanEntry();
          } else {
             setAmount(cost.amount.toString());
             setMethod(cost.source === 'efectivo' ? 0 : 1);
@@ -70,10 +66,19 @@ const InfoCost = ({
                data.find(item => item.label === cost.category).value,
             );
             setDetails(cost.details);
-            setDate(cost.date);
+            const dateCost = new Date(cost.date);
+            setDate(dateCost);
          }
       }
    }, [cost, type]);
+
+   const cleanEntry = () => {
+      setAmount('');
+      setMethod(0);
+      setSelectedCategory('1');
+      setDetails('');
+      setDate(today);
+   };
 
    const recordCostChanges = () => {
       money = parseFloat(amount);
@@ -101,6 +106,7 @@ const InfoCost = ({
             //console.log(newValue);
             setList(newValue);
             setVisible(!visible);
+            cleanEntry();
          } else {
             Alert.alert('', 'Falta determinar el monto del nuevo gasto', [
                {text: 'OK'},
@@ -327,7 +333,8 @@ const ComponentStyle = colors => {
          alignItems: 'center',
       },
       spinner: {
-         width: '35%',
+         //width: '35%',
+         width: 130,
       },
       item: {
          backgroundColor: colors.secondary,
@@ -337,7 +344,8 @@ const ComponentStyle = colors => {
          //paddingVertical: 0,
       },
       date: {
-         width: '25%',
+         //width: '25%',
+         width: 100,
          backgroundColor: colors.background,
          flexDirection: 'row',
          justifyContent: 'center',

@@ -16,14 +16,17 @@ import Menu from '../../assets/icons/menu.svg';
 import Card from '../../assets/icons/tarjeta.svg';
 import Cash from '../../assets/icons/efectivo.svg';
 import {BarChart} from 'react-native-gifted-charts';
-import CustomLittleButton from './CustomLittleButton/CustomLittleButton';
 
-const PayPaidCommand = ({commands, costs, listProducts}) => {
+const InfoPaidCommands = ({commands, costs, listProducts}) => {
    const colors = useTheme().colors;
    const styles = ComponentStyle(colors);
    const {height, width} = useWindowDimensions();
    const size = 25;
-
+   const sizeM = 15;
+   const sizeS = 10;
+   const [maxWidth, setMaxWidth] = useState(width * 0.85 - 35);
+   const [widthChart, setWidth] = useState(200);
+   const [heightChart, setHeight] = useState(130);
    const [number, setNumber] = useState(0);
    const [income, setIncome] = useState(0);
    const [expenses, setExpenses] = useState(0);
@@ -32,6 +35,31 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
    const [profits, setProfits] = useState(0);
    const [cash, setCash] = useState(0);
    const [data, setData] = useState([]);
+   const [maxData, setMaxData] = useState(5);
+
+   useEffect(() => {
+      const heightBar = height - 670;
+      //console.log(height, heightBar);
+      if (heightBar > 130) {
+         setHeight(heightBar);
+      } else {
+         setHeight(130);
+      }
+
+      const widthMax = width * 0.85 - 35;
+      setMaxWidth(widthMax);
+
+      const widthBar = data.length * 45 + 15;
+      if (widthBar < widthMax) {
+         if (widthBar > 200) {
+            setWidth(widthBar);
+         } else {
+            setWidth(200);
+         }
+      } else {
+         setWidth(widthMax); //!!!
+      }
+   }, [width, height]);
 
    useEffect(() => {
       if (commands) {
@@ -59,7 +87,7 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
             0,
          );
 
-         let productData = [];
+         /* let productData = [];
          commands.forEach(item => {
             let calcProductQuantity = {};
             item.products.forEach(product => {
@@ -70,22 +98,59 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
             });
             productData = productData.concat(
                Object.entries(calcProductQuantity).map(([id, value]) => ({
-                  //id,
+                  id,
                   value,
                   label:
                      listProducts.find(item => item.id === parseFloat(id))
                         ?.product || '-----',
                })),
             );
+         });*/
+
+         let calcProductQuantity = {};
+         commands.forEach(item => {
+            item.products.forEach(product => {
+               const productId = product.id;
+               const quantity = product.quantity;
+               calcProductQuantity[productId] =
+                  (calcProductQuantity[productId] || 0) + quantity;
+            });
          });
+
+         const productData = Object.entries(calcProductQuantity).map(
+            ([id, value]) => ({
+               //id,
+               value,
+               label:
+                  listProducts.find(item => item.id === parseFloat(id))
+                     ?.product || '-----',
+            }),
+         );
+         const maxValue = productData.reduce(
+            (max, current) => (current.value > max ? current.value : max),
+            0,
+         );
+         //console.log(productData);
 
          const calcProducts = productData.reduce(
             (accumulator, currentValue) => accumulator + currentValue.value,
             0,
          );
 
+         const widthBar = productData.length * 45 + 15;
+         if (widthBar < maxWidth) {
+            if (widthBar > 200) {
+               setWidth(widthBar);
+            } else {
+               setWidth(200);
+            }
+         } else {
+            setWidth(maxWidth);
+         }
+
          setNumber(numberCommands);
          setData(productData);
+         maxValue > 5 ? setMaxData(maxValue) : setMaxData(5);
          setIncome(calcIncome);
          setCash(calcCash);
          setTip(calcTip);
@@ -98,40 +163,6 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
    return (
       <ScrollView style={styles.scroll}>
          <View style={styles.container}>
-            <View style={styles.quantityContainer}>
-               <View style={styles.data}>
-                  <View style={styles.status}>
-                     <Command width={size} height={size} fill={colors.color1} />
-                     <Text style={styles.title}>Comandas pagadas</Text>
-                  </View>
-                  <Text style={{...styles.title, color: colors.color1}}>
-                     {'  '}
-                     {number}
-                  </Text>
-               </View>
-               <View style={styles.data}>
-                  <View style={styles.statusMethod}>
-                     <CustomLittleButton type={1} active={true} />
-                     <Text style={styles.title}>{cash} %</Text>
-                  </View>
-                  <View style={styles.statusMethod}>
-                     <CustomLittleButton type={2} active={true} />
-                     <Text style={styles.title}>
-                        {number != 0 ? 100 - cash : 0} %
-                     </Text>
-                  </View>
-               </View>
-               <View style={styles.data}>
-                  <View style={styles.status}>
-                     <Menu width={size} height={size} fill={colors.color1} />
-                     <Text style={styles.title}>Productos vendidos</Text>
-                  </View>
-                  <Text style={{...styles.title, color: colors.color1}}>
-                     {'  '}
-                     {products}
-                  </Text>
-               </View>
-            </View>
             <View style={styles.moneyContainer}>
                <View style={styles.balanceContainer}>
                   <View style={styles.statusSimple}>
@@ -181,8 +212,58 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
                   </Text>
                </View>
             </View>
+            <View style={styles.quantityContainer}>
+               <View style={styles.data}>
+                  <View style={styles.status}>
+                     <Command
+                        width={sizeM}
+                        height={sizeM}
+                        fill={colors.color1}
+                     />
+                     <Text style={styles.text}> Comandas pagadas</Text>
+                  </View>
+                  <Text style={{...styles.text, color: colors.color1}}>
+                     {'  '}
+                     {number}
+                  </Text>
+               </View>
+               <View style={styles.data}>
+                  <View style={styles.statusMethod}>
+                     <View style={styles.oval}>
+                        <Cash
+                           width={sizeS}
+                           height={sizeS}
+                           fill={colors.background}
+                        />
+                     </View>
+                     <Text style={styles.text}> {cash} %</Text>
+                  </View>
+                  <View style={styles.statusMethod}>
+                     <View style={styles.oval}>
+                        <Card
+                           width={sizeS}
+                           height={sizeS}
+                           fill={colors.background}
+                        />
+                     </View>
+                     <Text style={styles.text}>
+                        {' '}
+                        {number != 0 ? 100 - cash : 0} %
+                     </Text>
+                  </View>
+               </View>
+               <View style={styles.data}>
+                  <View style={styles.status}>
+                     <Menu width={sizeM} height={sizeM} fill={colors.color1} />
+                     <Text style={styles.text}> Productos vendidos</Text>
+                  </View>
+                  <Text style={{...styles.text, color: colors.color1}}>
+                     {'  '}
+                     {products}
+                  </Text>
+               </View>
+            </View>
             <View style={styles.chartContainer}>
-               <Text style={styles.title}>Ventas por producto</Text>
                <BarChart
                   noOfSections={5}
                   barBorderTopLeftRadius={radius.xs}
@@ -192,6 +273,7 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
                   spacing={spacing.m}
                   xAxisLabelTextStyle={{
                      ...styles.text,
+                     lineHeight: spacing.l,
                      transform: [{rotate: '-90deg'}],
                      //transform: [{rotate: '-70deg'}],
                      color: colors.typography,
@@ -203,12 +285,15 @@ const PayPaidCommand = ({commands, costs, listProducts}) => {
                   yAxisTextStyle={styles.text}
                   xAxisColor={colors.typography}
                   yAxisColor={colors.typography}
-                  xAxisLabelsVerticalShift={30}
+                  xAxisLabelsVerticalShift={25}
                   labelWidth={55}
                   xAxisTextNumberOfLines={2}
-                  width={width * 0.7}
+                  width={widthChart}
+                  //xAxisLength={widthChart}
+                  //rulesLength={widthChart}
                   scrollToEnd={true}
-                  //maxValue={6}
+                  height={heightChart}
+                  maxValue={maxData}
                />
             </View>
          </View>
@@ -231,34 +316,34 @@ const ComponentStyle = colors => {
          marginVertical: spacing.l,
       },
       quantityContainer: {
-         width: '100%',
-         flexDirection: 'column',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-         borderRadius: radius.s,
-      },
-      moneyContainer: {
-         width: '80%',
-         flexDirection: 'column',
-         justifyContent: 'flex-start',
-         alignItems: 'center',
-         borderRadius: radius.s,
-         marginVertical: spacing.l,
-         //borderWidth: 1,
-      },
-      balanceContainer: {
-         width: '100%',
-         alignItems: 'center',
-         borderRadius: radius.s,
-         borderBottomColor: colors.surface,
-         borderBottomWidth: 1,
-      },
-      chartContainer: {
-         width: '85%',
+         //width: '100%',
+         width: 350,
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'center',
          borderRadius: radius.s,
+         marginVertical: spacing.xl,
+      },
+      moneyContainer: {
+         //width: '80%',
+         width: 320,
+         flexDirection: 'column',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
+      },
+      balanceContainer: {
+         width: '100%',
+         alignItems: 'center',
+         borderBottomColor: colors.surface,
+         borderBottomWidth: 1,
+      },
+      chartContainer: {
+         //width: '85%',
+         flex: 1,
+         flexDirection: 'column',
+         justifyContent: 'center',
+         alignItems: 'center',
+         paddingRight: spacing.xl * 2,
       },
       statusSimple: {
          width: '80%',
@@ -289,7 +374,6 @@ const ComponentStyle = colors => {
       text: {
          ...typography.body,
          color: colors.typography,
-         lineHeight: spacing.l,
       },
       title: {
          ...typography.title,
@@ -302,7 +386,15 @@ const ComponentStyle = colors => {
          color: colors.typography,
          paddingLeft: spacing.s,
       },
+      oval: {
+         width: 25,
+         height: 20,
+         borderRadius: radius.m,
+         alignItems: 'center',
+         justifyContent: 'center',
+         backgroundColor: colors.color1,
+      },
    });
 };
 
-export default PayPaidCommand;
+export default InfoPaidCommands;

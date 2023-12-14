@@ -8,7 +8,7 @@ const ProductList = ({navigation, list, setVisible, setId}) => {
    const [column, setColumn] = useState(3);
 
    useEffect(() => {
-      let columnsNumber = (width - 60) / 110;
+      let columnsNumber = (width - 30) / 110;
       columnsNumber = Math.floor(columnsNumber);
       setColumn(columnsNumber);
    }, [width]);

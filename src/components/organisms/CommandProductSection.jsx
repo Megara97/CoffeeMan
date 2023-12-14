@@ -14,7 +14,11 @@ const CommandProductSection = ({navigation, id, onSelect}) => {
       const fetchData = async () => {
          try {
             const productsList = await AsyncStorage.getItem('products');
-            const products = productsList ? JSON.parse(productsList) : [];
+            //const products = productsList ? JSON.parse(productsList) : [];
+            const activeProducts = productsList ? JSON.parse(productsList) : [];
+            const products = activeProducts.filter(
+               item => item.status != 'delete', // === 'active',
+            );
 
             const commandsList = await AsyncStorage.getItem('commands');
             const commands = commandsList ? JSON.parse(commandsList) : [];

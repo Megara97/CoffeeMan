@@ -22,7 +22,11 @@ const Commands = ({navigation, route}) => {
                tabBarActiveTintColor: colors.background,
                tabBarInactiveTintColor: colors.typography,
                tabBarActiveBackgroundColor: colors.color1,
-               tabBarInactiveBackgroundColor: colors.secondary,
+               tabBarInactiveBackgroundColor: colors.surface, //secondary
+               tabBarStyle: {borderColor: colors.background},
+            }}
+            sceneContainerStyle={{
+               borderWidth: 0,
             }}>
             <Tab.Screen
                name="ActiveCommands"

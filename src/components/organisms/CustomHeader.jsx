@@ -77,7 +77,8 @@ const ComponentStyle = colors => {
          borderBottomRightRadius: radius.s,
       },
       logo: {
-         width: '30%',
+         //width: '30%',
+         width: 120,
          flexDirection: 'row',
          justifyContent: 'center',
       },

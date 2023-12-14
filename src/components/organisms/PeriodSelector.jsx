@@ -104,7 +104,7 @@ const PeriodSelector = ({setSelection}) => {
    return (
       <View style={styles.container}>
          <View style={styles.spinnerContainer}>
-            <Text style={styles.title}>Periodo:</Text>
+            <Text style={styles.title}>{'      '}Periodo:</Text>
             <Picker
                style={styles.spinner}
                mode="dropdown"
@@ -214,7 +214,8 @@ const ComponentStyle = colors => {
          paddingBottom: spacing.s,
       },
       spinner: {
-         width: '50%',
+         //width: '50%',
+         width: 160,
          //height: 50,
          //paddingVertical: 0,
          //color: colors.typography,
@@ -236,7 +237,8 @@ const ComponentStyle = colors => {
          color: colors.typography,
       },
       date: {
-         width: '25%',
+         //width: '25%',
+         width: 100,
          backgroundColor: colors.background,
          flexDirection: 'row',
          justifyContent: 'center',

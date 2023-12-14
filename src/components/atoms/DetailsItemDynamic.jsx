@@ -143,7 +143,7 @@ const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
    return (
       <View style={styles.item}>
          <View style={styles.quantity}>
-            <TouchableOpacity onPress={onLess}>
+            <TouchableOpacity style={styles.button} onPress={onLess}>
                <Less width={size} height={size} fill={colors.color1} />
             </TouchableOpacity>
             <TextInput
@@ -153,7 +153,7 @@ const ItemDynamic = ({id, number, product, idProduct, subtotal, setChange}) => {
                keyboardType="numeric"
                placeholderTextColor={colors.typography}
             />
-            <TouchableOpacity onPress={onMore}>
+            <TouchableOpacity style={styles.button} onPress={onMore}>
                <More width={size} height={size} fill={colors.color1} />
             </TouchableOpacity>
          </View>
@@ -187,6 +187,14 @@ const ComponentStyle = colors => {
          justifyContent: 'flex-start',
          alignItems: 'center',
       },
+      button: {
+         width: '25%',
+         height: 50,
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+         //borderWidth: 1,
+      },
       product: {
          width: '35%',
          textAlign: 'left',
@@ -203,7 +211,8 @@ const ComponentStyle = colors => {
          alignItems: 'flex-end',
       },
       input: {
-         width: '40%',
+         //width: '40%',
+         width: 40,
          backgroundColor: colors.background,
          marginHorizontal: spacing.xxs,
          textAlign: 'center',
@@ -211,6 +220,8 @@ const ComponentStyle = colors => {
          ...typography.title,
          fontSize: 20,
          color: colors.typography,
+         paddingTop: spacing.m,
+         paddingBottom: spacing.xs,
          //height: 50,
          //paddingVertical: 0,
       },

@@ -182,7 +182,8 @@ const ComponentStyle = colors => {
       },
       modal: {
          height: '100%',
-         width: '70%',
+         //width: '70%',
+         width: 270,
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'flex-start',
@@ -205,7 +206,8 @@ const ComponentStyle = colors => {
       logo: {
          position: 'absolute',
          top: 0,
-         width: '43%',
+         //width: '30%',
+         width: 120,
          alignItems: 'center',
       },
       sections: {

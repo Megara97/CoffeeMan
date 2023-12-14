@@ -56,7 +56,10 @@ const ChangeModal = ({id, total, visible, setVisible}) => {
                <View style={styles.changeMenu}>
                   <View style={styles.productsMenu}>
                      <Text style={styles.bold}>Total</Text>
-                     <Text style={styles.bold}>$ {total} </Text>
+                     <Text style={styles.bold}>
+                        {'$ '}
+                        {total}{' '}
+                     </Text>
                   </View>
                   <View style={styles.productsMenu}>
                      <Text style={styles.content}>Recibido:</Text>
@@ -68,14 +71,17 @@ const ChangeModal = ({id, total, visible, setVisible}) => {
                            //onChangeText={setMoney}
                            //value={money}
                            placeholder={money}
-                           placeholderTextColor={colors.overlay}
+                           placeholderTextColor={colors.overlay} //colors.typography
                            keyboardType="numeric"
                         />
                      </View>
                   </View>
                   <View style={styles.productsMenu}>
                      <Text style={styles.content}>Cambio:</Text>
-                     <Text style={styles.content}>$ {calcChange()} </Text>
+                     <Text style={styles.content}>
+                        {'$ '}
+                        {calcChange()}{' '}
+                     </Text>
                   </View>
                </View>
                <View style={styles.buttons}>
@@ -102,7 +108,7 @@ const ComponentStyle = colors => {
       container: {
          //width: '80%',
          width: 310,
-         height: 200,
+         height: 210,
          flexDirection: 'column',
          justifyContent: 'center',
          alignItems: 'center',
@@ -137,6 +143,7 @@ const ComponentStyle = colors => {
       },
       bold: {
          ...typography.titleBold,
+         color: colors.typography,
       },
       content: {
          ...typography.title,
@@ -144,6 +151,7 @@ const ComponentStyle = colors => {
       },
       input: {
          paddingVertical: 0,
+         paddingLeft: 0,
          textAlign: 'right',
          ...typography.title,
          color: colors.typography,
